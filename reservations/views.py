@@ -1,11 +1,16 @@
-from rest_framework import viewsets
+
+from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import status
 
 from .models import Reservation
 from .serializers import ReservationSerializer
+from .controllers import (
+    confirm_reservation,
+    cancel_reservation,
+    finish_reservation,
+)
 
 
 class ReservationViewSet(viewsets.ModelViewSet):
@@ -22,9 +27,7 @@ class ReservationViewSet(viewsets.ModelViewSet):
         )
 
         # Staff can consult all reservations
-        if self.request.user.is_staff:
-            pass
-        else:
+        if not self.request.user.is_staff:
             # A client can only consult their own reservations
             queryset = queryset.filter(
                 utilisateur=self.request.user
@@ -42,39 +45,36 @@ class ReservationViewSet(viewsets.ModelViewSet):
         # The connected user becomes the reservation's client
         serializer.save(utilisateur=self.request.user)
 
+    # Confirm reservation
     @action(detail=True, methods=['patch'])
     def confirm(self, request, pk=None):
         reservation = self.get_object()
 
-        serializer = self.get_serializer(
-            reservation,
-            data={'statut': 'confirmee'},
-            partial=True
+        confirm_reservation(reservation)
+
+        return Response(
+            self.get_serializer(reservation).data,
+            status=status.HTTP_200_OK
         )
 
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-
-        return Response(serializer.data)
-
+    # Cancel reservation
     @action(detail=True, methods=['patch'])
     def cancel(self, request, pk=None):
         reservation = self.get_object()
 
-        reservation.statut = 'annulee'
-        reservation.save(update_fields=['statut'])
+        cancel_reservation(reservation)
 
         return Response({
-            'message': 'Réservation annulée avec succès.'
-        })
+            'message': 'Reservation cancelled successfully.'
+        }, status=status.HTTP_200_OK)
 
+    # Finish reservation
     @action(detail=True, methods=['patch'])
     def finish(self, request, pk=None):
         reservation = self.get_object()
 
-        reservation.statut = 'terminee'
-        reservation.save(update_fields=['statut'])
+        finish_reservation(reservation)
 
         return Response({
-            'message': 'Réservation terminée avec succès.'
-        })
+            'message': 'Reservation finished successfully.'
+        }, status=status.HTTP_200_OK)
