@@ -1,4 +1,3 @@
-
 from django.db import models
 
 
@@ -9,7 +8,18 @@ class Chambre(models.Model):
         unique=True
     )
 
-    type = models.CharField(max_length=50)
+    TYPE_CHOICES = [
+        ('simple', 'Chambre simple'),
+        ('double', 'Chambre double'),
+        ('suite', 'Suite'),
+        ('familiale', 'Chambre familiale'),
+    ]
+
+    type = models.CharField(
+        max_length=20,
+        choices=TYPE_CHOICES,
+        default='simple'
+    )
 
     capacite = models.PositiveIntegerField()
 
