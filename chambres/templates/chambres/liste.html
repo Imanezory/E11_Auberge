@@ -1,0 +1,136 @@
+
+{% extends 'chambres/base.html' %}
+{% load static %}
+
+{% block title %}Nos chambres | Auberge{% endblock %}
+
+{% block content %}
+
+<!-- INTRODUCTION -->
+<section class="rooms-intro">
+    <span>NOTRE HÉBERGEMENT</span>
+    <h1>Nos Chambres</h1>
+    <p>
+        Découvrez nos chambres confortables et élégantes,
+        <br>pour un séjour inoubliable.
+    </p>
+</section>
+
+<!-- LISTE DES CHAMBRES -->
+<section class="rooms-section">
+
+    <div class="rooms-heading">
+        <span>NOS CHAMBRES</span>
+        <h2>Un confort sur mesure</h2>
+        <p>
+            Profitez d'un cadre agréable avec des chambres adaptées
+            à tous vos besoins.
+        </p>
+    </div>
+
+    <div class="rooms-grid">
+
+        {% for chambre in chambres %}
+
+        <article class="room-card">
+
+            <div class="room-image">
+
+                {% if chambre.image %}
+                    <img src="{{ chambre.image.url }}"
+                         alt="Chambre {{ chambre.numChambre }}">
+                {% else %}
+                    <img src="{% static 'chambres/images/chambre-default.jpg' %}"
+                         alt="Photo de chambre">
+                {% endif %}
+
+            </div>
+
+            <div class="room-content">
+
+                <h3>Chambre {{ chambre.type }}</h3>
+
+                <div class="room-meta">
+
+                    <span>♙ {{ chambre.capacite }} personne(s)</span>
+
+                    <span>◇ {{ chambre.prix }} DH / nuit</span>
+
+                    <span class="room-status
+                        {% if chambre.statut == 'disponible' %}
+                            available
+                        {% elif chambre.statut == 'occupee' %}
+                            occupied
+                        {% else %}
+                            maintenance
+                        {% endif %}">
+                        ● {{ chambre.get_statut_display }}
+                    </span>
+
+                </div>
+
+                <div class="room-card-footer">
+
+                    <a href="{% url 'chambres:detail' chambre.pk %}"
+                       class="room-reserve-btn">
+                        Réserver <span>→</span>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+        {% empty %}
+
+        <div class="rooms-empty">
+            <h3>Aucune chambre disponible pour le moment.</h3>
+            <p>Revenez bientôt pour découvrir nos chambres.</p>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+<!-- NOS ENGAGEMENTS -->
+<section class="engagements-section" id="engagements">
+
+    <div class="engagements-heading">
+        <span>POUR UN SÉJOUR AGRÉABLE</span>
+        <h2>Nos engagements</h2>
+    </div>
+
+    <div class="engagements-grid">
+
+        <div class="engagement-item">
+            <div class="engagement-icon">♢</div>
+            <h3>Confort garanti</h3>
+            <p>Des chambres modernes<br>et bien équipées.</p>
+        </div>
+
+        <div class="engagement-item">
+            <div class="engagement-icon">♧</div>
+            <h3>Service 24h/24</h3>
+            <p>Une équipe à votre écoute<br>en permanence.</p>
+        </div>
+
+        <div class="engagement-item">
+            <div class="engagement-icon">♧</div>
+            <h3>Sécurité assurée</h3>
+            <p>Un environnement sûr<br>pour votre tranquillité.</p>
+        </div>
+
+        <div class="engagement-item">
+            <div class="engagement-icon">⌖</div>
+            <h3>Emplacement idéal</h3>
+            <p>Au cœur d'Agadir, proche<br>des principales attractions.</p>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

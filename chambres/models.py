@@ -1,14 +1,28 @@
-from django.db import models
 
-# Create your models here.
 from django.db import models
 
 
 class Chambre(models.Model):
-    numChambre = models.CharField(max_length=10, unique=True)
+
+    numChambre = models.CharField(
+        max_length=10,
+        unique=True
+    )
+
     type = models.CharField(max_length=50)
+
     capacite = models.PositiveIntegerField()
-    prix = models.DecimalField(max_digits=10, decimal_places=2)
+
+    prix = models.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
+
+    image = models.ImageField(
+        upload_to='chambres/',
+        null=True,
+        blank=True
+    )
 
     STATUT_CHOICES = [
         ('disponible', 'Disponible'),

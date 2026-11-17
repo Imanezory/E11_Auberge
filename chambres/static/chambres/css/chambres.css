@@ -1,0 +1,1206 @@
+
+/* ========================================
+   1. VARIABLES ET CONFIGURATION GÉNÉRALE
+======================================== */
+
+:root {
+    --dark-green: #202D28;
+    --main-green: #455B45;
+    --sage-green: #71816F;
+    --light-sage: #A8B6A4;
+    --beige: #F8F5EF;
+    --white: #FFFFFF;
+    --grey: #777777;
+    --rust: #B87555;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--dark-green);
+    background-color: var(--white);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button,
+input,
+select {
+    font-family: inherit;
+}
+
+
+/* ========================================
+   2. HEADER
+======================================== */
+
+.site-header {
+    width: 100%;
+    background-color: var(--dark-green);
+    padding: 20px 7%;
+    position: relative;
+    z-index: 10;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1300px;
+    margin: auto;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--white);
+}
+
+.logo span,
+.footer-brand span {
+    color: var(--light-sage);
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+
+.main-nav a {
+    color: var(--white);
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.main-nav a:hover {
+    color: #B8C5B5;
+}
+
+.main-nav .reservation-btn {
+    background-color: var(--sage-green);
+    padding: 12px 24px;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.main-nav .reservation-btn:hover {
+    background-color: #5B6D59;
+    color: var(--white);
+}
+
+
+/* ========================================
+   3. HERO SECTION
+======================================== */
+
+.chambres-hero {
+    min-height: 390px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 70px 20px;
+    background:
+        linear-gradient(rgba(32, 45, 40, 0.72),
+                        rgba(32, 45, 40, 0.72)),
+        url("../images/hero-chambres.jpg") center/cover no-repeat;
+}
+
+.hero-content {
+    max-width: 750px;
+    color: var(--white);
+}
+
+.hero-subtitle,
+.section-subtitle {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 3px;
+    font-weight: 500;
+    margin-bottom: 18px;
+}
+
+.hero-subtitle {
+    color: var(--light-sage);
+}
+
+.hero-content h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 500;
+    margin-bottom: 18px;
+}
+
+.hero-content p {
+    font-size: 15px;
+    line-height: 1.9;
+    color: #F0F0EC;
+}
+
+
+/* ========================================
+   4. SECTION CHAMBRES
+======================================== */
+
+.chambres-section {
+    padding: 85px 7%;
+    background-color: var(--beige);
+}
+
+.section-heading {
+    text-align: center;
+    max-width: 750px;
+    margin: 0 auto 45px;
+}
+
+.section-subtitle {
+    color: var(--sage-green);
+}
+
+.section-heading h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 500;
+    color: var(--dark-green);
+    margin-bottom: 15px;
+}
+
+.section-heading p {
+    color: var(--grey);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+
+/* ========================================
+   5. FILTRES ET RECHERCHE
+======================================== */
+
+.chambres-filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 45px;
+}
+
+.chambres-filters input,
+.chambres-filters select {
+    min-width: 210px;
+    padding: 13px 15px;
+    border: 1px solid #DADFD7;
+    border-radius: 4px;
+    background-color: var(--white);
+    color: var(--dark-green);
+    font-size: 13px;
+    outline: none;
+}
+
+.chambres-filters input:focus,
+.chambres-filters select:focus {
+    border-color: var(--sage-green);
+}
+
+.chambres-filters button {
+    border: none;
+    padding: 14px 25px;
+    border-radius: 4px;
+    background-color: var(--main-green);
+    color: var(--white);
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.3s ease;
+}
+
+.chambres-filters button:hover {
+    background-color: var(--dark-green);
+}
+
+.reset-filter {
+    color: var(--sage-green);
+    font-size: 13px;
+    padding: 10px;
+}
+
+.reset-filter:hover {
+    color: var(--dark-green);
+    text-decoration: underline;
+}
+
+
+/* ========================================
+   6. GRILLE DES CHAMBRES
+======================================== */
+
+.chambres-grid {
+    max-width: 1300px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+}
+
+.chambre-card {
+    background-color: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(32, 45, 40, 0.07);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.chambre-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(32, 45, 40, 0.13);
+}
+
+.chambre-image {
+    height: 230px;
+    position: relative;
+    overflow: hidden;
+    background-color: #E8EAE5;
+}
+
+.chambre-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.chambre-card:hover .chambre-image img {
+    transform: scale(1.06);
+}
+
+.chambre-status {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 7px 13px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+    background-color: var(--white);
+}
+
+.chambre-status.disponible {
+    color: #426C45;
+}
+
+.chambre-status.occupee {
+    color: var(--rust);
+}
+
+.chambre-status.maintenance {
+    color: #777777;
+}
+
+
+/* ========================================
+   7. INFORMATIONS DE LA CHAMBRE
+======================================== */
+
+.chambre-info {
+    padding: 23px;
+}
+
+.chambre-type {
+    color: var(--sage-green);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.chambre-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 23px;
+    font-weight: 500;
+    margin: 10px 0 15px;
+    color: var(--dark-green);
+}
+
+.chambre-details {
+    color: var(--grey);
+    font-size: 13px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #EEEEEA;
+}
+
+.chambre-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.chambre-price strong {
+    display: block;
+    font-size: 19px;
+    color: var(--main-green);
+}
+
+.chambre-price small {
+    font-size: 11px;
+    color: var(--grey);
+}
+
+.details-btn {
+    display: inline-block;
+    background-color: var(--sage-green);
+    color: var(--white);
+    padding: 11px 17px;
+    border-radius: 4px;
+    font-size: 12px;
+    transition: background 0.3s ease;
+}
+
+.details-btn:hover {
+    background-color: var(--dark-green);
+}
+
+
+/* ========================================
+   8. AUCUNE CHAMBRE TROUVÉE
+======================================== */
+
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 55px 20px;
+    background-color: var(--white);
+    border-radius: 8px;
+}
+
+.empty-state h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 25px;
+    margin-bottom: 12px;
+}
+
+.empty-state p {
+    color: var(--grey);
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.empty-state a {
+    display: inline-block;
+    color: var(--white);
+    background-color: var(--sage-green);
+    padding: 12px 22px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+
+/* ========================================
+   9. FOOTER
+======================================== */
+
+.site-footer {
+    background-color: var(--dark-green);
+    color: var(--white);
+    padding: 55px 7% 20px;
+}
+
+.footer-container {
+    max-width: 1300px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    padding-bottom: 40px;
+}
+
+.footer-brand h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.footer-brand p,
+.footer-contact p {
+    max-width: 350px;
+    color: #D1D6D0;
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+.footer-contact h3 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    text-align: center;
+    padding-top: 20px;
+}
+
+.footer-bottom p {
+    color: #AAB5A9;
+    font-size: 12px;
+}
+
+
+/* ========================================
+   10. RESPONSIVE DESIGN
+======================================== */
+
+@media (max-width: 992px) {
+
+    .chambres-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .main-nav {
+        gap: 18px;
+    }
+
+    .hero-content h1 {
+        font-size: 42px;
+    }
+}
+
+@media (max-width: 650px) {
+
+    .site-header {
+        padding: 18px 5%;
+    }
+
+    .header-container {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .main-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .main-nav a {
+        font-size: 12px;
+    }
+
+    .chambres-hero {
+        min-height: 300px;
+    }
+
+    .hero-content h1 {
+        font-size: 34px;
+    }
+
+    .hero-content p {
+        font-size: 13px;
+    }
+
+    .chambres-section {
+        padding: 55px 5%;
+    }
+
+    .section-heading h2 {
+        font-size: 28px;
+    }
+
+    .chambres-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chambres-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .chambres-filters input,
+    .chambres-filters select,
+    .chambres-filters button {
+        width: 100%;
+    }
+
+    .footer-container {
+        flex-direction: column;
+    }
+}
+
+
+
+/* ========================================
+   PAGE DETAIL CHAMBRE
+======================================== */
+
+.detail-hero {
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 20px;
+
+    background:
+        linear-gradient(rgba(32, 45, 40, 0.75),
+                        rgba(32, 45, 40, 0.75)),
+        url("../images/hero-chambres.jpg") center/cover no-repeat;
+}
+
+.detail-hero-content {
+    color: var(--white);
+}
+
+.detail-hero-content span {
+    color: var(--light-sage);
+    font-size: 12px;
+    letter-spacing: 3px;
+}
+
+.detail-hero-content h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 43px;
+    font-weight: 500;
+    margin: 18px 0;
+}
+
+.detail-hero-content p {
+    color: #F0F0EC;
+    font-size: 14px;
+}
+
+/* SECTION PRINCIPALE */
+
+.room-detail-section {
+    background-color: var(--beige);
+    padding: 80px 7%;
+}
+
+.room-detail-container {
+    max-width: 1150px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 55px;
+    align-items: center;
+}
+
+/* IMAGE */
+
+.detail-image {
+    height: 470px;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: #E8EAE5;
+    box-shadow: 0 8px 25px rgba(32, 45, 40, 0.10);
+}
+
+.detail-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.room-no-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--grey);
+    font-size: 14px;
+}
+
+/* INFORMATIONS */
+
+.detail-information {
+    background-color: var(--white);
+    padding: 35px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(32, 45, 40, 0.06);
+}
+
+.rooms-subtitle {
+    color: var(--sage-green);
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.detail-information h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--dark-green);
+    font-size: 32px;
+    font-weight: 500;
+    margin: 15px 0;
+}
+
+.detail-description {
+    color: var(--grey);
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+.detail-divider {
+    height: 1px;
+    background-color: #EAECE7;
+    margin: 23px 0;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin: 18px 0;
+    font-size: 13px;
+}
+
+.detail-row span {
+    color: var(--grey);
+}
+
+.detail-row strong {
+    color: var(--dark-green);
+    text-align: right;
+}
+
+.detail-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.detail-price span {
+    color: var(--grey);
+    font-size: 13px;
+}
+
+.detail-price strong {
+    color: var(--main-green);
+    font-size: 24px;
+}
+
+/* BOUTONS */
+
+.detail-book-btn,
+.detail-unavailable {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    text-align: center;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--sage-green);
+    color: var(--white);
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    margin-bottom: 18px;
+}
+
+.detail-book-btn:hover {
+    background-color: var(--dark-green);
+}
+
+.detail-unavailable {
+    background-color: #BDBDBD;
+    cursor: not-allowed;
+}
+
+.detail-back {
+    display: block;
+    text-align: center;
+    color: var(--sage-green);
+    font-size: 13px;
+}
+
+.detail-back:hover {
+    color: var(--dark-green);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 850px) {
+    .room-detail-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .detail-image {
+        height: 350px;
+    }
+}
+
+@media (max-width: 600px) {
+    .room-detail-section {
+        padding: 45px 5%;
+    }
+
+    .detail-hero-content h1 {
+        font-size: 32px;
+    }
+
+    .detail-information {
+        padding: 23px;
+    }
+
+    .detail-information h2 {
+        font-size: 26px;
+    }
+
+    .detail-row {
+        font-size: 12px;
+    }
+}
+
+/* =====================================
+   VARIABLES
+===================================== */
+
+:root {
+    --dark-green: #20352D;
+    --main-green: #456B50;
+    --sage: #A8B6A4;
+    --light-sage: #E4EBDD;
+    --beige: #F8F5EF;
+    --white: #FFFFFF;
+    --text: #222222;
+    --grey: #777777;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text);
+    background: var(--white);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* =====================================
+   HEADER
+===================================== */
+
+.site-header {
+    height: 65px;
+    background: var(--dark-green);
+    padding: 0 7%;
+}
+
+.header-container {
+    max-width: 1400px;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 27px;
+    font-weight: 700;
+    color: var(--white);
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.main-nav a {
+    font-size: 13px;
+    color: var(--white);
+    transition: 0.3s;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    color: #C2D2BB;
+}
+
+.main-nav a.active {
+    border-bottom: 2px solid #A8B6A4;
+    padding-bottom: 8px;
+}
+
+.main-nav .reservation-btn {
+    border: 1px solid white;
+    border-radius: 30px;
+    padding: 10px 22px;
+    background: var(--sage);
+    color: var(--dark-green);
+    margin-left: 30px;
+}
+
+.reservation-btn span {
+    margin-left: 7px;
+}
+
+/* =====================================
+   INTRODUCTION
+===================================== */
+
+.rooms-intro {
+    background: var(--beige);
+    text-align: center;
+    padding: 55px 20px 45px;
+}
+
+.rooms-intro span,
+.rooms-heading span,
+.engagements-heading span {
+    color: var(--main-green);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.rooms-intro h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 500;
+    margin: 12px 0;
+    color: #171717;
+}
+
+.rooms-intro p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--grey);
+}
+
+/* =====================================
+   SECTION CHAMBRES
+===================================== */
+
+.rooms-section {
+    background: var(--white);
+    padding: 45px 5% 55px;
+}
+
+.rooms-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.rooms-heading h2,
+.engagements-heading h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 500;
+    margin: 8px 0;
+}
+
+.rooms-heading p {
+    color: var(--grey);
+    font-size: 13px;
+}
+
+/* =====================================
+   GRILLE DES CHAMBRES
+===================================== */
+
+.rooms-grid {
+    max-width: 1400px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px 30px;
+}
+
+.room-card {
+    background: #FCFBF8;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.room-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(32, 53, 45, 0.09);
+}
+
+/* IMAGE */
+
+.room-image {
+    height: 195px;
+    overflow: hidden;
+    border-radius: 13px;
+}
+
+.room-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.room-card:hover .room-image img {
+    transform: scale(1.04);
+}
+
+/* INFORMATIONS */
+
+.room-content {
+    padding: 15px 9px 12px;
+}
+
+.room-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.room-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+    font-size: 11px;
+    color: #444;
+}
+
+.room-status {
+    border-radius: 20px;
+    padding: 4px 9px;
+    background: #F0F4EC;
+    white-space: nowrap;
+}
+
+.room-status.available {
+    color: #237642;
+}
+
+.room-status.occupied {
+    color: #B87555;
+    background: #F8EEE8;
+}
+
+.room-status.maintenance {
+    color: #777777;
+    background: #EEEEEE;
+}
+
+/* BOUTON */
+
+.room-card-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 14px;
+}
+
+.room-reserve-btn {
+    min-width: 125px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 9px 18px;
+    border: 1px solid #E6E3DB;
+    border-radius: 30px;
+    font-size: 11px;
+    transition: 0.3s;
+}
+
+.room-reserve-btn:hover {
+    background: var(--dark-green);
+    color: white;
+    border-color: var(--dark-green);
+}
+
+.rooms-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px 20px;
+    color: var(--grey);
+}
+
+/* =====================================
+   NOS ENGAGEMENTS
+===================================== */
+
+.engagements-section {
+    background: var(--beige);
+    padding: 35px 5% 45px;
+}
+
+.engagements-heading {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.engagements-grid {
+    max-width: 1250px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.engagement-item {
+    text-align: center;
+    padding: 10px 20px;
+    border-right: 1px solid #DADBD4;
+}
+
+.engagement-item:last-child {
+    border-right: none;
+}
+
+.engagement-icon {
+    width: 58px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: var(--light-sage);
+    font-size: 27px;
+    color: var(--dark-green);
+}
+
+.engagement-item h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.engagement-item p {
+    font-size: 12px;
+    color: var(--grey);
+    line-height: 1.8;
+}
+
+/* =====================================
+   FOOTER
+===================================== */
+
+.site-footer {
+    background: var(--dark-green);
+    color: white;
+    padding: 45px 7% 20px;
+}
+
+.footer-container {
+    max-width: 1300px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    padding-bottom: 30px;
+}
+
+.footer-brand h2 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 12px;
+}
+
+.footer-brand span {
+    color: var(--sage);
+}
+
+.footer-brand p,
+.footer-contact p {
+    color: #D1D6D0;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.footer-bottom {
+    border-top: 1px solid #526158;
+    text-align: center;
+    padding-top: 18px;
+    color: #AAB5A9;
+    font-size: 11px;
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 1000px) {
+    .rooms-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .main-nav {
+        gap: 15px;
+    }
+
+    .main-nav .reservation-btn {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 650px) {
+    .site-header {
+        height: auto;
+        padding: 15px 5%;
+    }
+
+    .header-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .main-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 14px;
+    }
+
+    .main-nav a {
+        font-size: 11px;
+    }
+
+    .rooms-intro h1 {
+        font-size: 36px;
+    }
+
+    .rooms-heading h2,
+    .engagements-heading h2 {
+        font-size: 27px;
+    }
+
+    .rooms-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .room-image {
+        height: 220px;
+    }
+
+    .engagements-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px 0;
+    }
+
+    .engagement-item:nth-child(2) {
+        border-right: none;
+    }
+
+    .footer-container {
+        flex-direction: column;
+    }
+}
+

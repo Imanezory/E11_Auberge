@@ -1,0 +1,101 @@
+
+{% extends 'chambres/base.html' %}
+{% load static %}
+
+{% block title %}Chambre {{ chambre.numChambre }} | Auberge{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="detail-hero">
+    <div class="detail-hero-content">
+        <span>NOTRE AUBERGE</span>
+        <h1>Découvrez votre espace</h1>
+        <p>Le confort et la tranquillité au cœur de votre séjour.</p>
+    </div>
+</section>
+
+<!-- DETAILS DE LA CHAMBRE -->
+<section class="room-detail-section">
+
+    <div class="room-detail-container">
+
+        <!-- IMAGE -->
+        <div class="detail-image">
+
+            {% if chambre.image %}
+                <img src="{{ chambre.image.url }}"
+                     alt="Chambre {{ chambre.numChambre }}">
+            {% else %}
+                <div class="room-no-image">
+                    <p>Photo non disponible</p>
+                </div>
+            {% endif %}
+
+        </div>
+
+        <!-- INFORMATIONS -->
+        <div class="detail-information">
+
+            <span class="rooms-subtitle">
+                CHAMBRE N° {{ chambre.numChambre }}
+            </span>
+
+            <h2>Chambre {{ chambre.type }}</h2>
+
+            <p class="detail-description">
+                Profitez d'un espace agréable et soigneusement
+                aménagé pour vous garantir un séjour confortable.
+            </p>
+
+            <div class="detail-divider"></div>
+
+            <div class="detail-row">
+                <span>Type de chambre</span>
+                <strong>{{ chambre.type }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Capacité</span>
+                <strong>{{ chambre.capacite }} personne(s)</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Numéro</span>
+                <strong>{{ chambre.numChambre }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Disponibilité</span>
+                <strong>{{ chambre.get_statut_display }}</strong>
+            </div>
+
+            <div class="detail-divider"></div>
+
+            <div class="detail-price">
+                <span>Tarif par nuit</span>
+                <strong>{{ chambre.prix }} DH</strong>
+            </div>
+
+            {% if chambre.statut == 'disponible' %}
+                <a href="/#reservation" class="detail-book-btn">
+                    Réserver cette chambre →
+                </a>
+            {% else %}
+                <button class="detail-unavailable" disabled>
+                    Chambre non disponible
+                </button>
+            {% endif %}
+
+            <a href="{% url 'chambres:liste' %}"
+               class="detail-back">
+                ← Retour aux chambres
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
