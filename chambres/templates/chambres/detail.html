@@ -1,8 +1,12 @@
 
-{% extends 'chambres/base.html' %}
+
+{% extends 'base.html' %}
 {% load static %}
 
 {% block title %}Chambre {{ chambre.numChambre }} | Auberge{% endblock %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'chambres/css/chambres.css' %}">
+{% endblock %}
 
 {% block content %}
 
