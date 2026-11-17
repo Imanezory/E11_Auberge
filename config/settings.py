@@ -2,6 +2,7 @@
 """
 Django settings for config project.
 """
+
 import os
 from pathlib import Path
 
@@ -13,7 +14,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Applications
+# ==============================
+# APPLICATIONS
+# ==============================
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -31,7 +35,10 @@ INSTALLED_APPS = [
     'factures',
 ]
 
-# Middleware
+# ==============================
+# MIDDLEWARE
+# ==============================
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -44,7 +51,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'config.urls'
 
-# Templates
+# ==============================
+# TEMPLATES
+# ==============================
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -62,7 +72,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# Database
+# ==============================
+# DATABASE MYSQL
+# ==============================
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -74,7 +87,10 @@ DATABASES = {
     }
 }
 
-# Password validation
+# ==============================
+# PASSWORD VALIDATION
+# ==============================
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -90,25 +106,48 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
+# ==============================
+# INTERNATIONALIZATION
+# ==============================
+
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files
+# ==============================
+# STATIC FILES
+# ==============================
+
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-# Media files
+# ==============================
+# MEDIA FILES
+# ==============================
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Custom user
+# ==============================
+# CUSTOM USER
+# ==============================
+
 AUTH_USER_MODEL = 'accueil.Utilisateur'
 
-# Default primary key
+# ==============================
+# EMAIL - TEST LOCAL
+# ==============================
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+DEFAULT_FROM_EMAIL = "Auberge <noreply@auberge.local>"
+
+# ==============================
+# DEFAULT PRIMARY KEY
+# ==============================
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

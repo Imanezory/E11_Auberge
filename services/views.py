@@ -1,35 +1,27 @@
 
 from django.shortcuts import render, get_object_or_404, redirect
+
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+
 from .models import Service
 from .forms import ReservationServiceForm
+from .serializers import ServiceSerializer
 
 
-# ===== IMAGES DES SERVICES =====
-IMAGES_SERVICES = {
-   "Wi-Fi haut débit": "wifi.jpg",
-        "Réception 24h/24": "reception.jpg",
-        "Parking sécurisé": "parking.jpg",
-        "Petit-déjeuner": "breakfast.jpg",
-        "Restauration": "restauration.jpg",
-        "Navette aéroport": "transport.jpg",
-        "Blanchisserie": "blanchisserie.png",
-}
+# ==========================================
+# AFFICHAGE DES SERVICES
+# ==========================================
 
-
-# ===== AFFICHAGE DES SERVICES =====
 def liste_services(request):
 
-    services_gratuits = list(
-        Service.objects.filter(prix=0)
+    services_gratuits = Service.objects.filter(
+        prix=0
     )
 
-    services_payants = list(
-        Service.objects.filter(prix__gt=0)
+    services_payants = Service.objects.filter(
+        prix__gt=0
     )
-
-    # Associer chaque service à son image
-    for service in services_gratuits + services_payants:
-        service.image_nom = IMAGES_SERVICES.get(service.nom)
 
     context = {
         "services_gratuits": services_gratuits,
@@ -43,10 +35,44 @@ def liste_services(request):
     )
 
 
-# ===== RESERVATION DIRECTE D'UN SERVICE =====
+# ==========================================
+# DETAILS D'UN SERVICE + CAROUSEL
+# ==========================================
+
+def detail_service(request, service_id):
+
+    # Récupérer le service sélectionné
+    service = get_object_or_404(
+        Service,
+        id=service_id
+    )
+
+    # Sélectionner 8 services aléatoires
+    # sans afficher le service actuel
+    autres_services = (
+        Service.objects
+        .exclude(id=service.id)
+        .order_by("?")[:8]
+    )
+
+    context = {
+        "service": service,
+        "autres_services": autres_services,
+    }
+
+    return render(
+        request,
+        "services/detail_service.html",
+        context
+    )
+
+
+# ==========================================
+# RESERVATION DIRECTE D'UN SERVICE
+# ==========================================
+
 def reserver_service(request, service_id):
 
-    # Récupérer le service choisi
     service = get_object_or_404(
         Service,
         id=service_id,
@@ -61,13 +87,10 @@ def reserver_service(request, service_id):
 
             reservation = form.save(commit=False)
 
-            # Associer le service
             reservation.service = service
 
-            # Confirmation automatique
             reservation.statut = "confirmee"
 
-            # Enregistrement dans MySQL
             reservation.save()
 
             return redirect("confirmation_service")
@@ -87,10 +110,26 @@ def reserver_service(request, service_id):
     )
 
 
-# ===== PAGE DE CONFIRMATION =====
+# ==========================================
+# CONFIRMATION DE RESERVATION
+# ==========================================
+
 def confirmation_service(request):
 
     return render(
         request,
         "services/confirmation_service.html"
     )
+
+
+# ==========================================
+# REST API - SERVICES
+# ==========================================
+
+class ServiceViewSet(viewsets.ModelViewSet):
+
+    queryset = Service.objects.all().order_by("id")
+
+    serializer_class = ServiceSerializer
+
+    permission_classes = [IsAuthenticatedOrReadOnly]
