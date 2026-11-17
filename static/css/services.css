@@ -1,0 +1,483 @@
+
+/* ========== GENERAL ========== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #FFFFFF;
+    color: #302B26;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+/* ========== NAVBAR ========== */
+
+.auberge-header {
+    background: linear-gradient(110deg, #202D28, #304036);
+    width: 100%;
+    position: relative;
+    z-index: 100;
+}
+
+.auberge-nav {
+    max-width: 1280px;
+    min-height: 70px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.auberge-logo {
+    color: #FFFFFF;
+    font-family: 'Playfair Display', serif;
+    font-size: 29px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.auberge-logo span,
+.footer h3 span {
+    color: #B6C5A9;
+}
+
+.auberge-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.auberge-links a {
+    color: #F4F4F1;
+    font-size: 13px;
+    transition: color 0.3s;
+}
+
+.auberge-links a:hover,
+.auberge-links a.active {
+    color: #C5D6B8;
+}
+
+.auberge-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.auberge-reserver {
+    background: #82977C;
+    border: 3px double #FFFFFF;
+    border-radius: 30px;
+    color: #FFFFFF;
+    padding: 9px 22px;
+    font-size: 13px;
+    white-space: nowrap;
+    transition: background 0.3s;
+}
+
+.auberge-reserver:hover {
+    background: #657B61;
+}
+
+.auberge-reserver span {
+    margin-left: 8px;
+}
+
+.auberge-menu-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    color: #FFFFFF;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+/* ========== HERO ========== */
+
+.services-hero {
+    background: #F8F7F4;
+    text-align: center;
+    padding: 90px 20px 95px;
+}
+
+.subtitle {
+    display: inline-block;
+    color: #82977C;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+}
+
+.services-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 6vw, 62px);
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.services-hero p {
+    color: #777777;
+    font-size: 14px;
+    line-height: 1.9;
+    max-width: 570px;
+    margin: 0 auto;
+}
+
+/* ========== SECTIONS ========== */
+
+.services-section {
+    padding: 90px 25px 105px;
+}
+
+.paid-section {
+    background: #FFFFFF;
+}
+
+.free-section {
+    background: #FAF8F5;
+}
+
+.section-heading {
+    text-align: center;
+    margin: 0 auto 60px;
+    max-width: 650px;
+}
+
+.section-heading h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 44px);
+    font-weight: 400;
+    margin-bottom: 16px;
+}
+
+.section-heading p {
+    color: #858585;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+/* ========== SERVICES GRID ========== */
+
+.services-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 55px 30px;
+}
+
+/* ========== CARTE SERVICE ========== */
+
+.service-card {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+/* ========== IMAGE ========== */
+
+.service-image-wrapper {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 32px;
+    background: #ECEAE5;
+}
+
+.service-image {
+    width: 100%;
+    height: 265px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.service-card:hover .service-image {
+    transform: scale(1.045);
+}
+
+/* ========== CONTENU ========== */
+
+.service-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+    padding: 23px 0 0;
+}
+
+.service-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    color: #999999;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+.meta-separator {
+    color: #CCCCCC;
+}
+
+.service-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 25px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #302B26;
+    margin-bottom: 14px;
+}
+
+.service-content p {
+    color: #777777;
+    font-size: 13px;
+    line-height: 1.9;
+    margin-bottom: 25px;
+}
+
+/* ========== BOUTON RESERVER ========== */
+
+.service-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+
+    margin-top: auto;
+    padding: 13px 29px;
+
+    background: #FFFFFF;
+    color: #302B26;
+    border: 1px solid #E5E5E5;
+    border-radius: 35px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+
+    transition: all 0.3s ease;
+}
+
+.service-btn span {
+    font-size: 20px;
+    line-height: 1;
+    transition: transform 0.3s ease;
+}
+
+.service-btn:hover {
+    background: #455B45;
+    color: #FFFFFF;
+    border-color: #455B45;
+}
+
+.service-btn:hover span {
+    transform: translateX(5px);
+}
+
+/* ========== SERVICES GRATUITS ========== */
+
+.free-label {
+    color: #455B45;
+    font-weight: 500;
+}
+
+.included-label {
+    margin-top: auto;
+    color: #455B45;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* ========== EMPTY MESSAGE ========== */
+
+.empty-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #888888;
+    font-size: 14px;
+    padding: 30px;
+}
+
+/* ========== SECURITE ENFANTS ========== */
+
+.children-section {
+    padding: 60px 25px;
+    background: #FFFFFF;
+}
+
+.children-warning {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 28px 35px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    background: #F8F5EF;
+    border-left: 4px solid #B87555;
+    border-radius: 8px;
+}
+
+.warning-icon {
+    font-size: 27px;
+    color: #B87555;
+}
+
+.children-warning h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.children-warning p {
+    color: #777777;
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+/* ========== FOOTER ========== */
+
+.footer {
+    background: #202D28;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 55px 20px 35px;
+}
+
+.footer h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 29px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.footer > p {
+    color: #D1D6D0;
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+.footer .copyright {
+    margin-top: 30px;
+    color: #AAB5A9;
+    font-size: 11px;
+}
+
+/* ========== RESPONSIVE TABLETTE ========== */
+
+@media (max-width: 1000px) {
+    .services-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .auberge-links {
+        gap: 15px;
+    }
+}
+
+/* ========== RESPONSIVE MOBILE ========== */
+
+@media (max-width: 760px) {
+    .auberge-nav {
+        min-height: 68px;
+    }
+
+    .auberge-menu-btn {
+        display: block;
+    }
+
+    .auberge-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #202D28;
+        padding: 22px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        box-shadow: 0 12px 20px rgba(0,0,0,0.12);
+    }
+
+    .auberge-links.is-open {
+        display: flex;
+    }
+
+    .auberge-reserver {
+        padding: 8px 15px;
+        font-size: 12px;
+    }
+
+    .services-hero {
+        padding: 70px 20px;
+    }
+
+    .services-section {
+        padding: 65px 20px 75px;
+    }
+
+    .section-heading {
+        margin-bottom: 40px;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 45px;
+        max-width: 460px;
+    }
+
+    .service-image {
+        height: 260px;
+    }
+
+    .service-image-wrapper {
+        border-radius: 27px;
+    }
+
+    .service-content h3 {
+        font-size: 24px;
+    }
+
+    .children-warning {
+        padding: 22px;
+        gap: 14px;
+    }
+
+    .children-warning h3 {
+        font-size: 19px;
+    }
+}
+
+@media (max-width: 380px) {
+    .auberge-logo {
+        font-size: 25px;
+    }
+
+    .auberge-reserver {
+        padding: 7px 10px;
+    }
+
+    .service-image {
+        height: 225px;
+    }
+}

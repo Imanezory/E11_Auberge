@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Se connecter | Auberge</title>
+
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="login-page">
+
+        <!-- PARTIE GAUCHE -->
+        <section class="login-image">
+
+            <div class="brand">Auberge</div>
+
+            <div class="welcome">
+                <span>AUBERGE</span>
+
+                <h1>Bienvenue</h1>
+
+                <p>
+                    Connectez-vous pour gérer vos réservations
+                    et profiter de nos services.
+                </p>
+            </div>
+
+        </section>
+
+        <!-- PARTIE DROITE -->
+        <section class="login-content">
+
+            <div class="login-box">
+
+                <div class="eyebrow">
+                    ✦ ESPACE CLIENT ✦
+                </div>
+
+                <h2>Se Connecter</h2>
+
+                <p class="subtitle">
+                    Accédez à votre compte Auberge
+                </p>
+
+                <form method="POST" action="{% url 'login' %}">
+                    {% csrf_token %}
+
+                    {% if form.errors %}
+                    <p class="error">
+                        Identifiant ou mot de passe incorrect.
+                    </p>
+                    {% endif %}
+
+                    <label for="id_username">Identifiant</label>
+                    <input type="text" id="id_username" name="username" placeholder="Votre identifiant"
+                        autocomplete="username" required>
+
+                    <label for="id_password">Mot de passe</label>
+                    <input type="password" id="id_password" name="password" placeholder="Votre mot de passe"
+                        autocomplete="current-password" required>
+
+                    <button type="submit">
+                        Se connecter →
+                    </button>
+                </form>
+
+                <p style="text-align: center; font-size: 12px; color: #777; margin-top: 25px;">
+                    Vous n'avez pas encore de compte ?
+                    <a href="{% url 'inscription' %}"
+                        style="color: #455B45; font-size: 12px; font-weight: 600; text-decoration: none;">
+                        S'inscrire
+                    </a>
+                </p>
+
+
+            </div>
+
+        </section>
+
+    </div>
+
+</body>
+
+</html>

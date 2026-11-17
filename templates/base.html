@@ -1,0 +1,75 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Auberge{% endblock %}</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- CSS global -->
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+
+    <!-- CSS spécifique à chaque page -->
+    {% block extra_css %}{% endblock %}
+
+</head>
+
+<body class="bg-[#F8F5EF] text-[#302B26] font-sans">
+
+    <!-- HEADER COMMUN -->
+    {% include 'header.html' %}
+
+    <!-- Espace sous le header pour les pages internes -->
+    {% block header_space %}
+    <div class="h-24 bg-[#202D28]"></div>
+    {% endblock %}
+
+    <!-- CONTENU PRINCIPAL -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- FOOTER COMMUN -->
+    {% include 'footer.html' %}
+
+    <!-- MENU MOBILE -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const menuBtn = document.getElementById("menu-btn");
+            const mobileMenu = document.getElementById("mobile-menu");
+
+            if (menuBtn && mobileMenu) {
+
+                menuBtn.addEventListener("click", function () {
+
+                    const isHidden = mobileMenu.classList.toggle("hidden");
+
+                    menuBtn.setAttribute(
+                        "aria-expanded",
+                        String(!isHidden)
+                    );
+
+                });
+
+            }
+
+        });
+    </script>
+
+    <!-- JavaScript spécifique à chaque page -->
+    {% block extra_js %}{% endblock %}
+
+</body>
+</html>

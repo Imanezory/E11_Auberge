@@ -1,0 +1,237 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos Services | Auberge</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/services.css' %}">
+</head>
+
+<body>
+
+<!-- ========== NAVBAR ========== -->
+<header class="auberge-header">
+    <nav class="auberge-nav">
+
+        <a href="/" class="auberge-logo">
+            Auberge<span>.</span>
+        </a>
+
+        <div class="auberge-links" id="auberge-links">
+            <a href="/">Accueil</a>
+            <a href="/#chambres">Chambres</a>
+            <a href="{% url 'liste_services' %}" class="active">
+                Services
+            </a>
+            <a href="/#apropos">À propos</a>
+            <a href="/#contact">Contact</a>
+        </div>
+
+        <div class="auberge-actions">
+            <a href="/#reservation" class="auberge-reserver">
+                Réserver <span>→</span>
+            </a>
+
+            <button
+                class="auberge-menu-btn"
+                id="auberge-menu-btn"
+                type="button"
+                aria-label="Ouvrir le menu"
+                aria-expanded="false"
+                aria-controls="auberge-links">
+                ☰
+            </button>
+        </div>
+
+    </nav>
+</header>
+
+<!-- ========== HERO ========== -->
+<section class="services-hero">
+    <span class="subtitle">VOTRE CONFORT, NOTRE PRIORITÉ</span>
+    <h1>Nos Services</h1>
+    <p>
+        Découvrez des expériences uniques et des prestations
+        pensées pour votre confort et votre bien-être.
+    </p>
+</section>
+
+<!-- ========== SERVICES PAYANTS ========== -->
+<section class="services-section paid-section">
+
+    <div class="section-heading">
+        <span class="subtitle">DES EXPÉRIENCES À DÉCOUVRIR</span>
+        <h2>Services Payants</h2>
+        <p>
+            Profitez de nos prestations exclusives,
+            même sans réservation de chambre.
+        </p>
+    </div>
+
+    <div class="services-grid">
+
+        {% for service in services_payants %}
+
+        <article class="service-card">
+
+            {% if service.image_nom %}
+            <div class="service-image-wrapper">
+                <img
+                    src="{% static 'images/services/' %}{{ service.image_nom }}"
+                    alt="{{ service.nom }}"
+                    class="service-image"
+                    loading="lazy">
+            </div>
+            {% endif %}
+
+            <div class="service-content">
+
+                <div class="service-meta">
+                    <span>✧ {{ service.type }}</span>
+                    <span class="meta-separator">|</span>
+                    <span>
+                        {{ service.prix|floatformat:2 }} DH
+                    </span>
+                </div>
+
+                <h3>{{ service.nom }}</h3>
+
+                <p>{{ service.description }}</p>
+
+                <a
+                    href="{% url 'reserver_service' service.id %}"
+                    class="service-btn">
+                    Réserver <span>→</span>
+                </a>
+
+            </div>
+
+        </article>
+
+        {% empty %}
+        <p class="empty-message">
+            Aucun service payant disponible pour le moment.
+        </p>
+        {% endfor %}
+
+    </div>
+</section>
+
+<!-- ========== SERVICES GRATUITS ========== -->
+<section class="services-section free-section">
+
+    <div class="section-heading">
+        <span class="subtitle">INCLUS DANS VOTRE SÉJOUR</span>
+        <h2>Services Gratuits</h2>
+        <p>
+            Profitez de nos services offerts pour rendre
+            votre séjour encore plus agréable.
+        </p>
+    </div>
+
+    <div class="services-grid">
+
+        {% for service in services_gratuits %}
+
+        <article class="service-card">
+
+            {% if service.image_nom %}
+            <div class="service-image-wrapper">
+                <img
+                    src="{% static 'images/services/' %}{{ service.image_nom }}"
+                    alt="{{ service.nom }}"
+                    class="service-image"
+                    loading="lazy">
+            </div>
+            {% endif %}
+
+            <div class="service-content">
+
+                <div class="service-meta">
+                    <span>✧ {{ service.type }}</span>
+                    <span class="meta-separator">|</span>
+                    <span class="free-label">Gratuit</span>
+                </div>
+
+                <h3>{{ service.nom }}</h3>
+
+                <p>{{ service.description }}</p>
+
+                <span class="included-label">
+                    ✓ Inclus dans votre séjour
+                </span>
+
+            </div>
+
+        </article>
+
+        {% empty %}
+        <p class="empty-message">
+            Aucun service gratuit disponible pour le moment.
+        </p>
+        {% endfor %}
+
+    </div>
+</section>
+
+<!-- ========== SECURITE ENFANTS ========== -->
+<section class="children-section">
+    <div class="children-warning">
+
+        <span class="warning-icon">⚠</span>
+
+        <div>
+            <h3>Informations importantes — Sécurité des enfants</h3>
+            <p>
+                Les enfants doivent être accompagnés et surveillés
+                par un adulte responsable dans les espaces communs,
+                notamment à proximité de la piscine.
+                L'accès à la piscine sans surveillance d'un adulte
+                est interdit aux enfants.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer">
+    <h3>AUBERGE<span>.</span></h3>
+
+    <p>
+        Une expérience de séjour unique,
+        alliant confort et élégance.
+    </p>
+
+    <p class="copyright">
+        © 2026 Auberge. Tous droits réservés.
+    </p>
+</footer>
+
+<!-- ========== MENU MOBILE ========== -->
+<script>
+    const menuBtn = document.getElementById("auberge-menu-btn");
+    const mobileMenu = document.getElementById("auberge-links");
+
+    if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener("click", () => {
+            const isOpen = mobileMenu.classList.toggle("is-open");
+            menuBtn.setAttribute("aria-expanded", String(isOpen));
+        });
+
+        mobileMenu.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", () => {
+                mobileMenu.classList.remove("is-open");
+                menuBtn.setAttribute("aria-expanded", "false");
+            });
+        });
+    }
+</script>
+
+</body>
+</html>
