@@ -4,8 +4,30 @@
 {% block title %}Auberge | Accueil{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/carousel.css' %}">
 <style>
+  /* Défilement doux pour tous les liens internes de l'accueil */
+  html { scroll-behavior: smooth; }
+  #apropos, #chambres, #services, #equipements, #galerie, #reservation, #contact {
+    scroll-margin-top: 96px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  /* Hero animé : Tailwind pour la mise en page, CSS pour les keyframes */
+  #accueil-hero .hero-photo { opacity: 0; animation: accueilCrossfade 18s infinite; transform: scale(1); }
+  #accueil-hero .hero-photo:nth-child(1) { animation-delay: 0s; }
+  #accueil-hero .hero-photo:nth-child(2) { animation-delay: 6s; }
+  #accueil-hero .hero-photo:nth-child(3) { animation-delay: 12s; }
+  @keyframes accueilCrossfade {
+    0% { opacity: 0; transform: scale(1); }
+    5%, 30% { opacity: 1; }
+    36%, 100% { opacity: 0; transform: scale(1.08); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #accueil-hero .hero-photo { animation: none; transform: none; }
+    #accueil-hero .hero-photo:first-child { opacity: 1; }
+  }
   #galerie .gallery-cell { position: relative; overflow: hidden; isolation: isolate; background: #455B45; }
   #galerie .gallery-cell > img { display: block; width: 100%; height: 100%; object-fit: cover; }
   #galerie .gallery-cell > img.gallery-incoming { position: absolute; inset: 0; z-index: 2; transition: transform 1100ms cubic-bezier(.22,1,.36,1); }
@@ -22,103 +44,60 @@
 
 {% block content %}
 
-    <!-- ================= HERO ================= -->
+<!-- ================= HERO ACCUEIL PREMIUM ================= -->
+<section id="accueil-hero" aria-label="Bienvenue à l'Auberge"
+  class="relative isolate flex min-h-[680px] items-center justify-center overflow-hidden bg-[#202D28] px-5 py-28 text-center text-white md:min-h-[760px] lg:min-h-[820px]">
 
-    <!-- HERO CAROUSEL -->
-   
-{% load static %}
-
-<section class="auberge-slider" id="auberge-slider">
-
-  <div class="auberge-slider__inner">
-
-    <!-- TEXTE À GAUCHE -->
-    <div class="auberge-slider__content">
-      <span class="auberge-slider__eyebrow">
-        BIENVENUE À L'AUBERGE
-      </span>
-
-      <div class="auberge-slider__text" id="slide-text">
-        <span class="auberge-slider__number" id="slide-number">01 / 06</span>
-
-        <h1 id="slide-title">Notre Auberge</h1>
-
-        <p id="slide-description">
-          Découvrez un lieu d'exception où le charme
-          et le confort se rencontrent.
-        </p>
-
-        <a href="#chambres" class="auberge-slider__button">
-          Découvrir nos espaces
-          <span aria-hidden="true">→</span>
-        </a>
-      </div>
-
-      <div class="auberge-slider__controls">
-        <button type="button" id="slide-prev" aria-label="Image précédente">
-          ←
-        </button>
-
-        <div class="auberge-slider__progress">
-          <div id="slide-progress"></div>
-        </div>
-
-        <button type="button" id="slide-next" aria-label="Image suivante">
-          →
-        </button>
-      </div>
-    </div>
-
-    <!-- IMAGES À DROITE -->
-    <div class="auberge-slider__visual">
-      <div class="auberge-slider__cards" id="slide-cards">
-
-        <div class="auberge-slider__card is-active">
-          <img
-            src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&q=85"
-            alt="Notre Auberge"
-          >
-        </div>
-
-        <div class="auberge-slider__card">
-          <img
-            src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=900&q=85"
-            alt="Nos Chambres"
-          >
-        </div>
-
-        <div class="auberge-slider__card">
-          <img
-            src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900&q=85"
-            alt="La Piscine"
-          >
-        </div>
-
-        <div class="auberge-slider__card">
-          <img
-            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=85"
-            alt="Notre Restaurant"
-          >
-        </div>
-
-        <div class="auberge-slider__card">
-          <img
-            src="{% static 'images/spa.jpg' %}"
-            alt="Notre Spa"
-          >
-        </div>
-
-        <div class="auberge-slider__card">
-          <img
-            src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=900&q=85"
-            alt="Notre Jardin"
-          >
-        </div>
-
-      </div>
-    </div>
-
+  <!-- Trois photographies avec fondu et zoom automatiques -->
+  <div class="absolute inset-0 -z-20" aria-hidden="true">
+    <img class="hero-photo absolute inset-0 h-full w-full object-cover"
+      src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1800&q=85"
+      alt="" fetchpriority="high">
+    <img class="hero-photo absolute inset-0 h-full w-full object-cover"
+      src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1800&q=85"
+      alt="" loading="lazy">
+    <img class="hero-photo absolute inset-0 h-full w-full object-cover"
+      src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1800&q=85"
+      alt="" loading="lazy">
   </div>
+
+  <div class="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-[#14231C]/90 via-[#14231C]/55 to-[#14231C]/85"></div>
+  <div class="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#202D28]/70 to-transparent"></div>
+
+  <div class="relative z-10 mx-auto max-w-5xl">
+    <div class="mb-7 flex items-center justify-center gap-4">
+      <span class="h-px w-8 bg-[#E8DCC8] sm:w-12"></span>
+      <span class="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#E8DCC8] sm:text-xs sm:tracking-[0.35em]">BIENVENUE À L'AUBERGE</span>
+      <span class="h-px w-8 bg-[#E8DCC8] sm:w-12"></span>
+    </div>
+
+    <h1 class="font-serif text-[clamp(2.8rem,7vw,5.5rem)] font-normal leading-[1.13] tracking-tight">
+      L'élégance d'un séjour,
+      <span class="mt-2 block italic text-[#E8DCC8]">le charme d'un souvenir.</span>
+    </h1>
+
+    <p class="mx-auto mt-8 max-w-2xl text-sm leading-8 text-white/85 sm:text-base">
+      Un havre de paix où l'authenticité, le confort et l'hospitalité
+      se rencontrent pour vous offrir des instants inoubliables.
+    </p>
+
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+      <a href="#chambres" class="group inline-flex items-center gap-6 bg-[#E8DCC8] px-7 py-4 text-sm font-semibold text-[#302B26] transition duration-300 hover:-translate-y-1 hover:bg-white">
+        Découvrir nos chambres
+        <span aria-hidden="true" class="text-lg transition-transform duration-300 group-hover:translate-x-1">→</span>
+      </a>
+      <a href="#services" class="group inline-flex items-center gap-6 border border-white/70 bg-white/10 px-7 py-4 text-sm font-semibold text-white backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-white/20">
+        Explorer nos services
+        <span aria-hidden="true" class="text-lg transition-transform duration-300 group-hover:translate-x-1">→</span>
+      </a>
+    </div>
+  </div>
+
+  <a href="#apropos" aria-label="Découvrir notre auberge"
+    class="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 text-[#E8DCC8]">
+    <span class="text-[10px] font-semibold tracking-[0.3em]">DÉCOUVRIR</span>
+    <span class="h-10 w-px bg-[#E8DCC8]/70"></span>
+  </a>
 </section>
 
 <!-- ================= À PROPOS ================= -->
@@ -682,7 +661,6 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/carousel.js' %}" defer></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {

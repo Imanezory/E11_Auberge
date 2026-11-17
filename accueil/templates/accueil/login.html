@@ -1,94 +1,175 @@
+
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="fr">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block title %}Se connecter | Auberge{% endblock %}
 
-    <title>Se connecter | Auberge</title>
+{% block header_space %}
+<div class="h-24 bg-[#202D28]"></div>
+{% endblock %}
 
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% block content %}
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap"
-        rel="stylesheet">
-</head>
+<div class="flex min-h-[calc(100vh-96px)] flex-col lg:flex-row">
 
-<body>
+    <!-- PARTIE GAUCHE -->
+    <section class="relative flex min-h-[350px] w-full
+                    items-center justify-center overflow-hidden
+                    bg-[#202D28] px-8 py-16
+                    lg:min-h-[calc(100vh-96px)] lg:w-1/2 lg:px-16">
 
-    <div class="login-page">
+        <img
+            src="{% static 'images/login-bg.jpg' %}"
+            alt="Auberge"
+            class="absolute inset-0 h-full w-full object-cover">
 
-        <!-- PARTIE GAUCHE -->
-        <section class="login-image">
+        <div class="absolute inset-0 bg-[#15241D]/60"></div>
 
-            <div class="brand">Auberge</div>
+        <div class="relative z-10 max-w-lg text-white">
 
-            <div class="welcome">
-                <span>AUBERGE</span>
+            <span class="mb-6 block text-xs font-semibold
+                         uppercase tracking-[0.4em] text-[#E8DCC8]">
+                AUBERGE
+            </span>
 
-                <h1>Bienvenue</h1>
+            <h1 class="mb-7 font-serif text-5xl
+                       font-semibold leading-tight md:text-6xl">
+                Bienvenue
+            </h1>
 
-                <p>
-                    Connectez-vous pour gérer vos réservations
-                    et profiter de nos services.
-                </p>
+            <p class="max-w-md text-base leading-8 text-white/90">
+                Connectez-vous pour gérer vos réservations
+                et profiter de nos services.
+            </p>
+
+        </div>
+    </section>
+
+    <!-- PARTIE DROITE -->
+    <section class="flex w-full items-center justify-center
+                    bg-[#F8F5EF] px-6 py-16
+                    lg:w-1/2 lg:px-16">
+
+        <div class="w-full max-w-md">
+
+            <div class="mb-5 text-center text-xs font-semibold
+                        uppercase tracking-[0.3em] text-[#71816F]">
+                ✦ ESPACE CLIENT ✦
             </div>
 
-        </section>
+            <h2 class="mb-3 text-center font-serif
+                       text-4xl font-semibold text-[#302B26]">
+                Se connecter
+            </h2>
 
-        <!-- PARTIE DROITE -->
-        <section class="login-content">
+            <p class="mb-10 text-center text-sm text-[#77736D]">
+                Accédez à votre compte Auberge
+            </p>
 
-            <div class="login-box">
+            <!-- FORMULAIRE -->
+            <form method="POST"
+                  action="{% url 'login' %}"
+                  class="space-y-6">
 
-                <div class="eyebrow">
-                    ✦ ESPACE CLIENT ✦
+                {% csrf_token %}
+
+                <!-- MESSAGES D'ERREUR -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="rounded-lg border border-red-200
+                                    bg-red-50 px-4 py-3 text-sm text-red-700">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <!-- ADRESSE EMAIL -->
+                <div>
+                    <label for="id_email"
+                           class="mb-2 block text-sm
+                                  font-medium text-[#302B26]">
+                        Adresse e-mail
+                    </label>
+
+                    <input
+                        type="email"
+                        id="id_email"
+                        name="email"
+                        placeholder="exemple@gmail.com"
+                        autocomplete="email"
+                        value="{{ request.POST.email|default:'' }}"
+                        required
+                        class="w-full rounded-lg border
+                               border-[#DDD8CF] bg-white
+                               px-4 py-3.5 text-sm text-[#302B26]
+                               outline-none transition duration-200
+                               placeholder:text-[#A5A09A]
+                               focus:border-[#455B45]
+                               focus:ring-2 focus:ring-[#455B45]/15">
                 </div>
 
-                <h2>Se Connecter</h2>
+                <!-- MOT DE PASSE -->
+                <div>
+                    <label for="id_password"
+                           class="mb-2 block text-sm
+                                  font-medium text-[#302B26]">
+                        Mot de passe
+                    </label>
 
-                <p class="subtitle">
-                    Accédez à votre compte Auberge
-                </p>
+                    <input
+                        type="password"
+                        id="id_password"
+                        name="password"
+                        placeholder="Votre mot de passe"
+                        autocomplete="current-password"
+                        required
+                        class="w-full rounded-lg border
+                               border-[#DDD8CF] bg-white
+                               px-4 py-3.5 text-sm text-[#302B26]
+                               outline-none transition duration-200
+                               placeholder:text-[#A5A09A]
+                               focus:border-[#455B45]
+                               focus:ring-2 focus:ring-[#455B45]/15">
 
-                <form method="POST" action="{% url 'login' %}">
-                    {% csrf_token %}
+                    <!-- MOT DE PASSE OUBLIÉ -->
+                    <div class="mt-3 text-right">
+                        <a href="{% url 'password_reset_request' %}"
+                           class="text-sm font-medium text-[#455B45]
+                                  transition hover:text-[#304330]
+                                  hover:underline">
+                            Mot de passe oublié ?
+                        </a>
+                    </div>
+                </div>
 
-                    {% if form.errors %}
-                    <p class="error">
-                        Identifiant ou mot de passe incorrect.
-                    </p>
-                    {% endif %}
+                <!-- BOUTON CONNEXION -->
+                <button
+                    type="submit"
+                    class="flex w-full items-center justify-center
+                           gap-3 rounded-lg bg-[#455B45]
+                           px-6 py-4 text-sm font-semibold
+                           text-white transition duration-300
+                           hover:bg-[#304330]">
 
-                    <label for="id_username">Identifiant</label>
-                    <input type="text" id="id_username" name="username" placeholder="Votre identifiant"
-                        autocomplete="username" required>
+                    Se connecter
+                    <span>→</span>
+                </button>
 
-                    <label for="id_password">Mot de passe</label>
-                    <input type="password" id="id_password" name="password" placeholder="Votre mot de passe"
-                        autocomplete="current-password" required>
+            </form>
 
-                    <button type="submit">
-                        Se connecter →
-                    </button>
-                </form>
+            <!-- INSCRIPTION -->
+            <p class="mt-8 text-center text-sm text-[#77736D]">
+                Vous n'avez pas encore de compte ?
 
-                <p style="text-align: center; font-size: 12px; color: #777; margin-top: 25px;">
-                    Vous n'avez pas encore de compte ?
-                    <a href="{% url 'inscription' %}"
-                        style="color: #455B45; font-size: 12px; font-weight: 600; text-decoration: none;">
-                        S'inscrire
-                    </a>
-                </p>
+                <a href="{% url 'inscription' %}"
+                   class="ml-1 font-semibold text-[#455B45]
+                          transition hover:underline">
+                    S'inscrire
+                </a>
+            </p>
 
+        </div>
+    </section>
+</div>
 
-            </div>
-
-        </section>
-
-    </div>
-
-</body>
-
-</html>
+{% endblock %}
