@@ -103,7 +103,7 @@ select {
    3. HERO SECTION
 ======================================== */
 
-.chambres-hero {
+.rooms-intro {
     min-height: 390px;
     display: flex;
     align-items: center;
@@ -113,7 +113,7 @@ select {
     background:
         linear-gradient(rgba(32, 45, 40, 0.72),
                         rgba(32, 45, 40, 0.72)),
-        url("../images/hero-chambres.jpg") center/cover no-repeat;
+        url("../images/chambres/back.jpg") center/cover no-repeat;
 }
 
 .hero-content {
