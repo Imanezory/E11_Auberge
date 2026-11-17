@@ -1,0 +1,238 @@
+
+* {
+    box-sizing: border-box;
+  }
+  
+  .client-page {
+    min-height: 100vh;
+    background: #F7F3E9;
+    color: #2B2B2B;
+    font-family: Arial, sans-serif;
+  }
+  
+  .client-header {
+    background: #1F4D3B;
+    color: white;
+    padding: 22px 8%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .brand h1 {
+    font-size: 25px;
+    margin: 0;
+  }
+  
+  .brand p {
+    margin: 5px 0 0;
+    font-size: 13px;
+    opacity: 0.8;
+  }
+  
+  .secure-label {
+    font-size: 13px;
+  }
+  
+  .invoice-container {
+    max-width: 950px;
+    margin: 45px auto;
+    padding: 0 20px;
+  }
+  
+  .welcome-section {
+    margin-bottom: 30px;
+  }
+  
+  .welcome-small {
+    color: #C07A5A;
+    font-weight: bold;
+    letter-spacing: 2px;
+    font-size: 12px;
+  }
+  
+  .welcome-section h2 {
+    font-size: 30px;
+    margin: 10px 0;
+  }
+  
+  .welcome-section p:last-child {
+    color: #777;
+    line-height: 1.6;
+  }
+  
+  .invoice-section,
+  .payment-section {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+  }
+  
+  .invoice-section h3,
+  .payment-section h3 {
+    margin-top: 0;
+    margin-bottom: 22px;
+    color: #1F4D3B;
+    font-size: 19px;
+  }
+  
+  .info-grid,
+  .reservation-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+  
+  .info-grid div,
+  .reservation-grid div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .info-grid span,
+  .reservation-grid span {
+    font-size: 13px;
+    color: #888;
+  }
+  
+  .info-grid strong,
+  .reservation-grid strong {
+    font-size: 15px;
+  }
+  
+  .section-heading,
+  .payment-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  
+  .reference {
+    background: #F7F3E9;
+    color: #1F4D3B;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  .price-row,
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .price-row span {
+    color: #777;
+  }
+  
+  .total-row {
+    border: none;
+    margin-top: 10px;
+    color: #1F4D3B;
+    font-size: 19px;
+    font-weight: bold;
+  }
+  
+  .payment-section {
+    background: #fff;
+    border: 1px solid #eee;
+  }
+  
+  .payment-title span {
+    color: #777;
+    font-size: 13px;
+  }
+  
+  .payment-section > p {
+    color: #777;
+    line-height: 1.6;
+    font-size: 14px;
+  }
+  
+  .pay-button,
+  .download-button {
+    width: 100%;
+    padding: 15px;
+    border-radius: 7px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: 0.2s;
+  }
+  
+  .pay-button {
+    background: #1F4D3B;
+    color: white;
+    border: none;
+  }
+  
+  .pay-button:hover {
+    background: #163b2d;
+  }
+  
+  .download-button {
+    background: white;
+    color: #1F4D3B;
+    border: 1px solid #1F4D3B;
+  }
+  
+  .download-button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  
+  .security-note {
+    text-align: center;
+    font-size: 12px !important;
+    margin-top: 18px;
+  }
+  
+  .client-footer {
+    background: #1F4D3B;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 13px;
+  }
+  
+  @media (max-width: 600px) {
+    .client-header {
+      padding: 18px;
+    }
+  
+    .brand h1 {
+      font-size: 20px;
+    }
+  
+    .secure-label {
+      font-size: 11px;
+    }
+  
+    .invoice-container {
+      margin: 25px auto;
+    }
+  
+    .info-grid,
+    .reservation-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .section-heading,
+    .payment-title {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  
+    .welcome-section h2 {
+      font-size: 24px;
+    }
+  }
+  

@@ -1,15 +1,17 @@
-import Sidebar from "./components/Sidebar";
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
+import Client from "./pages/Client";
+import "./App.css";
 
 function App() {
   return (
-    <div className="app-container">
-      <Sidebar />
-
-      <div className="main-content">
-        <Dashboard />
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Client />} />
+        <Route path="/admin-dashboard" element={<Dashboard />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
