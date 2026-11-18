@@ -46,14 +46,17 @@ urlpatterns = [
     # Accueil + Inscription
     path('', include('accueil.urls')),
 
-    # Services
+    # Services HTML
     path('services/', include('services.urls')),
 
-    # Chambres
+    # Chambres HTML
     path('chambres/', include('chambres.urls')),
 
     # REST API - Services
     path('api/', include(router.urls)),
+
+    # REST API - Chambres
+    path('api/', include('chambres.api_urls')),
 
     # REST API - Réservations
     path('api/', include('reservations.urls')),
