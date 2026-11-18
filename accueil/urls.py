@@ -23,4 +23,9 @@ urlpatterns = [
         views.inscription,
         name='inscription'
     ),
+    # CSRF token for React
+    path('api/csrf/',
+          views.csrf_token_view,
+          name='csrf_token'
+    ),
 ]

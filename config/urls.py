@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-
+from reservations.frontend_views import reservation_frontend
 from django.contrib.auth.views import LogoutView
 from rest_framework.routers import DefaultRouter
 
@@ -42,6 +42,9 @@ urlpatterns = [
 
     # Connexion
     path('login/', connexion, name='login'),
+    
+    # Interface React - Réservations
+    path('reservations/', reservation_frontend, name='reservation_frontend'),
 
     # Accueil + Inscription
     path('', include('accueil.urls')),
