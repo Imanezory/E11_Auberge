@@ -25,6 +25,7 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      CHARIPAY_API_KEY: ${CHARIPAY_API_KEY}
     depends_on:
       - db
 

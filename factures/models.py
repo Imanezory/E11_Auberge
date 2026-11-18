@@ -8,6 +8,17 @@ class Facture(models.Model):
         ("payee", "Payée"),
     ]
 
+
+    date_paiement = models.DateTimeField(
+        blank=True,
+        null=True
+    )
+
+    devise = models.CharField(
+       max_length=3,
+     default="MAD"
+     )
+
     reservation_id = models.PositiveIntegerField(unique=True)
     client_id = models.PositiveIntegerField()
 

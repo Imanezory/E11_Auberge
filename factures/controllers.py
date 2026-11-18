@@ -1,5 +1,6 @@
 
 from decimal import Decimal
+from django.db import transaction
 from .models import Facture
 
 
@@ -14,7 +15,7 @@ class FactureController:
         return montant
 
     def calculer_montant_services(self, services_data):
-        total = Decimal("0")
+        total = Decimal("0.00")
 
         for service in services_data:
             prix = Decimal(str(service["prix"]))
@@ -36,20 +37,24 @@ class FactureController:
 
         return chambres + services
 
+    @transaction.atomic
     def creer_facture(self, reservation_data, services_data):
         montant_chambres = self.calculer_montant_chambres(reservation_data)
         montant_services = self.calculer_montant_services(services_data)
-
         montant_total = self.calculer_montant_total(
             montant_chambres,
             montant_services
         )
 
-        return Facture.objects.create(
+        facture, created = Facture.objects.get_or_create(
             reservation_id=reservation_data["id"],
-            client_id=reservation_data["client_id"],
-            montant_chambres=montant_chambres,
-            montant_services=montant_services,
-            montant_total=montant_total,
-            statut="non_payee"
+            defaults={
+                "client_id": reservation_data["client_id"],
+                "montant_chambres": montant_chambres,
+                "montant_services": montant_services,
+                "montant_total": montant_total,
+                "statut": "non_payee",
+            }
         )
+
+        return facture
