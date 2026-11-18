@@ -1,0 +1,62 @@
+[
+{
+  "model": "chambres.chambre",
+  "pk": 1,
+  "fields": {
+    "numChambre": "101",
+    "type": "double",
+    "capacite": 2,
+    "prix": "950.00",
+    "image": "chambres/ch4.jpg",
+    "statut": "disponible"
+  }
+},
+{
+  "model": "chambres.chambre",
+  "pk": 2,
+  "fields": {
+    "numChambre": "102",
+    "type": "simple",
+    "capacite": 1,
+    "prix": "400.00",
+    "image": "chambres/ch1.jpg",
+    "statut": "disponible"
+  }
+},
+{
+  "model": "chambres.chambre",
+  "pk": 3,
+  "fields": {
+    "numChambre": "103",
+    "type": "simple",
+    "capacite": 1,
+    "prix": "350.00",
+    "image": "chambres/ch2.jpg",
+    "statut": "occupee"
+  }
+},
+{
+  "model": "chambres.chambre",
+  "pk": 4,
+  "fields": {
+    "numChambre": "201",
+    "type": "double",
+    "capacite": 2,
+    "prix": "900.00",
+    "image": "chambres/ch3.jpg",
+    "statut": "disponible"
+  }
+},
+{
+  "model": "chambres.chambre",
+  "pk": 5,
+  "fields": {
+    "numChambre": "205",
+    "type": "suite",
+    "capacite": 3,
+    "prix": "1400.00",
+    "image": "chambres/ch5.jpg",
+    "statut": "maintenance"
+  }
+}
+]

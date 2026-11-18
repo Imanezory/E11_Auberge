@@ -53,7 +53,8 @@ urlpatterns = [
 
     # Pages Chambres
     path('chambres/', include('chambres.urls')),
-
+    # REST API - Chambres
+    path('api/chambres/', include('chambres.api_urls')),
     # REST API - Services
     path('api/', include(router.urls)),
 
