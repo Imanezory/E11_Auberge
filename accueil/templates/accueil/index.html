@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block title %}Auberge | Accueil{% endblock %}
-
 {% block extra_css %}
 <style>
   /* Défilement doux pour tous les liens internes de l'accueil */
@@ -367,20 +366,20 @@
 
       <div class="mt-10 grid gap-7 sm:grid-cols-2">
         <div class="flex gap-4">
-          <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-[#E8DCC8] text-2xl">🍽️</span>
+          <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-[#E8DCC8] text-[#455B45]"><i data-lucide="utensils-crossed"></i></span>
           <div><h3 class="font-semibold text-[#302B26]">Restaurant</h3><p class="mt-2 text-sm leading-6 text-gray-500">Des saveurs à découvrir.</p></div>
         </div>
         <div class="flex gap-4">
-          <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-[#E8DCC8] text-2xl">🏊</span>
+          <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-[#E8DCC8] text-[#455B45]"><i data-lucide="waves"></i></span>
           <div><h3 class="font-semibold text-[#302B26]">Piscine</h3><p class="mt-2 text-sm leading-6 text-gray-500">Un moment de détente.</p></div>
         </div>
         <div class="flex gap-4">
-          <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-[#E8DCC8] text-2xl">📶</span>
+          <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-[#E8DCC8] text-[#455B45]"><i data-lucide="wifi"></i></span>
           <div><h3 class="font-semibold text-[#302B26]">Wi-Fi</h3><p class="mt-2 text-sm leading-6 text-gray-500">Restez connecté.</p></div>
         </div>
         <div class="flex gap-4">
-          <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-[#E8DCC8] text-2xl">🌿</span>
-          <div><h3 class="font-semibold text-[#302B26]">Spa & Bien-être</h3><p class="mt-2 text-sm leading-6 text-gray-500">Prenez soin de vous.</p></div>
+          <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-[#E8DCC8] text-[#455B45]"><i data-lucide="leaf"></i></span>
+          <div><h3 class="font-semibold text-[#302B26]">Bien-être</h3><p class="mt-2 text-sm leading-6 text-gray-500">Prenez soin de vous.</p></div>
         </div>
       </div>
 
@@ -436,12 +435,12 @@
 
       <article class="group overflow-hidden bg-[#304036]">
         <div class="overflow-hidden">
-          <img src="{% static 'images/spa.jpg' %}"
+          <img src="{% static 'images/bien.jpg' %}"
             alt="Spa" class="h-64 w-full object-cover transition duration-700 group-hover:scale-110">
         </div>
         <div class="p-8">
           <span class="text-xs uppercase tracking-[0.2em] text-[#E8DCC8]">Relaxation</span>
-          <h3 class="mt-3 font-serif text-3xl">Spa & Bien-être</h3>
+          <h3 class="mt-3 font-serif text-3xl">Bien-être</h3>
           <p class="mt-4 text-sm leading-7 text-white/65">Un espace pour retrouver calme, sérénité et relaxation.</p>
           <a href="/services/" class="mt-7 inline-block border-b border-[#E8DCC8] pb-2 text-sm font-semibold text-[#E8DCC8]">
             Découvrir & réserver →
@@ -451,7 +450,7 @@
 
       <article class="group overflow-hidden bg-[#304036]">
         <div class="overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900&q=85"
+          <img src="{% static 'images/piscin.jpg' %}"
             alt="Piscine" class="h-64 w-full object-cover transition duration-700 group-hover:scale-110">
         </div>
         <div class="p-8">
@@ -604,19 +603,41 @@
       </p>
 
       <div class="mt-10 space-y-7">
-        <div class="flex gap-5">
-          <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-[#E8DCC8] text-xl">📍</span>
-          <div><h3 class="font-semibold text-[#302B26]">Adresse</h3><p class="mt-1 text-sm text-gray-500">À compléter</p></div>
+
+    <!-- Adresse -->
+    <div class="flex gap-5">
+        <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-[#E8DCC8] text-[#455B45]">
+            <i data-lucide="map-pin"></i>
+        </span>
+        <div>
+            <h3 class="font-semibold text-[#302B26]">Adresse</h3>
+            <p class="mt-1 text-sm text-gray-500">À compléter</p>
         </div>
-        <div class="flex gap-5">
-          <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-[#E8DCC8] text-xl">☎</span>
-          <div><h3 class="font-semibold text-[#302B26]">Téléphone</h3><p class="mt-1 text-sm text-gray-500">À compléter</p></div>
+    </div>
+
+    <!-- Téléphone -->
+    <div class="flex gap-5">
+        <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-[#E8DCC8] text-[#455B45]">
+            <i data-lucide="phone"></i>
+        </span>
+        <div>
+            <h3 class="font-semibold text-[#302B26]">Téléphone</h3>
+            <p class="mt-1 text-sm text-gray-500">À compléter</p>
         </div>
-        <div class="flex gap-5">
-          <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-[#E8DCC8] text-xl">✉</span>
-          <div><h3 class="font-semibold text-[#302B26]">E-mail</h3><p class="mt-1 text-sm text-gray-500">À compléter</p></div>
+    </div>
+
+    <!-- E-mail -->
+    <div class="flex gap-5">
+        <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-[#E8DCC8] text-[#455B45]">
+            <i data-lucide="mail"></i>
+        </span>
+        <div>
+            <h3 class="font-semibold text-[#302B26]">E-mail</h3>
+            <p class="mt-1 text-sm text-gray-500">À compléter</p>
         </div>
-      </div>
+    </div>
+
+</div>
     </div>
 
     <form id="contact-form" class="bg-white p-7 shadow-lg sm:p-10">
@@ -751,5 +772,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   setInterval(advance, 4500);
 });
+</script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
 </script>
 {% endblock %}

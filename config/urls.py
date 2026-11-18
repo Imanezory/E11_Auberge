@@ -48,8 +48,11 @@ urlpatterns = [
     # Accueil + Inscription
     path('', include('accueil.urls')),
 
-    # Pages Services
+        # Pages Services
     path('services/', include('services.urls')),
+
+    # Pages Chambres
+    path('chambres/', include('chambres.urls')),
 
     # REST API - Services
     path('api/', include(router.urls)),
