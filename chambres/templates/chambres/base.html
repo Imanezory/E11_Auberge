@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Auberge{% endblock %}</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS principal -->
+    <link rel="stylesheet" href="{% static 'chambres/css/chambres.css' %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+
+    <header class="site-header">
+        <div class="header-container">
+
+            <a href="{% url 'chambres:liste' %}" class="logo">
+                Auberge.
+            </a>
+
+            <nav class="main-nav">
+                <a href="{% url 'chambres:liste' %}">Accueil</a>
+                <a href="{% url 'chambres:liste' %}" class="active">Chambres</a>
+                <a href="#engagements">Services</a>
+                <a href="#engagements">À propos</a>
+                <a href="#contact">Contact</a>
+
+                <a href="{% url 'chambres:liste' %}" class="reservation-btn">
+                    Réserver <span>▢</span>
+                </a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <!-- CONTENU DES PAGES -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer" id="contact">
+        <div class="footer-container">
+
+            <div class="footer-brand">
+                <h2>Auberge<span>.</span></h2>
+                <p>
+                    Un séjour agréable dans un cadre chaleureux
+                    et confortable.
+                </p>
+            </div>
+
+            <div class="footer-contact">
+                <h3>Contact</h3>
+                <p>Bienvenue dans notre auberge.</p>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© {% now "Y" %} Auberge. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+
+</body>
+
+</html>
