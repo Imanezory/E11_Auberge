@@ -50,6 +50,10 @@ export const getChambres = async () => {
   const response = await API.get('/chambres/')
   return response.data
 }
+export const getServices = async () => {
+  const response = await API.get('/services/')
+  return response.data
+}
 
 export const createReservation = async (reservationData) => {
   const response = await API.post('/reservations/', reservationData)
