@@ -23,7 +23,7 @@ function ReservationPage() {
 
   const [createdReservation, setCreatedReservation] = useState(null)
 
-  // Fetch rooms from Django API
+  // Charger les chambres depuis l'API Django
   useEffect(() => {
     const fetchChambres = async () => {
       try {
@@ -33,7 +33,7 @@ function ReservationPage() {
         const data = await getChambres()
         setChambres(data)
       } catch (err) {
-        console.error('Erreur:', err)
+        console.error('Erreur :', err)
         setError('Impossible de charger les chambres. Veuillez réessayer.')
       } finally {
         setLoading(false)
@@ -43,7 +43,7 @@ function ReservationPage() {
     fetchChambres()
   }, [])
 
-  // Get today's date in local format
+  // Date minimale : aujourd'hui
   const today = new Date()
   const minDate = [
     today.getFullYear(),
@@ -55,7 +55,7 @@ function ReservationPage() {
   const [dateDepart, setDateDepart] = useState('')
   const [nbrPersonnes, setNbrPersonnes] = useState(1)
 
-  // Filter rooms by status and capacity
+  // Filtrer les chambres disponibles selon leur capacité
   const chambresDisponibles = chambres.filter((chambre) => {
     return (
       chambre.statut === 'disponible' &&
@@ -67,6 +67,7 @@ function ReservationPage() {
     setSelectedChambre(chambre)
   }
 
+  // Passer à l'étape suivante
   const handleNext = () => {
     if (!dateArrivee || !dateDepart) {
       alert('Veuillez sélectionner les dates de votre séjour.')
@@ -79,7 +80,7 @@ function ReservationPage() {
     }
 
     if (dateDepart <= dateArrivee) {
-      alert('La date de départ doit être après la date d’arrivée.')
+      alert('La date de départ doit être postérieure à la date d’arrivée.')
       return
     }
 
@@ -102,17 +103,21 @@ function ReservationPage() {
     })
 
     setCurrentStep(2)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleBack = () => {
     setCurrentStep(1)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleConfirmation = (reservation) => {
     setCreatedReservation(reservation)
     setCurrentStep(3)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  // Créer une nouvelle réservation
   const handleNewReservation = () => {
     setSelectedChambre(null)
     setDateArrivee('')
@@ -129,6 +134,7 @@ function ReservationPage() {
 
     setCreatedReservation(null)
     setCurrentStep(1)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const getTypeLabel = (type) => {
@@ -145,24 +151,18 @@ function ReservationPage() {
   return (
     <div className="reservation-app">
 
-      <header className="dashboard-header">
-        <div className="dashboard-brand">
-          <span className="brand-icon">A</span>
-          <span>AUBERGE</span>
-        </div>
-      </header>
+      <div className="reservation-page-container">
 
-      <main className="dashboard-main">
-
+        {/* Étapes de réservation */}
         <div className="reservation-steps">
           <div className={currentStep >= 1 ? 'step active' : 'step'}>
             <span>1</span>
-            <p>Choose a room</p>
+            <p>Choix de la chambre</p>
           </div>
 
           <div className={currentStep >= 2 ? 'step active' : 'step'}>
             <span>2</span>
-            <p>Your details</p>
+            <p>Vos informations</p>
           </div>
 
           <div className={currentStep >= 3 ? 'step active' : 'step'}>
@@ -171,19 +171,27 @@ function ReservationPage() {
           </div>
         </div>
 
+        {/* Étape 1 : Choix de la chambre */}
         {currentStep === 1 && (
           <section className="room-selection-section">
 
-            <h1>Choose your stay</h1>
-            <p>Select your dates, guests and room.</p>
+            <div className="reservation-page-heading">
+              <span className="reservation-eyebrow">AUBERGE</span>
+              <h1>Réservez votre séjour</h1>
+              <p>
+                Choisissez vos dates, indiquez le nombre de personnes
+                et sélectionnez la chambre qui vous convient.
+              </p>
+            </div>
 
+            {/* Formulaire de recherche */}
             <div className="booking-card">
-
               <div className="booking-fields">
 
                 <div className="form-group">
-                  <label>Check-in</label>
+                  <label htmlFor="dateArrivee">Date d'arrivée</label>
                   <input
+                    id="dateArrivee"
                     type="date"
                     min={minDate}
                     value={dateArrivee}
@@ -192,8 +200,9 @@ function ReservationPage() {
                 </div>
 
                 <div className="form-group">
-                  <label>Check-out</label>
+                  <label htmlFor="dateDepart">Date de départ</label>
                   <input
+                    id="dateDepart"
                     type="date"
                     min={dateArrivee || minDate}
                     value={dateDepart}
@@ -202,8 +211,9 @@ function ReservationPage() {
                 </div>
 
                 <div className="form-group">
-                  <label>Guests</label>
+                  <label htmlFor="nbrPersonnes">Nombre de personnes</label>
                   <input
+                    id="nbrPersonnes"
                     type="number"
                     min="1"
                     max="20"
@@ -219,25 +229,40 @@ function ReservationPage() {
               </div>
             </div>
 
-            <h2>Available rooms</h2>
+            {/* Liste des chambres */}
+            <div className="available-rooms-heading">
+              <h2>Nos chambres disponibles</h2>
+              <p>
+                Découvrez nos chambres et choisissez celle qui correspond
+                à vos besoins.
+              </p>
+            </div>
 
-            {loading && <p>Loading rooms...</p>}
+            {loading && (
+              <p className="loading-message">
+                Chargement des chambres...
+              </p>
+            )}
 
             {error && (
               <div className="error-message">
-                {error}
-                <button onClick={() => window.location.reload()}>
-                  Retry
+                <p>{error}</p>
+                <button
+                  type="button"
+                  onClick={() => window.location.reload()}
+                >
+                  Réessayer
                 </button>
               </div>
             )}
 
             {!loading && !error && chambresDisponibles.length === 0 && (
-              <p>No rooms match the selected guest capacity.</p>
+              <p className="empty-message">
+                Aucune chambre ne correspond au nombre de personnes sélectionné.
+              </p>
             )}
 
             <div className="room-selection-grid">
-
               {chambresDisponibles.map((chambre) => (
                 <article
                   key={chambre.id}
@@ -255,22 +280,22 @@ function ReservationPage() {
                     />
                   ) : (
                     <div className="room-image-placeholder">
-                      No image available
+                      Image non disponible
                     </div>
                   )}
 
                   <div className="room-card-content">
 
-                    <h3>Room {chambre.numChambre}</h3>
+                    <h3>Chambre {chambre.numChambre}</h3>
 
                     <p>{getTypeLabel(chambre.type)}</p>
 
                     <p>
-                      Capacity: {chambre.capacite} person(s)
+                      Capacité : {chambre.capacite} personne(s)
                     </p>
 
                     <p className="room-price">
-                      {Number(chambre.prix).toFixed(2)} DH / night
+                      {Number(chambre.prix).toFixed(2)} DH / nuit
                     </p>
 
                     <button
@@ -281,34 +306,36 @@ function ReservationPage() {
                       }}
                     >
                       {selectedChambre?.id === chambre.id
-                        ? 'Selected'
-                        : 'Select this room'}
+                        ? 'Chambre sélectionnée'
+                        : 'Choisir cette chambre'}
                     </button>
 
                   </div>
                 </article>
               ))}
-
             </div>
 
             {selectedChambre && (
               <p className="selected-room-message">
-                Selected room: {selectedChambre.numChambre}
+                Chambre sélectionnée : {selectedChambre.numChambre}
               </p>
             )}
 
-            <button
-              type="button"
-              className="continue-button"
-              onClick={handleNext}
-              disabled={loading || !!error}
-            >
-              Continue
-            </button>
+            <div className="reservation-actions">
+              <button
+                type="button"
+                className="continue-button"
+                onClick={handleNext}
+                disabled={loading || !!error}
+              >
+                Continuer
+              </button>
+            </div>
 
           </section>
         )}
 
+        {/* Étape 2 : Informations du client */}
         {currentStep === 2 && (
           <ReservationFormPage
             reservationData={reservationData}
@@ -317,6 +344,7 @@ function ReservationPage() {
           />
         )}
 
+        {/* Étape 3 : Confirmation */}
         {currentStep === 3 && (
           <ReservationConfirmationPage
             reservation={createdReservation}
@@ -324,7 +352,7 @@ function ReservationPage() {
           />
         )}
 
-      </main>
+      </div>
     </div>
   )
 }
