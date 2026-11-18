@@ -1,0 +1,146 @@
+[
+{
+  "model": "chambres.chambre",
+  "pk": 1,
+  "fields": {
+    "numChambre": "101",
+    "type": "double",
+    "capacite": 2,
+    "prix": "950.00",
+    "image": "chambres/ch4.jpg",
+    "statut": "disponible"
+  }
+},
+{
+  "model": "chambres.chambre",
+  "pk": 2,
+  "fields": {
+    "numChambre": "102",
+    "type": "simple",
+    "capacite": 1,
+    "prix": "400.00",
+    "image": "chambres/ch1.jpg",
+    "statut": "disponible"
+  }
+},
+{
+  "model": "chambres.chambre",
+  "pk": 3,
+  "fields": {
+    "numChambre": "103",
+    "type": "simple",
+    "capacite": 1,
+    "prix": "350.00",
+    "image": "chambres/ch2.jpg",
+    "statut": "disponible"
+  }
+},
+{
+  "model": "chambres.chambre",
+  "pk": 4,
+  "fields": {
+    "numChambre": "201",
+    "type": "double",
+    "capacite": 2,
+    "prix": "900.00",
+    "image": "chambres/ch3.jpg",
+    "statut": "disponible"
+  }
+},
+{
+  "model": "chambres.chambre",
+  "pk": 5,
+  "fields": {
+    "numChambre": "205",
+    "type": "suite",
+    "capacite": 3,
+    "prix": "1400.00",
+    "image": "chambres/ch5.jpg",
+    "statut": "disponible"
+  }
+},
+{
+  "model": "chambres.chambre",
+  "pk": 6,
+  "fields": {
+    "numChambre": "305",
+    "type": "suite",
+    "capacite": 4,
+    "prix": "2100.00",
+    "image": "chambres/ch7.jpg",
+    "statut": "disponible"
+  }
+},
+{
+  "model": "chambres.chambre",
+  "pk": 7,
+  "fields": {
+    "numChambre": "108",
+    "type": "double",
+    "capacite": 2,
+    "prix": "1000.00",
+    "image": "chambres/ch6.jpg",
+    "statut": "disponible"
+  }
+},
+{
+  "model": "chambres.chambre",
+  "pk": 8,
+  "fields": {
+    "numChambre": "109",
+    "type": "familiale",
+    "capacite": 3,
+    "prix": "1200.00",
+    "image": "chambres/ch8.jpg",
+    "statut": "disponible"
+  }
+},
+{
+  "model": "chambres.chambre",
+  "pk": 9,
+  "fields": {
+    "numChambre": "208",
+    "type": "familiale",
+    "capacite": 4,
+    "prix": "1300.00",
+    "image": "chambres/ch10.jpg",
+    "statut": "disponible"
+  }
+},
+{
+  "model": "chambres.chambre",
+  "pk": 10,
+  "fields": {
+    "numChambre": "212",
+    "type": "familiale",
+    "capacite": 4,
+    "prix": "1250.00",
+    "image": "chambres/ch9.jpg",
+    "statut": "disponible"
+  }
+},
+{
+  "model": "chambres.chambre",
+  "pk": 11,
+  "fields": {
+    "numChambre": "203",
+    "type": "simple",
+    "capacite": 1,
+    "prix": "500.00",
+    "image": "chambres/ch11.jpg",
+    "statut": "disponible"
+  }
+},
+{
+  "model": "chambres.chambre",
+  "pk": 12,
+  "fields": {
+    "numChambre": "213",
+    "type": "simple",
+    "capacite": 1,
+    "prix": "620.00",
+    "image": "chambres/ch12.jpg",
+    "statut": "disponible"
+  }
+}
+]

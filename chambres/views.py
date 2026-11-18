@@ -36,6 +36,7 @@ def liste_chambres(request):
     })
 
 
+
 def detail_chambre(request, pk):
 
     chambre = get_object_or_404(Chambre, pk=pk)
