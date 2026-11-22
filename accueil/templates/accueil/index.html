@@ -1,0 +1,755 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Auberge | Accueil{% endblock %}
+
+{% block extra_css %}
+<style>
+  /* Défilement doux pour tous les liens internes de l'accueil */
+  html { scroll-behavior: smooth; }
+  #apropos, #chambres, #services, #equipements, #galerie, #reservation, #contact {
+    scroll-margin-top: 96px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  /* Hero animé : Tailwind pour la mise en page, CSS pour les keyframes */
+  #accueil-hero .hero-photo { opacity: 0; animation: accueilCrossfade 18s infinite; transform: scale(1); }
+  #accueil-hero .hero-photo:nth-child(1) { animation-delay: 0s; }
+  #accueil-hero .hero-photo:nth-child(2) { animation-delay: 6s; }
+  #accueil-hero .hero-photo:nth-child(3) { animation-delay: 12s; }
+  @keyframes accueilCrossfade {
+    0% { opacity: 0; transform: scale(1); }
+    5%, 30% { opacity: 1; }
+    36%, 100% { opacity: 0; transform: scale(1.08); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #accueil-hero .hero-photo { animation: none; transform: none; }
+    #accueil-hero .hero-photo:first-child { opacity: 1; }
+  }
+  #galerie .gallery-cell { position: relative; overflow: hidden; isolation: isolate; background: #455B45; }
+  #galerie .gallery-cell > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  #galerie .gallery-cell > img.gallery-incoming { position: absolute; inset: 0; z-index: 2; transition: transform 1100ms cubic-bezier(.22,1,.36,1); }
+  #galerie .gallery-incoming.from-top { transform: translateY(-101%); }
+  #galerie .gallery-incoming.from-bottom { transform: translateY(101%); }
+  #galerie .gallery-incoming.from-left { transform: translateX(-101%); }
+  #galerie .gallery-incoming.from-right { transform: translateX(101%); }
+  #galerie .gallery-incoming.is-visible { transform: translate(0,0); }
+  @media (prefers-reduced-motion: reduce) { #galerie .gallery-incoming { transition: none !important; } }
+</style>
+{% endblock %}
+
+{% block header_space %}{% endblock %}
+
+{% block content %}
+
+<!-- ================= HERO ACCUEIL PREMIUM ================= -->
+<section id="accueil-hero" aria-label="Bienvenue à l'Auberge"
+  class="relative isolate flex min-h-[680px] items-center justify-center overflow-hidden bg-[#202D28] px-5 py-28 text-center text-white md:min-h-[760px] lg:min-h-[820px]">
+
+  <!-- Trois photographies avec fondu et zoom automatiques -->
+  <div class="absolute inset-0 -z-20" aria-hidden="true">
+    <img class="hero-photo absolute inset-0 h-full w-full object-cover"
+      src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1800&q=85"
+      alt="" fetchpriority="high">
+    <img class="hero-photo absolute inset-0 h-full w-full object-cover"
+      src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1800&q=85"
+      alt="" loading="lazy">
+    <img class="hero-photo absolute inset-0 h-full w-full object-cover"
+      src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1800&q=85"
+      alt="" loading="lazy">
+  </div>
+
+  <div class="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-[#14231C]/90 via-[#14231C]/55 to-[#14231C]/85"></div>
+  <div class="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#202D28]/70 to-transparent"></div>
+
+  <div class="relative z-10 mx-auto max-w-5xl">
+    <div class="mb-7 flex items-center justify-center gap-4">
+      <span class="h-px w-8 bg-[#E8DCC8] sm:w-12"></span>
+      <span class="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#E8DCC8] sm:text-xs sm:tracking-[0.35em]">BIENVENUE À L'AUBERGE</span>
+      <span class="h-px w-8 bg-[#E8DCC8] sm:w-12"></span>
+    </div>
+
+    <h1 class="font-serif text-[clamp(2.8rem,7vw,5.5rem)] font-normal leading-[1.13] tracking-tight">
+      L'élégance d'un séjour,
+      <span class="mt-2 block italic text-[#E8DCC8]">le charme d'un souvenir.</span>
+    </h1>
+
+    <p class="mx-auto mt-8 max-w-2xl text-sm leading-8 text-white/85 sm:text-base">
+      Un havre de paix où l'authenticité, le confort et l'hospitalité
+      se rencontrent pour vous offrir des instants inoubliables.
+    </p>
+
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+      <a href="#chambres" class="group inline-flex items-center gap-6 bg-[#E8DCC8] px-7 py-4 text-sm font-semibold text-[#302B26] transition duration-300 hover:-translate-y-1 hover:bg-white">
+        Découvrir nos chambres
+        <span aria-hidden="true" class="text-lg transition-transform duration-300 group-hover:translate-x-1">→</span>
+      </a>
+      <a href="#services" class="group inline-flex items-center gap-6 border border-white/70 bg-white/10 px-7 py-4 text-sm font-semibold text-white backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-white/20">
+        Explorer nos services
+        <span aria-hidden="true" class="text-lg transition-transform duration-300 group-hover:translate-x-1">→</span>
+      </a>
+    </div>
+  </div>
+
+  <a href="#apropos" aria-label="Découvrir notre auberge"
+    class="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 text-[#E8DCC8]">
+    <span class="text-[10px] font-semibold tracking-[0.3em]">DÉCOUVRIR</span>
+    <span class="h-10 w-px bg-[#E8DCC8]/70"></span>
+  </a>
+</section>
+
+<!-- ================= À PROPOS ================= -->
+<section id="apropos" class="overflow-hidden bg-[#F8F5EF] px-5 py-24 lg:py-32">
+
+  <div class="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2 lg:gap-24">
+
+    <!-- IMAGES À GAUCHE -->
+    <div class="relative min-h-[420px] sm:min-h-[540px]">
+
+      <!-- Grande image -->
+      <div class="absolute left-0 top-0 h-[85%] w-[82%] overflow-hidden rounded-sm">
+        <img
+          src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1100&q=85"
+          alt="Vue de notre auberge"
+          class="h-full w-full object-cover transition duration-700 hover:scale-105">
+      </div>
+
+      <!-- Petite image superposée -->
+      <div class="absolute bottom-0 right-0 h-[55%] w-[55%] overflow-hidden rounded-sm border-[8px] border-[#F8F5EF] shadow-2xl">
+        <img
+          src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&q=85"
+          alt="Chambre de notre auberge"
+          class="h-full w-full object-cover transition duration-700 hover:scale-105">
+      </div>
+
+      <!-- Badge -->
+      <div class="absolute bottom-5 left-3 bg-[#455B45] px-5 py-5 text-white shadow-xl sm:bottom-8 sm:left-6 sm:px-8 sm:py-7">
+
+        <p class="font-serif text-2xl font-semibold">
+          Auberge<span class="text-[#E8DCC8]">.</span>
+        </p>
+
+        <p class="mt-1 text-[10px] uppercase tracking-[0.2em] text-white/80">
+          Confort & Authenticité
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- TEXTE À DROITE -->
+    <div class="lg:pl-4">
+
+      <div class="mb-5 flex items-center gap-4">
+        <span class="h-px w-10 bg-[#B87555]"></span>
+
+        <span class="text-xs font-semibold uppercase tracking-[0.3em] text-[#B87555]">
+          Bienvenue chez nous
+        </span>
+      </div>
+
+      <h2 class="font-serif text-4xl font-normal leading-[1.2] text-[#302B26] sm:text-5xl lg:text-[55px]">
+
+        Découvrez le charme
+
+        <span class="mt-2 block italic text-[#455B45]">
+          de notre Auberge
+        </span>
+
+      </h2>
+
+      <p class="mt-8 text-[15px] leading-8 text-[#66635F]">
+        Bienvenue dans notre auberge, un lieu unique où
+        l'authenticité rencontre le confort moderne.
+        Nous vous accueillons dans une atmosphère chaleureuse,
+        pensée pour vous offrir des moments de détente
+        et de tranquillité.
+      </p>
+
+      <p class="mt-5 text-[15px] leading-8 text-[#66635F]">
+        Profitez de nos chambres élégantes, de nos espaces
+        accueillants et de nos services pour vivre
+        une expérience mémorable.
+      </p>
+
+      <!-- AVANTAGES -->
+      <div class="mt-9 grid gap-5 border-t border-[#DDD4C6] pt-8 sm:grid-cols-2">
+
+        <div class="flex items-center gap-3">
+          <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#E8DCC8] text-[#455B45]">
+            ✓
+          </span>
+          <span class="text-sm font-medium text-[#302B26]">
+            Chambres confortables
+          </span>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#E8DCC8] text-[#455B45]">
+            ✓
+          </span>
+          <span class="text-sm font-medium text-[#302B26]">
+            Services personnalisés
+          </span>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#E8DCC8] text-[#455B45]">
+            ✓
+          </span>
+          <span class="text-sm font-medium text-[#302B26]">
+            Ambiance chaleureuse
+          </span>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#E8DCC8] text-[#455B45]">
+            ✓
+          </span>
+          <span class="text-sm font-medium text-[#302B26]">
+            Espaces de détente
+          </span>
+        </div>
+
+      </div>
+
+      <!-- BOUTON -->
+      <a href="#services"
+         class="group mt-10 inline-flex items-center gap-10 bg-[#455B45] px-8 py-4 text-sm font-semibold text-white transition duration-300 hover:-translate-y-1 hover:bg-[#304036]">
+
+        Découvrir nos services
+
+        <span class="text-xl transition-transform duration-300 group-hover:translate-x-2">
+          →
+        </span>
+
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ================= NOS CHAMBRES ================= -->
+<section id="chambres" class="bg-[#F0EBE2] px-5 py-24 lg:py-28">
+  <div class="mx-auto max-w-7xl">
+
+    <div class="mb-12 flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <div class="mb-4 flex items-center gap-3">
+          <span class="h-px w-10 bg-[#B87555]"></span>
+          <span class="text-xs font-semibold uppercase tracking-[0.3em] text-[#B87555]">
+            Hébergement & confort
+          </span>
+        </div>
+        <h2 class="font-serif text-4xl text-[#302B26] md:text-5xl">
+          Découvrez <em class="text-[#455B45]">nos chambres</em>
+        </h2>
+        <p class="mt-5 max-w-xl leading-8 text-[#66635F]">
+          Des chambres pensées pour votre confort, dans un cadre
+          chaleureux et raffiné.
+        </p>
+      </div>
+
+      <div class="flex gap-3">
+        <button id="rooms-prev" type="button" aria-label="Chambres précédentes"
+          class="flex h-12 w-12 items-center justify-center border border-[#455B45] text-[#455B45] transition hover:bg-[#455B45] hover:text-white">
+          ←
+        </button>
+        <button id="rooms-next" type="button" aria-label="Chambres suivantes"
+          class="flex h-12 w-12 items-center justify-center bg-[#455B45] text-white transition hover:bg-[#304036]">
+          →
+        </button>
+      </div>
+    </div>
+
+    <div id="rooms-slider"
+      class="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+
+      <article class="w-[85%] shrink-0 snap-start bg-white shadow-sm sm:w-[47%] lg:w-[32%]">
+        <div class="relative overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=900&q=85"
+            alt="Chambre simple" class="h-72 w-full object-cover transition duration-700 hover:scale-110">
+          <span class="absolute left-5 top-5 bg-[#455B45] px-4 py-2 text-xs text-white">Simple</span>
+        </div>
+        <div class="p-7">
+          <p class="text-xs uppercase tracking-widest text-[#B87555]">1 personne</p>
+          <h3 class="mt-3 font-serif text-2xl text-[#302B26]">Chambre Simple</h3>
+          <p class="mt-4 text-sm leading-7 text-gray-500">Un espace paisible pour un séjour agréable.</p>
+          <div class="mt-7 flex items-center justify-between border-t border-gray-100 pt-5">
+            <span class="text-sm text-gray-500">Prix selon disponibilité</span>
+            <a href="/chambres/" class="font-semibold text-[#455B45] hover:underline">Détails →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="w-[85%] shrink-0 snap-start bg-white shadow-sm sm:w-[47%] lg:w-[32%]">
+        <div class="relative overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=900&q=85"
+            alt="Chambre double" class="h-72 w-full object-cover transition duration-700 hover:scale-110">
+          <span class="absolute left-5 top-5 bg-[#455B45] px-4 py-2 text-xs text-white">Double</span>
+        </div>
+        <div class="p-7">
+          <p class="text-xs uppercase tracking-widest text-[#B87555]">2 personnes</p>
+          <h3 class="mt-3 font-serif text-2xl text-[#302B26]">Chambre Double</h3>
+          <p class="mt-4 text-sm leading-7 text-gray-500">Confort et élégance pour partager votre séjour.</p>
+          <div class="mt-7 flex items-center justify-between border-t border-gray-100 pt-5">
+            <span class="text-sm text-gray-500">Prix selon disponibilité</span>
+            <a href="/chambres/" class="font-semibold text-[#455B45] hover:underline">Détails →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="w-[85%] shrink-0 snap-start bg-white shadow-sm sm:w-[47%] lg:w-[32%]">
+        <div class="relative overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=900&q=85"
+            alt="Suite familiale" class="h-72 w-full object-cover transition duration-700 hover:scale-110">
+          <span class="absolute left-5 top-5 bg-[#455B45] px-4 py-2 text-xs text-white">Familiale</span>
+        </div>
+        <div class="p-7">
+          <p class="text-xs uppercase tracking-widest text-[#B87555]">Famille</p>
+          <h3 class="mt-3 font-serif text-2xl text-[#302B26]">Suite Familiale</h3>
+          <p class="mt-4 text-sm leading-7 text-gray-500">Un espace généreux pour des moments mémorables.</p>
+          <div class="mt-7 flex items-center justify-between border-t border-gray-100 pt-5">
+            <span class="text-sm text-gray-500">Prix selon disponibilité</span>
+            <a href="/chambres/" class="font-semibold text-[#455B45] hover:underline">Détails →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="w-[85%] shrink-0 snap-start bg-white shadow-sm sm:w-[47%] lg:w-[32%]">
+        <div class="relative overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&q=85"
+            alt="Chambre supérieure" class="h-72 w-full object-cover transition duration-700 hover:scale-110">
+          <span class="absolute left-5 top-5 bg-[#455B45] px-4 py-2 text-xs text-white">Supérieure</span>
+        </div>
+        <div class="p-7">
+          <p class="text-xs uppercase tracking-widest text-[#B87555]">Confort premium</p>
+          <h3 class="mt-3 font-serif text-2xl text-[#302B26]">Chambre Supérieure</h3>
+          <p class="mt-4 text-sm leading-7 text-gray-500">Une atmosphère raffinée pour vous ressourcer.</p>
+          <div class="mt-7 flex items-center justify-between border-t border-gray-100 pt-5">
+            <span class="text-sm text-gray-500">Prix selon disponibilité</span>
+            <a href="/chambres/" class="font-semibold text-[#455B45] hover:underline">Détails →</a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="mt-10 text-center">
+      <a href="/chambres/" class="inline-flex items-center gap-7 bg-[#455B45] px-8 py-4 text-sm font-semibold text-white transition hover:bg-[#304036]">
+        Explorer toutes les chambres <span>→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ÉQUIPEMENTS ================= -->
+<section id="equipements" class="bg-[#F8F5EF] px-5 py-24 lg:py-32">
+  <div class="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
+
+    <div>
+      <div class="mb-5 flex items-center gap-3">
+        <span class="h-px w-10 bg-[#B87555]"></span>
+        <span class="text-xs font-semibold uppercase tracking-[0.3em] text-[#B87555]">Nos installations</span>
+      </div>
+
+      <h2 class="font-serif text-4xl leading-tight text-[#302B26] md:text-5xl">
+        Tout pour votre <em class="text-[#455B45]">bien-être</em>
+      </h2>
+
+      <p class="mt-7 max-w-lg text-[15px] leading-8 text-gray-600">
+        Profitez de nos espaces et installations pour rendre
+        votre séjour encore plus agréable.
+      </p>
+
+      <div class="mt-10 grid gap-7 sm:grid-cols-2">
+        <div class="flex gap-4">
+          <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-[#E8DCC8] text-2xl">🍽️</span>
+          <div><h3 class="font-semibold text-[#302B26]">Restaurant</h3><p class="mt-2 text-sm leading-6 text-gray-500">Des saveurs à découvrir.</p></div>
+        </div>
+        <div class="flex gap-4">
+          <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-[#E8DCC8] text-2xl">🏊</span>
+          <div><h3 class="font-semibold text-[#302B26]">Piscine</h3><p class="mt-2 text-sm leading-6 text-gray-500">Un moment de détente.</p></div>
+        </div>
+        <div class="flex gap-4">
+          <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-[#E8DCC8] text-2xl">📶</span>
+          <div><h3 class="font-semibold text-[#302B26]">Wi-Fi</h3><p class="mt-2 text-sm leading-6 text-gray-500">Restez connecté.</p></div>
+        </div>
+        <div class="flex gap-4">
+          <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-[#E8DCC8] text-2xl">🌿</span>
+          <div><h3 class="font-semibold text-[#302B26]">Spa & Bien-être</h3><p class="mt-2 text-sm leading-6 text-gray-500">Prenez soin de vous.</p></div>
+        </div>
+      </div>
+
+      <a href="/services/" class="mt-11 inline-flex items-center gap-8 bg-[#455B45] px-8 py-4 text-sm font-semibold text-white hover:bg-[#304036]">
+        Découvrir les équipements →
+      </a>
+    </div>
+
+    <div class="relative min-h-[420px] sm:min-h-[540px]">
+      <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1000&q=85"
+        alt="Piscine de l'auberge"
+        class="absolute right-0 top-0 h-[85%] w-[82%] object-cover shadow-xl">
+      <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=700&q=85"
+        alt="Restaurant de l'auberge"
+        class="absolute bottom-0 left-0 h-[53%] w-[55%] border-8 border-[#F8F5EF] object-cover shadow-2xl">
+      <div class="absolute right-4 top-6 bg-[#455B45] px-6 py-5 text-white shadow-lg">
+        <span class="font-serif text-2xl">Votre confort</span>
+        <p class="mt-1 text-xs text-white/75">Notre priorité</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section id="services" class="bg-[#202D28] px-5 py-24 text-white lg:py-28">
+  <div class="mx-auto max-w-7xl">
+    <div class="mb-14 text-center">
+      <p class="text-xs font-semibold uppercase tracking-[0.3em] text-[#E8DCC8]">Une expérience complète</p>
+      <h2 class="mt-5 font-serif text-4xl md:text-5xl">
+        Services & <em class="text-[#B8C5B5]">Prestations</em>
+      </h2>
+      <p class="mx-auto mt-6 max-w-2xl leading-8 text-white/65">
+        Des prestations pour rendre chaque instant de votre séjour exceptionnel.
+        Certains services peuvent être réservés sans chambre.
+      </p>
+    </div>
+
+    <div class="grid gap-7 md:grid-cols-3">
+      <article class="group overflow-hidden bg-[#304036]">
+        <div class="overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=85"
+            alt="Restauration" class="h-64 w-full object-cover transition duration-700 group-hover:scale-110">
+        </div>
+        <div class="p-8">
+          <span class="text-xs uppercase tracking-[0.2em] text-[#E8DCC8]">Gastronomie</span>
+          <h3 class="mt-3 font-serif text-3xl">Restauration</h3>
+          <p class="mt-4 text-sm leading-7 text-white/65">Une cuisine savoureuse à apprécier dans un cadre accueillant.</p>
+          <a href="/services/" class="mt-7 inline-block border-b border-[#E8DCC8] pb-2 text-sm font-semibold text-[#E8DCC8]">
+            Découvrir & réserver →
+          </a>
+        </div>
+      </article>
+
+      <article class="group overflow-hidden bg-[#304036]">
+        <div class="overflow-hidden">
+          <img src="{% static 'images/spa.jpg' %}"
+            alt="Spa" class="h-64 w-full object-cover transition duration-700 group-hover:scale-110">
+        </div>
+        <div class="p-8">
+          <span class="text-xs uppercase tracking-[0.2em] text-[#E8DCC8]">Relaxation</span>
+          <h3 class="mt-3 font-serif text-3xl">Spa & Bien-être</h3>
+          <p class="mt-4 text-sm leading-7 text-white/65">Un espace pour retrouver calme, sérénité et relaxation.</p>
+          <a href="/services/" class="mt-7 inline-block border-b border-[#E8DCC8] pb-2 text-sm font-semibold text-[#E8DCC8]">
+            Découvrir & réserver →
+          </a>
+        </div>
+      </article>
+
+      <article class="group overflow-hidden bg-[#304036]">
+        <div class="overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900&q=85"
+            alt="Piscine" class="h-64 w-full object-cover transition duration-700 group-hover:scale-110">
+        </div>
+        <div class="p-8">
+          <span class="text-xs uppercase tracking-[0.2em] text-[#E8DCC8]">Détente</span>
+          <h3 class="mt-3 font-serif text-3xl">Piscine</h3>
+          <p class="mt-4 text-sm leading-7 text-white/65">Profitez d'un cadre apaisant pour vos moments de loisirs.</p>
+          <a href="/services/" class="mt-7 inline-block border-b border-[#E8DCC8] pb-2 text-sm font-semibold text-[#E8DCC8]">
+            Découvrir & réserver →
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GALERIE ================= -->
+<section id="galerie" class="bg-[#F0EBE2] px-5 py-24 lg:py-28">
+  <div class="mx-auto max-w-7xl">
+    <div class="mb-12 text-center">
+      <p class="text-xs font-semibold uppercase tracking-[0.3em] text-[#B87555]">Découvrez notre univers</p>
+      <h2 class="mt-4 font-serif text-4xl text-[#302B26] md:text-5xl">
+        Notre <em class="text-[#455B45]">Galerie</em>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
+      <div class="gallery-cell group row-span-2 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&q=85"
+          alt="Auberge" class="h-full min-h-[350px] w-full object-cover ">
+      </div>
+
+      <div class="gallery-cell group overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=700&q=85"
+          alt="Chambre" class="h-48 w-full object-cover  md:h-56">
+      </div>
+
+      <div class="gallery-cell group overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=700&q=85"
+          alt="Restaurant" class="h-48 w-full object-cover  md:h-56">
+      </div>
+
+      <div class="gallery-cell group row-span-2 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900&q=85"
+          alt="Piscine" class="h-full min-h-[350px] w-full object-cover ">
+      </div>
+
+      <div class="gallery-cell group overflow-hidden">
+        <img src="{% static 'images/spa.jpg' %}"
+          alt="Spa" class="h-48 w-full object-cover  md:h-56">
+      </div>
+
+      <div class="gallery-cell group overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=700&q=85"
+          alt="Jardin" class="h-48 w-full object-cover  md:h-56">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TÉMOIGNAGES ================= -->
+<section id="temoignages" class="bg-[#F8F5EF] px-5 py-24 lg:py-28">
+  <div class="mx-auto max-w-7xl">
+    <div class="mb-12 text-center">
+      <p class="text-xs font-semibold uppercase tracking-[0.3em] text-[#B87555]">Votre expérience compte</p>
+      <h2 class="mt-4 font-serif text-4xl text-[#302B26] md:text-5xl">
+        Ce que disent <em class="text-[#455B45]">nos visiteurs</em>
+      </h2>
+    </div>
+
+    <div class="grid gap-7 md:grid-cols-3">
+      <article class="border border-[#E8DCC8] bg-white p-9">
+        <span class="font-serif text-6xl leading-none text-[#B87555]">“</span>
+        <p class="mt-3 text-sm italic leading-8 text-gray-600">
+          Un endroit calme et accueillant. Les chambres sont confortables et l'ambiance très agréable.
+        </p>
+        <div class="mt-8 border-t border-gray-100 pt-5">
+          <p class="font-semibold text-[#302B26]">Exemple de témoignage 01</p>
+          <span class="text-xs text-gray-400">Avis fictif — démonstration</span>
+        </div>
+      </article>
+
+      <article class="border border-[#E8DCC8] bg-white p-9">
+        <span class="font-serif text-6xl leading-none text-[#B87555]">“</span>
+        <p class="mt-3 text-sm italic leading-8 text-gray-600">
+          Une belle expérience, avec des espaces de détente et des services adaptés à nos besoins.
+        </p>
+        <div class="mt-8 border-t border-gray-100 pt-5">
+          <p class="font-semibold text-[#302B26]">Exemple de témoignage 02</p>
+          <span class="text-xs text-gray-400">Avis fictif — démonstration</span>
+        </div>
+      </article>
+
+      <article class="border border-[#E8DCC8] bg-white p-9">
+        <span class="font-serif text-6xl leading-none text-[#B87555]">“</span>
+        <p class="mt-3 text-sm italic leading-8 text-gray-600">
+          Le cadre est chaleureux, et la possibilité de profiter des services indépendamment des chambres est pratique.
+        </p>
+        <div class="mt-8 border-t border-gray-100 pt-5">
+          <p class="font-semibold text-[#302B26]">Exemple de témoignage 03</p>
+          <span class="text-xs text-gray-400">Avis fictif — démonstration</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RÉSERVATION ================= -->
+<section id="reservation" class="relative overflow-hidden bg-[#304036] px-5 py-24 text-center text-white">
+  <div class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full border border-white/10"></div>
+  <div class="pointer-events-none absolute -bottom-28 -left-20 h-80 w-80 rounded-full border border-white/10"></div>
+
+  <div class="relative mx-auto max-w-4xl">
+    <p class="text-xs font-semibold uppercase tracking-[0.3em] text-[#E8DCC8]">Votre prochain séjour</p>
+    <h2 class="mt-6 font-serif text-4xl leading-tight md:text-5xl">
+      Vivez une expérience <em class="text-[#D6DFD2]">inoubliable</em>
+    </h2>
+    <p class="mx-auto mt-6 max-w-2xl leading-8 text-white/75">
+      Réservez une chambre ou profitez de nos services indépendamment
+      de votre hébergement.
+    </p>
+
+    <div class="mt-10 flex flex-wrap justify-center gap-4">
+      <a href="/reservations/" class="bg-[#E8DCC8] px-8 py-4 text-sm font-semibold text-[#302B26] transition hover:bg-white">
+        Réserver une chambre →
+      </a>
+      <a href="/services/" class="border border-white/60 px-8 py-4 text-sm font-semibold text-white transition hover:bg-white/10">
+        Réserver un service →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="bg-[#F8F5EF] px-5 py-24 lg:py-28">
+  <div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2 lg:gap-20">
+
+    <div>
+      <div class="mb-5 flex items-center gap-3">
+        <span class="h-px w-10 bg-[#B87555]"></span>
+        <span class="text-xs font-semibold uppercase tracking-[0.3em] text-[#B87555]">Contactez-nous</span>
+      </div>
+
+      <h2 class="font-serif text-4xl leading-tight text-[#302B26] md:text-5xl">
+        Nous sommes <em class="text-[#455B45]">à votre écoute</em>
+      </h2>
+
+      <p class="mt-7 max-w-lg leading-8 text-gray-600">
+        Une question concernant nos chambres, nos services
+        ou une réservation ? Contactez notre équipe.
+      </p>
+
+      <div class="mt-10 space-y-7">
+        <div class="flex gap-5">
+          <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-[#E8DCC8] text-xl">📍</span>
+          <div><h3 class="font-semibold text-[#302B26]">Adresse</h3><p class="mt-1 text-sm text-gray-500">À compléter</p></div>
+        </div>
+        <div class="flex gap-5">
+          <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-[#E8DCC8] text-xl">☎</span>
+          <div><h3 class="font-semibold text-[#302B26]">Téléphone</h3><p class="mt-1 text-sm text-gray-500">À compléter</p></div>
+        </div>
+        <div class="flex gap-5">
+          <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-[#E8DCC8] text-xl">✉</span>
+          <div><h3 class="font-semibold text-[#302B26]">E-mail</h3><p class="mt-1 text-sm text-gray-500">À compléter</p></div>
+        </div>
+      </div>
+    </div>
+
+    <form id="contact-form" class="bg-white p-7 shadow-lg sm:p-10">
+      <h3 class="mb-8 font-serif text-3xl text-[#302B26]">Envoyez-nous un message</h3>
+
+      <div class="grid gap-5 sm:grid-cols-2">
+        <div>
+          <label for="contact-name" class="mb-2 block text-sm font-medium">Nom complet</label>
+          <input id="contact-name" name="nom" type="text" required placeholder="Votre nom"
+            class="w-full border border-gray-200 bg-[#FAF9F6] px-4 py-3 outline-none focus:border-[#455B45]">
+        </div>
+        <div>
+          <label for="contact-email" class="mb-2 block text-sm font-medium">E-mail</label>
+          <input id="contact-email" name="email" type="email" required placeholder="Votre e-mail"
+            class="w-full border border-gray-200 bg-[#FAF9F6] px-4 py-3 outline-none focus:border-[#455B45]">
+        </div>
+      </div>
+
+      <div class="mt-5">
+        <label for="contact-subject" class="mb-2 block text-sm font-medium">Sujet</label>
+        <input id="contact-subject" name="sujet" type="text" required placeholder="Objet du message"
+          class="w-full border border-gray-200 bg-[#FAF9F6] px-4 py-3 outline-none focus:border-[#455B45]">
+      </div>
+
+      <div class="mt-5">
+        <label for="contact-message" class="mb-2 block text-sm font-medium">Message</label>
+        <textarea id="contact-message" name="message" rows="5" required placeholder="Votre message..."
+          class="w-full resize-y border border-gray-200 bg-[#FAF9F6] px-4 py-3 outline-none focus:border-[#455B45]"></textarea>
+      </div>
+
+      <button type="submit" class="mt-7 w-full bg-[#455B45] px-8 py-4 text-sm font-semibold text-white transition hover:bg-[#304036]">
+        Envoyer le message →
+      </button>
+
+      <p id="contact-feedback" role="status" class="mt-4 hidden text-sm text-[#455B45]"></p>
+    </form>
+
+  </div>
+</section>
+
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Slider des chambres
+    const slider = document.getElementById("rooms-slider");
+    const prev = document.getElementById("rooms-prev");
+    const next = document.getElementById("rooms-next");
+
+    if (slider && prev && next) {
+        const move = (direction) => {
+            const card = slider.querySelector("article");
+            if (!card) return;
+
+            const gap = parseFloat(getComputedStyle(slider).gap) || 0;
+            const distance = card.getBoundingClientRect().width + gap;
+
+            slider.scrollBy({
+                left: direction * distance,
+                behavior: "smooth"
+            });
+        };
+
+        prev.addEventListener("click", () => move(-1));
+        next.addEventListener("click", () => move(1));
+    }
+
+    // Formulaire de contact
+    const form = document.getElementById("contact-form");
+    const feedback = document.getElementById("contact-feedback");
+
+    if (form && feedback) {
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            feedback.textContent =
+                "Formulaire validé. L'envoi sera disponible après connexion au backend Django.";
+
+            feedback.classList.remove("hidden");
+        });
+    }
+
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const gallery = document.getElementById("galerie");
+  if (!gallery || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const collections = [
+    ["https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&q=85", "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=900&q=85", "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=900&q=85"],
+    ["https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=900&q=85", "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=900&q=85", "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=900&q=85"],
+    ["https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=85", "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=85", "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=900&q=85"],
+    ["https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900&q=85", "https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?w=900&q=85", "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&q=85"],
+    ["{% static 'images/spa.jpg' %}", "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=900&q=85", "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=900&q=85"],
+    ["https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=900&q=85", "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=900&q=85", "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=900&q=85"]
+  ];
+  const directions = ["from-top", "from-left", "from-bottom", "from-right", "from-top", "from-bottom"];
+  const cells = Array.from(gallery.querySelectorAll(".gallery-cell"));
+  const positions = cells.map(() => 0);
+  let busy = false;
+
+  async function advance() {
+    if (busy || document.hidden) return;
+    busy = true;
+    await Promise.all(cells.map((cell, i) => new Promise(resolve => {
+      const current = cell.querySelector("img");
+      if (!current || !collections[i]) { resolve(); return; }
+      const next = (positions[i] + 1) % collections[i].length;
+      const incoming = new Image();
+      incoming.alt = current.alt;
+      incoming.className = "gallery-incoming " + directions[i];
+      incoming.onload = () => {
+        cell.appendChild(incoming);
+        requestAnimationFrame(() => requestAnimationFrame(() => incoming.classList.add("is-visible")));
+        setTimeout(() => {
+          current.remove();
+          incoming.className = "";
+          positions[i] = next;
+          resolve();
+        }, 1200);
+      };
+      incoming.onerror = () => resolve();
+      incoming.src = collections[i][next];
+    })));
+    busy = false;
+  }
+  setInterval(advance, 4500);
+});
+</script>
+{% endblock %}

@@ -31,6 +31,7 @@ class Reservation(models.Model):
         ('en_attente', 'En attente'),
         ('confirmee', 'Confirmée'),
         ('annulee', 'Annulée'),
+        ('terminee', 'Terminee'),
     ]
 
     statut = models.CharField(
