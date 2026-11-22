@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-
+from reservations.frontend_views import reservation_frontend
 from django.contrib.auth.views import LogoutView
 from rest_framework.routers import DefaultRouter
 
@@ -21,6 +21,7 @@ from accueil.views import (
 # ==============================
 # REST API - SERVICES
 # ==============================
+
 router = DefaultRouter()
 
 router.register(
@@ -33,30 +34,30 @@ router.register(
 # ==============================
 # URLS PRINCIPALES
 # ==============================
+
 urlpatterns = [
 
-    # Administration
+    # Administration Django
     path('admin/', admin.site.urls),
-
-    # Login avec Email + Mot de passe
-    path(
-        'login/',
-        connexion,
-        name='login'
-    ),
+    # Connexion
+    path('login/', connexion, name='login'),
+    # Interface React - Réservations
+    path('reservations/', reservation_frontend, name='reservation_frontend'),
 
     # Accueil + Inscription
     path('', include('accueil.urls')),
 
-        # Pages Services
+    # Services HTML
     path('services/', include('services.urls')),
 
-    # Pages Chambres
+    # Chambres HTML
     path('chambres/', include('chambres.urls')),
-    # REST API - Chambres
-    path('api/chambres/', include('chambres.api_urls')),
+
     # REST API - Services
     path('api/', include(router.urls)),
+
+    # REST API - Chambres
+    path('api/', include('chambres.api_urls')),
 
     # REST API - Réservations
     path('api/', include('reservations.urls')),
@@ -88,13 +89,13 @@ urlpatterns = [
         password_reset_confirm,
         name='password_reset_confirm'
     ),
-
 ]
 
 
 # ==============================
 # AFFICHAGE DES IMAGES UPLOADÉES
 # ==============================
+
 if settings.DEBUG:
     urlpatterns += static(
         settings.MEDIA_URL,

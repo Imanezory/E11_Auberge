@@ -1,4 +1,7 @@
 
+from django.http import JsonResponse
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.middleware.csrf import get_token
 import secrets
 import re
 from datetime import timedelta
@@ -14,6 +17,15 @@ from django.utils.crypto import salted_hmac, constant_time_compare
 from django.core.cache import cache
 
 from .forms import InscriptionForm
+
+# =====================================
+# CSRF TOKEN FOR REACT
+# =====================================
+@ensure_csrf_cookie
+def csrf_token_view(request):
+    return JsonResponse({
+        "csrfToken": get_token(request)
+    })
 
 
 # =====================================
