@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from django.http import FileResponse
-
+from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 from .pdf_service import generer_pdf_facture
 from .models import Facture
 from .serializers import FactureSerializer
@@ -18,6 +18,7 @@ from .controllers import FactureController
 class FactureListAPIView(generics.ListAPIView):
     serializer_class = FactureSerializer
     permission_classes = [IsAuthenticated]
+    renderer_classes = [JSONRenderer, BrowsableAPIRenderer]
 
     def get_queryset(self):
         if self.request.user.is_staff:
@@ -26,7 +27,6 @@ class FactureListAPIView(generics.ListAPIView):
         return Facture.objects.filter(
             client_id=self.request.user.id
         ).order_by("-date_emission")
-
 
 class FactureDetailAPIView(generics.RetrieveAPIView):
     serializer_class = FactureSerializer
@@ -119,6 +119,7 @@ class FacturePaymentAPIView(APIView):
         )
 
 
+
 class FacturePDFAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -134,14 +135,32 @@ class FacturePDFAPIView(APIView):
 
         if facture.statut != "payee":
             return Response(
-                {
-                    "error": "Veuillez payer votre facture avant de télécharger le PDF."
-                },
+                {"error": "Veuillez payer votre facture avant de télécharger le PDF."},
                 status=status.HTTP_403_FORBIDDEN
             )
 
-        if not facture.pdf_file:
+        # Vérifier si le PDF existe réellement
+        fichier_existe = (
+            facture.pdf_file
+            and facture.pdf_file.name
+            and facture.pdf_file.storage.exists(facture.pdf_file.name)
+        )
+
+        # Générer le PDF s'il est absent
+        if not fichier_existe:
             generer_pdf_facture(facture)
+            facture.refresh_from_db()
+
+        # Vérifier une deuxième fois après la génération
+        if (
+            not facture.pdf_file
+            or not facture.pdf_file.name
+            or not facture.pdf_file.storage.exists(facture.pdf_file.name)
+        ):
+            return Response(
+                {"error": "Le PDF n'a pas pu être généré. Vérifiez le service PDF."},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
         return FileResponse(
             facture.pdf_file.open("rb"),

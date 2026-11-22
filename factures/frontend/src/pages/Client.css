@@ -4,7 +4,9 @@
   }
   
   .client-page {
-    min-height: 100vh;
+    flex: 1;
+    width: 100%;
+    min-height: 100%;
     background: #F7F3E9;
     color: #2B2B2B;
     font-family: Arial, sans-serif;
@@ -35,6 +37,7 @@
   }
   
   .invoice-container {
+    width: 100%;
     max-width: 950px;
     margin: 45px auto;
     padding: 0 20px;

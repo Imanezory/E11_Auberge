@@ -41,6 +41,7 @@ class FactureController:
     def creer_facture(self, reservation_data, services_data):
         montant_chambres = self.calculer_montant_chambres(reservation_data)
         montant_services = self.calculer_montant_services(services_data)
+
         montant_total = self.calculer_montant_total(
             montant_chambres,
             montant_services
