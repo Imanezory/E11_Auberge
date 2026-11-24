@@ -476,43 +476,44 @@
             transition: none;
         }
     }
+
     .service-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
 
-    width: auto;
-    padding: 10px 20px;
+        width: auto;
+        padding: 10px 20px;
 
-    background-color: #1F4D3B;
-    color: #ffffff;
+        background-color: #1F4D3B;
+        color: #ffffff;
 
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-    white-space: nowrap;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        white-space: nowrap;
 
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
 
-.service-btn:hover {
-    background-color: #326B53;
-    color: #ffffff;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(31, 77, 59, 0.2);
-}
+    .service-btn:hover {
+        background-color: #326B53;
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(31, 77, 59, 0.2);
+    }
 
-.service-btn span {
-    font-size: 16px;
-    transition: transform 0.3s ease;
-}
+    .service-btn span {
+        font-size: 16px;
+        transition: transform 0.3s ease;
+    }
 
-.service-btn:hover span {
-    transform: translateX(4px);
-}
+    .service-btn:hover span {
+        transform: translateX(4px);
+    }
 </style>
 {% endblock %}
 
@@ -704,24 +705,23 @@
                     ● {{ chambre.get_statut_display }}
                 </span>
 
-               
 
-<div class="flex items-center justify-between gap-3 mt-5">
 
-    <!-- RESERVER -->
-    <a href="/reservations/?chambre_id={{ chambre.id }}"
-       class="service-btn">
-        Réserver
-        <span aria-hidden="true">→</span>
-    </a>
+                <div class="flex items-center justify-between gap-3 mt-5">
 
-    <!-- DETAILS -->
-    <a href="{% url 'chambres:detail' chambre.pk %}"
-       class="text-xs font-medium text-[#455B45] hover:underline">
-        Voir détails →
-    </a>
+                    <!-- RESERVER -->
+                    <a href="/reservations/?chambre_id={{ chambre.id }}" class="service-btn">
+                        Réserver
+                        <span aria-hidden="true">→</span>
+                    </a>
 
-</div>
+                    <!-- DETAILS -->
+                    <a href="{% url 'chambres:detail' chambre.pk %}"
+                        class="text-xs font-medium text-[#455B45] hover:underline">
+                        Voir détails →
+                    </a>
+
+                </div>
 
 
 
@@ -1061,192 +1061,192 @@
 
             previousPage = page;
 
-        });
-
-
-        /* FILTRAGE ET AFFICHAGE */
-
-        function render() {
-
-            const query = normalize(search.value);
-
-            const max = Number(priceFilter.value);
-
-
-            // Filtrer les chambres
-
-            const filtered = cards.filter(card => {
-
-                const name = normalize(card.dataset.name);
-
-                const type = normalize(card.dataset.type);
-
-                const text = normalize(card.textContent);
-
-                const price = Number(
-                    card.dataset.price.replace(",", ".")
-                );
-
-
-                const typeMatch =
-                    activeType === "all" ||
-                    type === normalize(activeType);
-
-
-                const searchMatch =
-                    !query ||
-                    name.includes(query) ||
-                    type.includes(query) ||
-                    text.includes(query);
-
-
-                const priceMatch =
-                    Number.isFinite(price) &&
-                    price <= max;
-
-
-                return typeMatch && searchMatch && priceMatch;
-
-            });
-
-
-            // Calcul du nombre de pages
-
-            const totalPages = Math.ceil(
-                filtered.length / perPage
-            );
-
-
-            // Corriger automatiquement la page courante
-
-            currentPage = Math.min(
-                Math.max(1, currentPage),
-                Math.max(1, totalPages)
-            );
-
-
-            // Calcul des chambres à afficher
-
-            const start = (currentPage - 1) * perPage;
-
-            const visibleCards = filtered.slice(
-                start,
-                start + perPage
-            );
-
-
-            // Masquer toutes les cartes
-
-            cards.forEach(card => {
-                card.hidden = true;
-            });
-
-
-            // Afficher uniquement les chambres de la page actuelle
-
-            visibleCards.forEach(card => {
-                card.hidden = false;
-            });
-
-
-            // Nombre de résultats
-
-            count.textContent =
-                filtered.length + " chambre(s) trouvée(s)";
-
-
-            // Aucun résultat
-
-            noResults.hidden = filtered.length !== 0;
-
-
-            // Titre dynamique
-
-            updateHeading();
-
-
-            // Pagination
-
-            renderPagination(totalPages);
-
-
-            // Informations de pagination
-
-            if (filtered.length === 0) {
-
-                pageInfo.textContent = "";
-
-            } else {
-
-                const first = start + 1;
-
-                const last = Math.min(
-                    start + perPage,
-                    filtered.length
-                );
-
-                pageInfo.textContent =
-                    "Affichage de " + first +
-                    " à " + last +
-                    " sur " + filtered.length +
-                    " chambre(s)";
-
-            }
-
         }
 
 
-        /* FILTRE PAR TYPE */
+    /* FILTRAGE ET AFFICHAGE */
 
-        buttons.forEach(button => {
+    function render() {
 
-            button.addEventListener("click", function () {
+        const query = normalize(search.value);
 
-                activeType = this.dataset.type;
+        const max = Number(priceFilter.value);
 
-                currentPage = 1;
 
-                buttons.forEach(btn => {
-                    btn.classList.remove("active");
-                });
+        // Filtrer les chambres
 
-                this.classList.add("active");
+        const filtered = cards.filter(card => {
 
-                render();
+            const name = normalize(card.dataset.name);
 
+            const type = normalize(card.dataset.type);
+
+            const text = normalize(card.textContent);
+
+            const price = Number(
+                card.dataset.price.replace(",", ".")
+            );
+
+
+            const typeMatch =
+                activeType === "all" ||
+                type === normalize(activeType);
+
+
+            const searchMatch =
+                !query ||
+                name.includes(query) ||
+                type.includes(query) ||
+                text.includes(query);
+
+
+            const priceMatch =
+                Number.isFinite(price) &&
+                price <= max;
+
+
+            return typeMatch && searchMatch && priceMatch;
+
+        });
+
+
+        // Calcul du nombre de pages
+
+        const totalPages = Math.ceil(
+            filtered.length / perPage
+        );
+
+
+        // Corriger automatiquement la page courante
+
+        currentPage = Math.min(
+            Math.max(1, currentPage),
+            Math.max(1, totalPages)
+        );
+
+
+        // Calcul des chambres à afficher
+
+        const start = (currentPage - 1) * perPage;
+
+        const visibleCards = filtered.slice(
+            start,
+            start + perPage
+        );
+
+
+        // Masquer toutes les cartes
+
+        cards.forEach(card => {
+            card.hidden = true;
+        });
+
+
+        // Afficher uniquement les chambres de la page actuelle
+
+        visibleCards.forEach(card => {
+            card.hidden = false;
+        });
+
+
+        // Nombre de résultats
+
+        count.textContent =
+            filtered.length + " chambre(s) trouvée(s)";
+
+
+        // Aucun résultat
+
+        noResults.hidden = filtered.length !== 0;
+
+
+        // Titre dynamique
+
+        updateHeading();
+
+
+        // Pagination
+
+        renderPagination(totalPages);
+
+
+        // Informations de pagination
+
+        if (filtered.length === 0) {
+
+            pageInfo.textContent = "";
+
+        } else {
+
+            const first = start + 1;
+
+            const last = Math.min(
+                start + perPage,
+                filtered.length
+            );
+
+            pageInfo.textContent =
+                "Affichage de " + first +
+                " à " + last +
+                " sur " + filtered.length +
+                " chambre(s)";
+
+        }
+
+    }
+
+
+    /* FILTRE PAR TYPE */
+
+    buttons.forEach(button => {
+
+        button.addEventListener("click", function () {
+
+            activeType = this.dataset.type;
+
+            currentPage = 1;
+
+            buttons.forEach(btn => {
+                btn.classList.remove("active");
             });
 
-        });
-
-
-        /* RECHERCHE */
-
-        search.addEventListener("input", function () {
-
-            currentPage = 1;
+            this.classList.add("active");
 
             render();
 
         });
 
-
-        /* FILTRE PAR PRIX */
-
-        priceFilter.addEventListener("input", function () {
-
-            priceValue.textContent =
-                this.value + " DH";
-
-            currentPage = 1;
-
-            render();
-
-        });
+    });
 
 
-        /* INITIALISATION */
+    /* RECHERCHE */
+
+    search.addEventListener("input", function () {
+
+        currentPage = 1;
 
         render();
+
+    });
+
+
+    /* FILTRE PAR PRIX */
+
+    priceFilter.addEventListener("input", function () {
+
+        priceValue.textContent =
+            this.value + " DH";
+
+        currentPage = 1;
+
+        render();
+
+    });
+
+
+    /* INITIALISATION */
+
+    render();
 
     });
 </script>
