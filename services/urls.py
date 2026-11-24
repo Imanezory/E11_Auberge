@@ -5,8 +5,12 @@ from rest_framework.routers import DefaultRouter
 from . import views
 
 
-# ===== REST API =====
+# ==========================================
+# REST API
+# ==========================================
+
 router = DefaultRouter()
+
 router.register(
     r"services",
     views.ServiceViewSet,
@@ -14,37 +18,41 @@ router.register(
 )
 
 
+# ==========================================
+# URLS SERVICES
+# ==========================================
+
 urlpatterns = [
 
-    # ===== LISTE DES SERVICES =====
+    # Liste des services
     path(
         "",
         views.liste_services,
         name="liste_services"
     ),
 
-    # ===== DETAILS D'UN SERVICE =====
+    # Détails d'un service
     path(
         "details/<int:service_id>/",
         views.detail_service,
         name="detail_service"
     ),
 
-    # ===== RESERVATION D'UN SERVICE =====
+    # Réservation d'un service
     path(
         "reserver/<int:service_id>/",
         views.reserver_service,
         name="reserver_service"
     ),
 
-    # ===== CONFIRMATION =====
+    # Confirmation
     path(
         "confirmation/",
         views.confirmation_service,
         name="confirmation_service"
     ),
 
-    # ===== REST API =====
+    # API
     path(
         "api/",
         include(router.urls)

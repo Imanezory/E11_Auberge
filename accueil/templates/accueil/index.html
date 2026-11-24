@@ -110,7 +110,7 @@
       <!-- Grande image -->
       <div class="absolute left-0 top-0 h-[85%] w-[82%] overflow-hidden rounded-sm">
         <img
-          src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1100&q=85"
+          src="https://images.trvl-media.com/lodging/3000000/2750000/2745100/2745098/d35514a7.jpg?impolicy=resizecrop&rw=1200&ra=fit"
           alt="Vue de notre auberge"
           class="h-full w-full object-cover transition duration-700 hover:scale-105">
       </div>
@@ -232,10 +232,12 @@
 
 </section>
 
+
 <!-- ================= NOS CHAMBRES ================= -->
 <section id="chambres" class="bg-[#F0EBE2] px-5 py-24 lg:py-28">
   <div class="mx-auto max-w-7xl">
 
+    <!-- TITRE -->
     <div class="mb-12 flex flex-wrap items-end justify-between gap-6">
       <div>
         <div class="mb-4 flex items-center gap-3">
@@ -244,106 +246,165 @@
             Hébergement & confort
           </span>
         </div>
+
         <h2 class="font-serif text-4xl text-[#302B26] md:text-5xl">
           Découvrez <em class="text-[#455B45]">nos chambres</em>
         </h2>
+
         <p class="mt-5 max-w-xl leading-8 text-[#66635F]">
           Des chambres pensées pour votre confort, dans un cadre
           chaleureux et raffiné.
         </p>
       </div>
 
+      <!-- NAVIGATION -->
+      {% if chambres|length > 3 %}
       <div class="flex gap-3">
-        <button id="rooms-prev" type="button" aria-label="Chambres précédentes"
+        <button id="rooms-prev" type="button"
+          aria-label="Chambres précédentes"
           class="flex h-12 w-12 items-center justify-center border border-[#455B45] text-[#455B45] transition hover:bg-[#455B45] hover:text-white">
           ←
         </button>
-        <button id="rooms-next" type="button" aria-label="Chambres suivantes"
+
+        <button id="rooms-next" type="button"
+          aria-label="Chambres suivantes"
           class="flex h-12 w-12 items-center justify-center bg-[#455B45] text-white transition hover:bg-[#304036]">
           →
         </button>
       </div>
+      {% endif %}
     </div>
 
+    <!-- CHAMBRES DYNAMIQUES -->
     <div id="rooms-slider"
       class="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 
-      <article class="w-[85%] shrink-0 snap-start bg-white shadow-sm sm:w-[47%] lg:w-[32%]">
+      {% for chambre in chambres %}
+
+      <article
+        class="w-[85%] shrink-0 snap-start bg-white shadow-sm sm:w-[47%] lg:w-[32%]">
+
+        <!-- IMAGE -->
         <div class="relative overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=900&q=85"
-            alt="Chambre simple" class="h-72 w-full object-cover transition duration-700 hover:scale-110">
-          <span class="absolute left-5 top-5 bg-[#455B45] px-4 py-2 text-xs text-white">Simple</span>
-        </div>
-        <div class="p-7">
-          <p class="text-xs uppercase tracking-widest text-[#B87555]">1 personne</p>
-          <h3 class="mt-3 font-serif text-2xl text-[#302B26]">Chambre Simple</h3>
-          <p class="mt-4 text-sm leading-7 text-gray-500">Un espace paisible pour un séjour agréable.</p>
-          <div class="mt-7 flex items-center justify-between border-t border-gray-100 pt-5">
-            <span class="text-sm text-gray-500">Prix selon disponibilité</span>
-            <a href="/chambres/" class="font-semibold text-[#455B45] hover:underline">Détails →</a>
+
+          {% if chambre.image %}
+          <img
+            src="{{ chambre.image.url }}"
+            alt="Chambre {{ chambre.numChambre }}"
+            loading="lazy"
+            class="h-72 w-full object-cover transition duration-700 hover:scale-110">
+          {% else %}
+          <div class="flex h-72 w-full items-center justify-center bg-[#E8E1D5] text-[#455B45]">
+            <span class="text-sm">Image non disponible</span>
           </div>
+          {% endif %}
+
+          <span class="absolute left-5 top-5 bg-[#455B45] px-4 py-2 text-xs text-white">
+            {{ chambre.type }}
+          </span>
+
+        </div>
+
+        <!-- INFORMATIONS -->
+        <div class="p-7">
+
+          <p class="text-xs uppercase tracking-widest text-[#B87555]">
+            {{ chambre.capacite }} personne(s)
+          </p>
+
+          <h3 class="mt-3 font-serif text-2xl text-[#302B26]">
+            Chambre {{ chambre.numChambre }}
+          </h3>
+
+          <p class="mt-4 text-sm leading-7 text-gray-500">
+            Un espace confortable et chaleureux pour profiter
+            pleinement de votre séjour.
+          </p>
+
+          <!-- PRIX -->
+          <div class="mt-7 flex items-center justify-between border-t border-gray-100 pt-5">
+
+            <div>
+              <strong class="text-lg text-[#455B45]">
+                {{ chambre.prix }} DH
+              </strong>
+              <p class="text-xs text-gray-500">Par nuit</p>
+            </div>
+
+            <a href="/chambres/"
+              class="font-semibold text-[#455B45] hover:underline">
+              Détails →
+            </a>
+
+          </div>
+
+          <!-- RESERVER -->
+          <a href="/reservations/"
+            class="mt-5 block w-full bg-[#455B45] px-5 py-3 text-center text-sm font-semibold text-white transition hover:bg-[#304036]">
+            Réserver cette chambre →
+          </a>
+
         </div>
       </article>
 
-      <article class="w-[85%] shrink-0 snap-start bg-white shadow-sm sm:w-[47%] lg:w-[32%]">
-        <div class="relative overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=900&q=85"
-            alt="Chambre double" class="h-72 w-full object-cover transition duration-700 hover:scale-110">
-          <span class="absolute left-5 top-5 bg-[#455B45] px-4 py-2 text-xs text-white">Double</span>
-        </div>
-        <div class="p-7">
-          <p class="text-xs uppercase tracking-widest text-[#B87555]">2 personnes</p>
-          <h3 class="mt-3 font-serif text-2xl text-[#302B26]">Chambre Double</h3>
-          <p class="mt-4 text-sm leading-7 text-gray-500">Confort et élégance pour partager votre séjour.</p>
-          <div class="mt-7 flex items-center justify-between border-t border-gray-100 pt-5">
-            <span class="text-sm text-gray-500">Prix selon disponibilité</span>
-            <a href="/chambres/" class="font-semibold text-[#455B45] hover:underline">Détails →</a>
-          </div>
-        </div>
-      </article>
+      {% empty %}
 
-      <article class="w-[85%] shrink-0 snap-start bg-white shadow-sm sm:w-[47%] lg:w-[32%]">
-        <div class="relative overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=900&q=85"
-            alt="Suite familiale" class="h-72 w-full object-cover transition duration-700 hover:scale-110">
-          <span class="absolute left-5 top-5 bg-[#455B45] px-4 py-2 text-xs text-white">Familiale</span>
-        </div>
-        <div class="p-7">
-          <p class="text-xs uppercase tracking-widest text-[#B87555]">Famille</p>
-          <h3 class="mt-3 font-serif text-2xl text-[#302B26]">Suite Familiale</h3>
-          <p class="mt-4 text-sm leading-7 text-gray-500">Un espace généreux pour des moments mémorables.</p>
-          <div class="mt-7 flex items-center justify-between border-t border-gray-100 pt-5">
-            <span class="text-sm text-gray-500">Prix selon disponibilité</span>
-            <a href="/chambres/" class="font-semibold text-[#455B45] hover:underline">Détails →</a>
-          </div>
-        </div>
-      </article>
+      <div class="w-full bg-white px-8 py-14 text-center">
+        <h3 class="font-serif text-2xl text-[#455B45]">
+          Aucune chambre disponible
+        </h3>
+        <p class="mt-3 text-gray-500">
+          Nos chambres seront bientôt disponibles.
+        </p>
+      </div>
 
-      <article class="w-[85%] shrink-0 snap-start bg-white shadow-sm sm:w-[47%] lg:w-[32%]">
-        <div class="relative overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&q=85"
-            alt="Chambre supérieure" class="h-72 w-full object-cover transition duration-700 hover:scale-110">
-          <span class="absolute left-5 top-5 bg-[#455B45] px-4 py-2 text-xs text-white">Supérieure</span>
-        </div>
-        <div class="p-7">
-          <p class="text-xs uppercase tracking-widest text-[#B87555]">Confort premium</p>
-          <h3 class="mt-3 font-serif text-2xl text-[#302B26]">Chambre Supérieure</h3>
-          <p class="mt-4 text-sm leading-7 text-gray-500">Une atmosphère raffinée pour vous ressourcer.</p>
-          <div class="mt-7 flex items-center justify-between border-t border-gray-100 pt-5">
-            <span class="text-sm text-gray-500">Prix selon disponibilité</span>
-            <a href="/chambres/" class="font-semibold text-[#455B45] hover:underline">Détails →</a>
-          </div>
-        </div>
-      </article>
+      {% endfor %}
+
     </div>
 
+    <!-- TOUTES LES CHAMBRES -->
     <div class="mt-10 text-center">
-      <a href="/chambres/" class="inline-flex items-center gap-7 bg-[#455B45] px-8 py-4 text-sm font-semibold text-white transition hover:bg-[#304036]">
-        Explorer toutes les chambres <span>→</span>
+      <a href="/chambres/"
+        class="inline-flex items-center gap-7 bg-[#455B45] px-8 py-4 text-sm font-semibold text-white transition hover:bg-[#304036]">
+        Explorer toutes les chambres
+        <span>→</span>
       </a>
     </div>
+
   </div>
 </section>
+
+<!-- ================= SLIDER JAVASCRIPT ================= -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const slider = document.getElementById("rooms-slider");
+    const prev = document.getElementById("rooms-prev");
+    const next = document.getElementById("rooms-next");
+
+    if (!slider) return;
+
+    if (prev) {
+        prev.addEventListener("click", function () {
+            slider.scrollBy({
+                left: -slider.clientWidth * 0.8,
+                behavior: "smooth"
+            });
+        });
+    }
+
+    if (next) {
+        next.addEventListener("click", function () {
+            slider.scrollBy({
+                left: slider.clientWidth * 0.8,
+                behavior: "smooth"
+            });
+        });
+    }
+
+});
+</script>
+
 
 <!-- ================= ÉQUIPEMENTS ================= -->
 <section id="equipements" class="bg-[#F8F5EF] px-5 py-24 lg:py-32">
@@ -392,7 +453,7 @@
       <img src="https://images.trvl-media.com/lodging/3000000/2750000/2745100/2745098/f0a8fbcb.jpg?impolicy=resizecrop&rw=1200&ra=fit"
         alt="Piscine de l'auberge"
         class="absolute right-0 top-0 h-[85%] w-[82%] object-cover shadow-xl">
-      <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=700&q=85"
+      <img src="https://images.trvl-media.com/lodging/3000000/2750000/2745100/2745098/2dd92c08.jpg?impolicy=resizecrop&rw=1200&ra=fit"
         alt="Restaurant de l'auberge"
         class="absolute bottom-0 left-0 h-[53%] w-[55%] border-8 border-[#F8F5EF] object-cover shadow-2xl">
       <div class="absolute right-4 top-6 bg-[#455B45] px-6 py-5 text-white shadow-lg">
@@ -420,7 +481,7 @@
     <div class="grid gap-7 md:grid-cols-3">
       <article class="group overflow-hidden bg-[#304036]">
         <div class="overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=85"
+          <img src="https://images.trvl-media.com/lodging/3000000/2750000/2745100/2745098/5f0f9478.jpg?impolicy=resizecrop&rw=1200&ra=fit"
             alt="Restauration" class="h-64 w-full object-cover transition duration-700 group-hover:scale-110">
         </div>
         <div class="p-8">
@@ -733,11 +794,11 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!gallery || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   const collections = [
-    ["https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&q=85", "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=900&q=85", "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=900&q=85"],
+    ["https://images.trvl-media.com/lodging/136000000/135550000/135542500/135542496/d06cc42d.jpg?impolicy=resizecrop&rw=1200&ra=fit", "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=900&q=85", "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=900&q=85"],
     ["https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=900&q=85", "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=900&q=85", "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=900&q=85"],
     ["https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=85", "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=85", "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=900&q=85"],
     ["https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900&q=85", "https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?w=900&q=85", "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&q=85"],
-    ["{% static 'images/spa.jpg' %}", "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=900&q=85", "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=900&q=85"],
+    ["https://imgs.search.brave.com/RbKt5vaodJVn4Hp5MMf50yyfwRZKV9isuhqvEHeghZY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzL2Y3L2I1/LzgxL2Y3YjU4MTk3/YjNlNzUzMzVkMWJl/ZTZhOTk1NWVjZDZk/LmpwZw", "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=900&q=85", "https://images.trvl-media.com/lodging/11000000/10980000/10975500/10975469/035b9cd9.jpg?impolicy=resizecrop&rw=1200&ra=fit"],
     ["https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=900&q=85", "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=900&q=85", "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=900&q=85"]
   ];
   const directions = ["from-top", "from-left", "from-bottom", "from-right", "from-top", "from-bottom"];

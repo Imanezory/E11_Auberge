@@ -4,10 +4,11 @@ from django.contrib.auth import views as auth_views
 from . import views
 
 urlpatterns = [
+
     # Page d'accueil
     path('', views.accueil, name='accueil'),
 
-    # Page Se connecter
+    # Connexion
     path(
         'login/',
         auth_views.LoginView.as_view(
@@ -17,15 +18,24 @@ urlpatterns = [
         name='login'
     ),
 
-    # Page Créer un compte
+    # Inscription
     path(
         'inscription/',
         views.inscription,
         name='inscription'
     ),
-    # CSRF token for React
-    path('api/csrf/',
-          views.csrf_token_view,
-          name='csrf_token'
+
+    # Espace client : profil + historique
+    path(
+        'mon-espace-client/',
+        views.mon_espace_client,
+        name='mon_espace_client'
+    ),
+
+    # CSRF React
+    path(
+        'api/csrf/',
+        views.csrf_token_view,
+        name='csrf_token'
     ),
 ]

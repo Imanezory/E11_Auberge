@@ -1,5 +1,6 @@
 
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -36,21 +37,19 @@ def liste_services(request):
 
 
 # ==========================================
-# DETAILS D'UN SERVICE + CAROUSEL
+# DETAILS D'UN SERVICE
 # ==========================================
 
 def detail_service(request, service_id):
 
-    # Récupérer le service sélectionné
     service = get_object_or_404(
         Service,
         id=service_id
     )
 
-    # Sélectionner 8 services aléatoires
-    # sans afficher le service actuel
     autres_services = (
         Service.objects
+        .filter(prix__gt=0)
         .exclude(id=service.id)
         .order_by("?")[:8]
     )
@@ -68,9 +67,11 @@ def detail_service(request, service_id):
 
 
 # ==========================================
-# RESERVATION DIRECTE D'UN SERVICE
+# RESERVATION D'UN SERVICE
+# LOGIN OBLIGATOIRE
 # ==========================================
 
+@login_required(login_url='/login/')
 def reserver_service(request, service_id):
 
     service = get_object_or_404(
@@ -88,7 +89,6 @@ def reserver_service(request, service_id):
             reservation = form.save(commit=False)
 
             reservation.service = service
-
             reservation.statut = "confirmee"
 
             reservation.save()
@@ -96,6 +96,7 @@ def reserver_service(request, service_id):
             return redirect("confirmation_service")
 
     else:
+
         form = ReservationServiceForm()
 
     context = {
@@ -105,7 +106,7 @@ def reserver_service(request, service_id):
 
     return render(
         request,
-        "services/reserver_service.html",
+        "reservations/react_app.html",
         context
     )
 
@@ -114,6 +115,7 @@ def reserver_service(request, service_id):
 # CONFIRMATION DE RESERVATION
 # ==========================================
 
+@login_required(login_url='/login/')
 def confirmation_service(request):
 
     return render(

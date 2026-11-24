@@ -1,18 +1,19 @@
 
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Réservation - Auberge</title>
+{% block title %}
+Réservation - Auberge
+{% endblock %}
 
-    <link rel="stylesheet" href="{% static 'frontend/assets/index.css' %}">
-</head>
-<body>
-    <div id="root"></div>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'frontend/assets/index.css' %}">
+{% endblock %}
 
-    <script type="module" src="{% static 'frontend/assets/index.js' %}"></script>
-</body>
-</html>
+{% block content %}
+<div id="root"></div>
+{% endblock %}
+
+{% block extra_js %}
+<script type="module" src="{% static 'frontend/assets/index.js' %}"></script>
+{% endblock %}

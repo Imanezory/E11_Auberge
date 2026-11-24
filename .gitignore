@@ -4,3 +4,18 @@ __pycache__/
 .git/
 .env
 db.sqlite3
+# Fichiers sensibles
+.env
+*.sql
+media/factures/
+
+# Fichiers temporaires
+factures_diff.txt
+chambres.json
+/tatus --short
+
+# Environnements
+venv/
+node_modules/
+__pycache__/
+*.pyc

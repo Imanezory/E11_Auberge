@@ -1,0 +1,365 @@
+
+.payment-page {
+    min-height: 100vh;
+    background: #F7F3E9;
+    color: #2B2B2B;
+    font-family: Arial, sans-serif;
+  }
+  
+  .payment-header {
+    background: #1F4D3B;
+    color: white;
+    padding: 20px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .payment-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .brand-icon {
+    width: 43px;
+    height: 43px;
+    border: 2px solid #D4AF37;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: #D4AF37;
+    font-size: 23px;
+    font-weight: bold;
+  }
+  
+  .payment-brand h1 {
+    margin: 0;
+    font-size: 21px;
+  }
+  
+  .payment-brand p {
+    margin: 4px 0 0;
+    font-size: 12px;
+    opacity: 0.8;
+  }
+  
+  .demo-secure {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+  }
+  
+  .payment-container {
+    max-width: 1100px;
+    margin: 35px auto;
+    padding: 0 20px 40px;
+  }
+  
+  .back-button {
+    border: none;
+    background: transparent;
+    color: #1F4D3B;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 22px;
+    font-weight: 600;
+  }
+  
+  .payment-layout {
+    display: grid;
+    grid-template-columns: 1.5fr 0.85fr;
+    gap: 25px;
+    align-items: start;
+  }
+  
+  .payment-form-card,
+  .payment-summary {
+    background: white;
+    border-radius: 14px;
+    padding: 30px;
+    box-shadow: 0 5px 22px rgba(43, 43, 43, 0.06);
+  }
+  
+  .payment-title h2 {
+    color: #1F4D3B;
+    font-size: 24px;
+    margin: 0 0 8px;
+  }
+  
+  .payment-title p {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 27px;
+  }
+  
+  .field-label,
+  .form-field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 9px;
+    color: #2B2B2B;
+  }
+  
+  .payment-methods {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  
+  .method-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 9px;
+    min-height: 85px;
+    padding: 13px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: #2B2B2B;
+    font-size: 13px;
+  }
+  
+  .method-card.selected {
+    border: 2px solid #1F4D3B;
+    background: #F7FAF7;
+  }
+  
+  .visa-logo {
+    color: #1A1F71;
+    font-size: 25px;
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: -2px;
+  }
+  
+  .mastercard-logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .mastercard-logo span {
+    display: block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #EB001B;
+  }
+  
+  .mastercard-logo span + span {
+    background: #F79E1B;
+    margin-left: -9px;
+    opacity: 0.9;
+  }
+  
+  .demo-notice {
+    background: #F7F3E9;
+    border-left: 4px solid #D4AF37;
+    border-radius: 5px;
+    padding: 13px 15px;
+    margin-bottom: 25px;
+    font-size: 13px;
+  }
+  
+  .demo-notice strong {
+    color: #1F4D3B;
+  }
+  
+  .demo-notice p {
+    margin: 6px 0 0;
+    line-height: 1.5;
+    color: #666;
+  }
+  
+  .form-section-title {
+    color: #1F4D3B;
+    font-size: 16px;
+    margin-bottom: 18px;
+  }
+  
+  .form-field {
+    margin-bottom: 17px;
+  }
+  
+  .form-field input {
+    width: 100%;
+    box-sizing: border-box;
+    height: 46px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    padding: 0 13px;
+    font-size: 14px;
+    outline: none;
+    background: white;
+    color: #2B2B2B;
+  }
+  
+  .form-field input:focus {
+    border-color: #1F4D3B;
+    box-shadow: 0 0 0 2px rgba(31, 77, 59, 0.08);
+  }
+  
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+  
+  .payment-error {
+    color: #A83232;
+    background: #FFF0F0;
+    border-radius: 6px;
+    padding: 12px;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+  
+  .confirm-payment-button {
+    width: 100%;
+    background: #1F4D3B;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 15px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s;
+  }
+  
+  .confirm-payment-button:hover {
+    background: #173C2E;
+  }
+  
+  .confirm-payment-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+  
+  .payment-footer-note {
+    color: #888;
+    font-size: 11px;
+    text-align: center;
+    margin: 17px 0 0;
+  }
+  
+  .payment-summary h3 {
+    color: #1F4D3B;
+    margin: 0 0 25px;
+    font-size: 18px;
+  }
+  
+  .summary-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 17px 0;
+    font-size: 13px;
+  }
+  
+  .summary-line span {
+    color: #777;
+  }
+  
+  .summary-line strong {
+    color: #2B2B2B;
+  }
+  
+  .summary-divider {
+    height: 1px;
+    background: #eee;
+    margin: 23px 0;
+  }
+  
+  .summary-total {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  
+  .summary-total span {
+    color: #777;
+    font-size: 14px;
+  }
+  
+  .summary-total strong {
+    color: #1F4D3B;
+    font-size: 27px;
+  }
+  
+  .summary-security {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    background: #F7F3E9;
+    padding: 13px;
+    border-radius: 7px;
+    margin-top: 27px;
+  }
+  
+  .summary-security span {
+    color: #1F4D3B;
+    font-weight: bold;
+  }
+  
+  .summary-security p {
+    color: #777;
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 0;
+  }
+  
+  .payment-message {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .payment-message button {
+    background: #1F4D3B;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 7px;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 750px) {
+    .payment-layout {
+      grid-template-columns: 1fr;
+    }
+  
+    .payment-header {
+      padding: 17px 20px;
+    }
+  
+    .payment-form-card,
+    .payment-summary {
+      padding: 22px;
+    }
+  
+    .payment-title h2 {
+      font-size: 21px;
+    }
+  }
+  
+  @media (max-width: 420px) {
+    .form-row {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+  
