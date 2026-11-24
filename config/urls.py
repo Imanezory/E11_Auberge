@@ -1,22 +1,122 @@
-"""
-URL configuration for config project.
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib.auth.views import LogoutView
+from rest_framework.routers import DefaultRouter
+
+from reservations.frontend_views import (
+    reservation_frontend,
+    facture_payment_frontend,
+)
+
+from services.views import ServiceViewSet
+from accueil.controllers import connexion
+
+from accueil.views import (
+    password_reset_request,
+    password_reset_verify,
+    password_reset_confirm,
+)
+
+
+# =====================================
+# REST API - SERVICES
+# =====================================
+
+router = DefaultRouter()
+
+router.register(
+    "services",
+    ServiceViewSet,
+    basename="service-api"
+)
+
+
+# =====================================
+# URLS PRINCIPALES
+# =====================================
 
 urlpatterns = [
+
+    # Administration Django
     path('admin/', admin.site.urls),
+
+    # Connexion
+    path('login/', connexion, name='login'),
+
+    # Interface React - Réservations
+    path(
+        'reservations/',
+        reservation_frontend,
+        name='reservation_frontend'
+    ),
+
+    # Interface React - Paiement des factures
+    path(
+        'factures/payment/<int:pk>/',
+        facture_payment_frontend,
+        name='facture-payment-frontend'
+    ),
+
+    # Accueil + Inscription
+    path('', include('accueil.urls')),
+
+    # Services HTML
+    path('services/', include('services.urls')),
+
+    # Chambres HTML
+    path('chambres/', include('chambres.urls')),
+
+    # REST API - Services
+    path('api/', include(router.urls)),
+
+    # REST API - Chambres
+    path('api/', include('chambres.api_urls')),
+
+    # REST API - Réservations
+    path('api/', include('reservations.urls')),
+
+    # REST API - Factures
+    path('api/factures/', include('factures.urls')),
+
+    # Déconnexion
+    path(
+        'logout/',
+        LogoutView.as_view(next_page='/'),
+        name='logout'
+    ),
+
+    # Mot de passe oublié
+    path(
+        'mot-de-passe-oublie/',
+        password_reset_request,
+        name='password_reset_request'
+    ),
+
+    # Vérification du code
+    path(
+        'verification-code/',
+        password_reset_verify,
+        name='password_reset_verify'
+    ),
+
+    # Nouveau mot de passe
+    path(
+        'nouveau-mot-de-passe/',
+        password_reset_confirm,
+        name='password_reset_confirm'
+    ),
 ]
+
+
+# =====================================
+# AFFICHAGE DES IMAGES UPLOADÉES
+# =====================================
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )

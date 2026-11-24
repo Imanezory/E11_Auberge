@@ -1,0 +1,19 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Réservation - Auberge
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'frontend/assets/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<div id="root"></div>
+{% endblock %}
+
+{% block extra_js %}
+<script type="module" src="{% static 'frontend/assets/index.js' %}"></script>
+{% endblock %}

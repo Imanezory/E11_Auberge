@@ -1,0 +1,1017 @@
+
+/* ==========================================
+   AUBERGE - SERVICE RESERVATION
+   Design compact identique à Chambres
+========================================== */
+
+.service-page {
+  --olive: #455b45;
+  --cream: #f8f5ef;
+  --sand: #e8dcc8;
+  --terracotta: #b87555;
+  --brown: #302b26;
+
+  width: 100%;
+  min-height: 100vh;
+  padding: 35px 5%;
+  background: var(--cream);
+  color: var(--brown);
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.service-page *,
+.service-page *::before,
+.service-page *::after {
+  box-sizing: border-box;
+}
+
+/* ==========================================
+   PROGRESS
+========================================== */
+
+.service-progress {
+  max-width: 760px;
+  margin: 25px auto 90px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.progress-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: #999;
+}
+
+.progress-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  width: 100%;
+  top: 20px;
+  left: 50%;
+  background: var(--sand);
+}
+
+.progress-step.completed::after {
+  background: var(--olive);
+}
+
+.progress-step span {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: white;
+  border: 1px solid var(--sand);
+  z-index: 1;
+}
+
+.progress-step.active span,
+.progress-step.completed span {
+  background: var(--olive);
+  border: 6px solid #e4e6df;
+  color: white;
+  font-weight: bold;
+}
+
+.progress-step p {
+  font-size: 13px;
+  margin-top: 12px;
+}
+
+/* ==========================================
+   HEADING
+========================================== */
+
+.service-heading {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.service-heading > span {
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: var(--olive);
+}
+
+.service-heading h1 {
+  font-family: Georgia, serif;
+  font-size: clamp(30px, 4vw, 46px);
+  font-weight: normal;
+  margin: 18px 0 10px;
+  color: #26352e;
+}
+
+.service-heading p {
+  font-size: 16px;
+  color: #858585;
+  line-height: 1.6;
+}
+
+/* ==========================================
+   MAIN LAYOUT
+========================================== */
+
+.service-layout {
+  width: 100%;
+  max-width: 1450px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(310px, .95fr);
+  gap: 25px;
+  align-items: start;
+}
+
+.service-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+/* ==========================================
+   CARDS
+========================================== */
+
+.service-card,
+.service-summary {
+  background: #fffdfb;
+  border: 1px solid var(--sand);
+  border-radius: 17px;
+  padding: 27px;
+  box-shadow: 0 5px 20px rgba(48,43,38,.035);
+}
+
+.service-card h2,
+.service-summary h2 {
+  font-family: Georgia, serif;
+  font-weight: normal;
+  font-size: 25px;
+  margin: 0 0 10px;
+  color: var(--brown);
+}
+
+.service-description {
+  color: #858585;
+  margin: 0 0 22px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ==========================================
+   FORM FIELDS
+========================================== */
+
+.service-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.service-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-bottom: 17px;
+  min-width: 0;
+}
+
+.service-field:last-child {
+  margin-bottom: 0;
+}
+
+.service-field label {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.service-field input,
+.service-field textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #ded6ca;
+  border-radius: 10px;
+  padding: 13px;
+  background: white;
+  color: var(--brown);
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.service-field input {
+  height: 48px;
+}
+
+.service-field textarea {
+  resize: vertical;
+}
+
+.service-field input:focus,
+.service-field textarea:focus {
+  border-color: var(--olive);
+  box-shadow: 0 0 0 3px rgba(69,91,69,.10);
+}
+
+/* ==========================================
+   CHOSEN SERVICE
+========================================== */
+
+.chosen-service {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  background: var(--cream);
+  border: 1px solid var(--sand);
+  border-radius: 13px;
+  padding: 13px;
+}
+
+.chosen-service > img {
+  width: 175px;
+  height: 125px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.chosen-service-info {
+  min-width: 0;
+}
+
+.service-category {
+  color: var(--olive);
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1.3px;
+}
+
+.chosen-service h3 {
+  font-family: Georgia, serif;
+  font-size: 22px;
+  margin: 8px 0;
+}
+
+.chosen-service p {
+  color: #858585;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.chosen-service strong {
+  display: block;
+  color: var(--terracotta);
+  font-size: 17px;
+  margin-top: 8px;
+}
+
+/* ==========================================
+   SUMMARY
+========================================== */
+
+.service-summary {
+  position: sticky;
+  top: 22px;
+  min-width: 0;
+}
+
+.service-summary h2 {
+  margin: 15px 0 22px;
+}
+
+.summary-selected-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.summary-service {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--sand);
+  min-width: 0;
+}
+
+.summary-service > img {
+  width: 65px;
+  height: 58px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.summary-service > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.summary-service h3 {
+  font-family: Georgia, serif;
+  font-size: 15px;
+  margin: 0 0 5px;
+}
+
+.summary-service p {
+  font-size: 12px;
+  color: #858585;
+  margin: 0;
+}
+
+.remove-service {
+  width: 27px;
+  height: 27px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 50%;
+  background: #f4e8e2;
+  color: #a64e38;
+  font-size: 19px;
+  cursor: pointer;
+}
+
+.summary-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  font-size: 13px;
+}
+
+.summary-line span {
+  color: #858585;
+}
+
+.summary-line strong {
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.service-summary hr {
+  border: none;
+  border-top: 1px solid var(--sand);
+  margin: 9px 0;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 17px 0;
+  font-weight: bold;
+}
+
+.summary-total strong {
+  color: var(--olive);
+  font-size: 22px;
+  white-space: nowrap;
+}
+
+.summary-calculation {
+  text-align: right;
+  color: var(--terracotta);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.summary-note {
+  color: #999;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* ==========================================
+   ADDITIONAL SERVICES - COMPACT
+========================================== */
+
+.service-page .additional-services {
+  width: 100%;
+  max-width: 1450px;
+  margin: 22px auto;
+  padding: 24px 27px;
+  background: #fffdfb;
+  border: 1px solid var(--sand);
+  border-radius: 17px;
+}
+
+/* HEADER + FILTERS */
+
+.additional-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.additional-title {
+  min-width: 0;
+}
+
+.additional-heading h2 {
+  font-family: Georgia, serif;
+  font-size: 25px;
+  margin: 8px 0;
+}
+
+.additional-heading .service-description {
+  font-size: 13px;
+  margin: 0;
+}
+
+.additional-filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.additional-filters label {
+  font-size: 13px;
+}
+
+.additional-filters select {
+  min-width: 130px;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--sand);
+  border-radius: 9px;
+  background: white;
+  color: var(--brown);
+  font-size: 13px;
+}
+
+.paid-only-badge {
+  background: #edf1e9;
+  color: var(--olive);
+  border-radius: 25px;
+  padding: 11px 15px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* GRID */
+
+.additional-services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+}
+
+/* CARD */
+
+.additional-service-card {
+  border: 1px solid var(--sand);
+  border-radius: 13px;
+  overflow: hidden;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.additional-service-card.selected {
+  border: 1.5px solid var(--olive);
+  box-shadow: 0 3px 12px rgba(69,91,69,.10);
+}
+
+/* IMAGE */
+
+.additional-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 115px;
+  background: var(--cream);
+}
+
+.additional-service-image,
+.additional-image-placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.additional-image-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--olive);
+  font-family: Georgia, serif;
+}
+
+.additional-image-wrapper input[type="checkbox"] {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 23px;
+  height: 23px;
+  accent-color: var(--olive);
+  cursor: pointer;
+}
+
+/* CONTENT */
+
+.additional-service-content {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.additional-service-content h3 {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  margin: 3px 0 8px;
+  color: var(--brown);
+}
+
+.additional-service-content > strong {
+  color: var(--terracotta);
+  font-size: 13px;
+  margin-bottom: 7px;
+}
+
+.additional-service-content p {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #858585;
+  margin: 0 0 10px;
+  min-height: 36px;
+}
+
+.service-type {
+  align-self: flex-start;
+  background: #f3eee5;
+  color: var(--olive);
+  padding: 7px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+}
+
+/* PAGINATION */
+
+.service-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 17px;
+  margin-top: 18px;
+}
+
+.service-pagination button {
+  padding: 9px 14px;
+  background: white;
+  color: var(--olive);
+  border: 1px solid var(--sand);
+  border-radius: 9px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.service-pagination button:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+.service-pagination span {
+  color: var(--brown);
+  font-size: 13px;
+}
+
+/* ==========================================
+   ACTIONS
+========================================== */
+
+.service-actions {
+  max-width: 1450px;
+  margin: 25px auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.service-actions button {
+  min-height: 47px;
+  padding: 13px 22px;
+  border-radius: 9px;
+  border: 1px solid var(--sand);
+  background: white;
+  color: var(--olive);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.service-actions .service-submit {
+  background: var(--olive);
+  color: white;
+  border-color: var(--olive);
+}
+
+.service-actions .service-submit:hover {
+  background: #344734;
+}
+
+/* ==========================================
+   ERROR / LOADING
+========================================== */
+
+.service-error {
+  max-width: 1450px;
+  margin: 18px auto;
+  padding: 14px;
+  border-radius: 9px;
+  background: #fff0ec;
+  border: 1px solid #edc5b9;
+  color: #a34435;
+  font-size: 13px;
+}
+
+.service-loading {
+  text-align: center;
+  padding: 100px 20px;
+  color: var(--olive);
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width: 1000px) {
+  .service-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .service-summary {
+    position: static;
+  }
+}
+
+@media(max-width: 750px) {
+  .additional-services-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .additional-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media(max-width: 600px) {
+  .service-page {
+    padding: 20px 14px;
+  }
+
+  .service-fields {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .chosen-service {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .chosen-service > img {
+    width: 100%;
+    height: 190px;
+  }
+
+  .service-card,
+  .service-summary {
+    padding: 19px;
+  }
+
+  .additional-services {
+    padding: 17px !important;
+  }
+
+  .additional-services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .additional-filters {
+    width: 100%;
+  }
+
+  .additional-filters select {
+    flex: 1;
+  }
+
+  .service-actions {
+    flex-direction: column;
+  }
+
+  .service-actions button {
+    width: 100%;
+  }
+
+  .service-heading h1 {
+    font-size: 29px;
+  }
+
+  .service-progress {
+    margin-bottom: 60px;
+  }
+
+  .progress-step p {
+    font-size: 11px;
+  }
+}
+
+/* =====================================
+   SERVICES SUPPLEMENTAIRES
+   DESIGN IDENTIQUE A LA PHOTO
+===================================== */
+
+.service-page .additional-services {
+    width: 100%;
+    padding: 22px 24px;
+    margin: 22px auto;
+    border-radius: 17px;
+}
+
+/* HEADER */
+
+.service-page .additional-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+    gap: 15px;
+}
+
+.service-page .additional-heading h2 {
+    font-family: Georgia, serif;
+    font-size: 25px;
+    margin: 8px 0;
+}
+
+.service-page .additional-heading .service-description {
+    font-size: 14px;
+    margin: 0;
+}
+
+/* 3 CARTES */
+
+.service-page .additional-services-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 15px !important;
+}
+
+/* CARTE */
+
+.service-page .additional-service-card {
+    width: 100%;
+    min-width: 0;
+    border-radius: 14px;
+    overflow: hidden;
+    background: white;
+}
+
+/* IMAGE */
+
+.service-page .additional-image-wrapper {
+    width: 100%;
+    height: 155px !important;
+    overflow: hidden;
+}
+
+.service-page .additional-service-image,
+.service-page .additional-image-placeholder {
+    width: 100%;
+    height: 155px !important;
+    object-fit: cover;
+}
+
+/* CONTENU */
+
+.service-page .additional-service-content {
+    padding: 12px 14px !important;
+}
+
+.service-page .additional-service-content h3 {
+    font-family: Georgia, serif;
+    font-size: 19px !important;
+    margin: 3px 0 9px;
+}
+
+.service-page .additional-service-content > strong {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.service-page .additional-service-content p {
+    font-size: 13px;
+    line-height: 1.5;
+    min-height: 38px;
+    margin-bottom: 9px;
+}
+
+.service-page .service-type {
+    font-size: 11px;
+    padding: 7px 12px;
+    border-radius: 20px;
+}
+
+/* CHECKBOX */
+
+.service-page .additional-image-wrapper input {
+    width: 23px;
+    height: 23px;
+    top: 12px;
+    right: 12px;
+}
+
+/* PAGINATION */
+
+.service-page .service-pagination {
+    margin-top: 18px;
+    gap: 16px;
+}
+
+/* TABLETTE */
+
+@media(max-width: 750px) {
+    .service-page .additional-services-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+/* MOBILE */
+
+@media(max-width: 480px) {
+    .service-page .additional-services-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .service-page .additional-heading {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* =====================================
+   ATTRIBUTION DES SERVICES PAR PERSONNE
+===================================== */
+
+.service-page .person-assignment {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8f5ef;
+    border: 1px solid #e8dcc8;
+    border-radius: 12px;
+}
+
+.service-page .person-assignment h3 {
+    font-family: Georgia, serif;
+    font-size: 17px;
+    margin: 0 0 13px;
+}
+
+.service-page .person-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.service-page .person-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 12px;
+    background: white;
+    border: 1px solid #e8dcc8;
+    border-radius: 9px;
+    color: #455b45;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.service-page .person-option input {
+    width: 16px;
+    height: 16px;
+    accent-color: #455b45;
+    cursor: pointer;
+}
+
+/* SERVICES SUPPLEMENTAIRES */
+
+.service-page .service-person-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid #e8dcc8;
+}
+
+.service-page .assign-label {
+    width: 100%;
+    color: #455b45;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.service-page .service-person-list .person-option {
+    padding: 6px 8px;
+    font-size: 10px;
+}
+
+/* RECAPITULATIF PAR PERSONNE */
+
+.service-page .person-summary {
+    padding: 14px 0;
+    border-bottom: 1px solid #e8dcc8;
+}
+
+.service-page .person-summary > h3 {
+    font-family: Georgia, serif;
+    font-size: 19px;
+    color: #455b45;
+    margin: 0 0 12px;
+}
+
+.service-page .person-summary .summary-service {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 0;
+}
+
+.service-page .person-summary .summary-service img {
+    width: 55px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.service-page .person-summary .summary-service > div {
+    flex: 1;
+    min-width: 0;
+}
+
+.service-page .person-summary .summary-service h4 {
+    font-family: Georgia, serif;
+    font-size: 15px;
+    margin: 0 0 4px;
+}
+
+.service-page .person-summary .summary-service p {
+    font-size: 12px;
+    color: #858585;
+    margin: 0;
+}
+
+.service-page .person-total {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 10px;
+    font-size: 12px;
+}
+
+.service-page .person-total strong {
+    color: #455b45;
+}
+
+.service-page .empty-person {
+    color: #999;
+    font-size: 12px;
+    padding: 8px 0;
+}
+
+/* CARTES SELECTIONNEES */
+
+.service-page .additional-service-card.selected {
+    border: 1.5px solid #455b45;
+    background: #fbfcf9;
+}
+
+@media(max-width: 600px) {
+    .service-page .person-checkboxes {
+        gap: 7px;
+    }
+
+    .service-page .person-option {
+        padding: 7px 9px;
+    }
+
+    .service-page .person-summary .summary-service img {
+        width: 45px;
+        height: 42px;
+    }
+}

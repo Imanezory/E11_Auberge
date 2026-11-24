@@ -1,0 +1,785 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Nos Services | Auberge{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/services.css' %}">
+
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    #services-payants,
+    #services-gratuits {
+        scroll-margin-top: 100px;
+    }
+
+    /* HERO */
+    #services-hero .hero-photo {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        animation: heroFade 18s infinite;
+    }
+
+    #services-hero .hero-photo-1 {
+        background-image: url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1800&q=85");
+        animation-delay: 0s;
+    }
+
+    #services-hero .hero-photo-2 {
+        background-image: url("https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1800&q=85");
+        animation-delay: 6s;
+    }
+
+    #services-hero .hero-photo-3 {
+        background-image: url("https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1800&q=85");
+        animation-delay: 12s;
+    }
+
+    @keyframes heroFade {
+        0% {
+            opacity: 0;
+            transform: scale(1);
+        }
+
+        5%,
+        30% {
+            opacity: 1;
+        }
+
+        35%,
+        100% {
+            opacity: 0;
+            transform: scale(1.08);
+        }
+    }
+
+    /* FILTRAGE */
+    .services-filter-panel {
+        max-width: 1100px;
+        margin: 0 auto 45px;
+        padding: 28px;
+        background: white;
+        border: 1px solid #E8DCC8;
+        box-shadow: 0 8px 30px rgba(48, 43, 38, .06);
+    }
+
+    .filter-search {
+        width: 100%;
+        padding: 14px 18px;
+        border: 1px solid #ddd;
+        background: #F8F5EF;
+        color: #302B26;
+        outline: none;
+    }
+
+    .filter-search:focus {
+        border-color: #455B45;
+    }
+
+    .filter-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .filter-btn {
+        padding: 12px 22px;
+        border: 1px solid #455B45;
+        background: transparent;
+        color: #455B45;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: .3s;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+        background: #455B45;
+        color: white;
+    }
+
+    .filter-category-title {
+        max-width: 1100px;
+        margin: 0 auto 30px;
+        text-align: center;
+    }
+
+    .filter-category-title h3 {
+        font-family: Georgia, serif;
+        font-size: 34px;
+        color: #302B26;
+    }
+
+    .filter-category-title p {
+        margin-top: 10px;
+        color: #777;
+    }
+
+    .filter-count {
+        margin-top: 15px;
+        font-size: 13px;
+        color: #777;
+    }
+
+    /* PAGINATION */
+    .services-pagination {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 9px;
+        margin-top: 45px;
+    }
+
+    .page-btn {
+        min-width: 42px;
+        padding: 11px 15px;
+        border: 1px solid #455B45;
+        background: white;
+        color: #455B45;
+        cursor: pointer;
+        transition: .25s;
+    }
+
+    .page-btn:hover:not(:disabled),
+    .page-btn.active {
+        background: #455B45;
+        color: white;
+    }
+
+    .page-btn:disabled {
+        opacity: .35;
+        cursor: not-allowed;
+    }
+
+    .paid-service-card[hidden],
+    .no-results[hidden],
+    .services-pagination[hidden] {
+        display: none !important;
+    }
+
+    .no-results {
+        text-align: center;
+        padding: 40px;
+        color: #777;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        html {
+            scroll-behavior: auto;
+        }
+
+        #services-hero .hero-photo {
+            animation: none;
+            opacity: 0;
+        }
+
+        #services-hero .hero-photo-1 {
+            opacity: 1;
+        }
+    }
+
+/* ==========================================
+   SERVICE CARDS - DESIGN ELEGANT
+========================================== */
+
+.service-card {
+    position: relative;
+    background: #fffdfb;
+    border: 1px solid #E8DCC8;
+    border-radius: 12px;
+    overflow: hidden;
+
+    box-shadow:
+        0 2px 6px rgba(48, 43, 38, 0.04),
+        0 6px 18px rgba(48, 43, 38, 0.07);
+
+    transition: all 0.3s ease;
+}
+
+/* Effet hover */
+
+.service-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 5px 12px rgba(48, 43, 38, 0.07),
+        0 12px 28px rgba(48, 43, 38, 0.12);
+
+    border-color: #D5C5AC;
+}
+
+/* Images */
+
+.service-card .service-image-wrapper {
+    overflow: hidden;
+}
+
+.service-card .service-image {
+    width: 100%;
+    transition: transform 0.4s ease;
+}
+
+.service-card:hover .service-image {
+    transform: scale(1.04);
+}
+
+/* Contenu */
+
+.service-card .service-content {
+    background: #fffdfb;
+    padding: 22px;
+}
+
+/* Bouton */
+
+.service-card .service-btn {
+    box-shadow: 0 3px 8px rgba(69, 91, 69, 0.12);
+    transition: all 0.3s ease;
+}
+
+.service-card .service-btn:hover {
+    box-shadow: 0 5px 14px rgba(69, 91, 69, 0.22);
+}
+
+/* Bouton Réserver */
+
+.service-card .service-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    width: auto;
+    flex: 0 0 auto;
+    padding: 10px 20px;
+
+    background-color: #1F4D3B;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.service-card .service-btn:hover {
+    background-color: #326B53;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(31, 77, 59, 0.2);
+}
+
+.service-card .service-btn span {
+    font-size: 16px;
+    transition: transform 0.3s ease;
+}
+
+.service-card .service-btn:hover span {
+    transform: translateX(4px);
+}
+.service-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.service-details-link {
+    margin-left: auto;
+    color: #455B45;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+}
+
+.service-details-link:hover {
+    color: #1F4D3B;
+    text-decoration: underline;
+}
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<!-- ====================================== -->
+<!-- HERO -->
+<!-- ====================================== -->
+
+<section id="services-hero" class="relative flex h-[360px] items-center justify-center
+           overflow-hidden bg-[#202D28] px-6 text-center text-white
+           sm:h-[420px] lg:h-[460px]">
+
+    <div class="absolute inset-0">
+        <div class="hero-photo hero-photo-1"></div>
+        <div class="hero-photo hero-photo-2"></div>
+        <div class="hero-photo hero-photo-3"></div>
+    </div>
+
+    <div class="absolute inset-0 bg-[#14231C]/65"></div>
+
+    <div class="relative z-10 mx-auto max-w-4xl">
+
+        <span class="text-xs uppercase tracking-[.3em] text-[#E8DCC8]">
+            L'ART DE RECEVOIR
+        </span>
+
+        <h1 class="mt-5 font-serif text-4xl sm:text-5xl lg:text-6xl">
+            Nos Services
+            <span class="mt-2 block italic text-[#E8DCC8]">
+                Votre confort, notre priorité.
+            </span>
+        </h1>
+
+        <p class="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/85">
+            Découvrez nos prestations et profitez d'une expérience unique
+            au sein de notre auberge.
+        </p>
+
+        <a href="#services-payants" class="mt-7 inline-flex bg-[#E8DCC8] px-8 py-3
+                  font-semibold text-[#302B26] transition hover:bg-white">
+            Explorer nos services →
+        </a>
+
+    </div>
+</section>
+
+
+<!-- ====================================== -->
+<!-- SERVICES PAYANTS -->
+<!-- ====================================== -->
+
+<section class="services-section paid-section" id="services-payants">
+
+    <div class="section-heading">
+        <span class="subtitle">DES EXPÉRIENCES À DÉCOUVRIR</span>
+        <h2>Services Payants</h2>
+        <p>
+            Profitez de nos prestations exclusives,
+            même sans réservation de chambre.
+        </p>
+    </div>
+
+    <!-- FILTRAGE -->
+    <div class="services-filter-panel">
+
+        <!-- Recherche -->
+        <input type="search" id="serviceSearch" class="filter-search"
+            placeholder="Rechercher : café, jus, massage, déjeuner...">
+
+        <!-- Catégories + Prix -->
+        <div class="flex flex-wrap items-center justify-between gap-4 mt-4">
+
+            <!-- Boutons catégories -->
+            <div class="filter-buttons flex flex-wrap items-center gap-2">
+
+                <button type="button" class="filter-btn active" data-category="all">
+                    Tous les services
+                </button>
+
+                <button type="button" class="filter-btn" data-category="restauration">
+                    Restauration
+                </button>
+
+                <button type="button" class="filter-btn" data-category="bien-être">
+                    Bien-être
+                </button>
+
+                <button type="button" class="filter-btn" data-category="loisirs">
+                    Loisirs
+                </button>
+
+            </div>
+
+            <!-- Filtre prix compact -->
+            <div class="w-40 shrink-0">
+                <div class="mb-1 flex justify-between text-xs font-medium text-[#455B45]">
+                    <span>Prix max</span>
+                    <span id="prix-valeur">500 DH</span>
+                </div>
+
+                <input type="range" id="prix-filter" min="0" max="500" value="500" step="10"
+                    class="w-full cursor-pointer accent-[#455B45]">
+            </div>
+
+
+
+        </div>
+
+        <!-- Nombre de services -->
+        <p class="filter-count mt-3" id="filterCount"></p>
+
+    </div>
+
+    <!-- TITRE DYNAMIQUE -->
+    <div class="filter-category-title">
+        <h3 id="categoryTitle">Tous nos services</h3>
+        <p id="categoryDescription">
+            Découvrez nos prestations et choisissez votre expérience.
+        </p>
+    </div>
+
+    <!-- CARTES DJANGO -->
+    <div class="services-grid" id="paidServicesGrid">
+
+        {% for service in services_payants %}
+
+        <article class="service-card paid-service-card" data-name="{{ service.nom }}" data-category="{{ service.type }}"
+            data-price="{{ service.prix|floatformat:2 }}">
+
+            {% if service.image %}
+            <div class="service-image-wrapper">
+
+                <img src="{{ service.image.url }}" alt="{{ service.nom }}" class="service-image" loading="lazy">
+
+            </div>
+            {% endif %}
+
+            <div class="service-content">
+
+                <div class="service-meta">
+                    <span>✧ {{ service.type }}</span>
+                    <span class="meta-separator">|</span>
+                    <span>{{ service.prix|floatformat:2 }} DH</span>
+                </div>
+
+                <h3>{{ service.nom }}</h3>
+
+                <p>{{ service.description }}</p>
+
+               <div class="service-actions">
+
+    <a href="{% url 'reserver_service' service.id %}"
+       class="service-btn">
+        Réserver
+        <span aria-hidden="true">→</span>
+    </a>
+
+    <a href="{% url 'detail_service' service.id %}"
+       class="service-details-link">
+        Voir détails →
+    </a>
+
+</div>
+            </div>
+        </article>
+
+        {% empty %}
+        <p class="empty-message">
+            Aucun service payant disponible pour le moment.
+        </p>
+        {% endfor %}
+
+    </div>
+
+    <p id="noResults" class="no-results" hidden>
+        Aucun service trouvé pour cette recherche.
+    </p>
+
+    <!-- PAGINATION -->
+    <nav id="servicesPagination" class="services-pagination" aria-label="Pagination des services payants">
+    </nav>
+
+</section>
+
+
+<!-- ====================================== -->
+<!-- SERVICES GRATUITS -->
+<!-- ====================================== -->
+
+<section class="services-section free-section" id="services-gratuits">
+
+    <div class="section-heading">
+        <span class="subtitle">INCLUS DANS VOTRE SÉJOUR</span>
+        <h2>Services Gratuits</h2>
+        <p>
+            Profitez de nos services offerts pour rendre
+            votre séjour encore plus agréable.
+        </p>
+    </div>
+
+    <div class="services-grid">
+
+        {% for service in services_gratuits %}
+
+        <article class="service-card">
+
+            {% if service.image %}
+            <div class="service-image-wrapper">
+
+                <img src="{{ service.image.url }}" alt="{{ service.nom }}" class="service-image" loading="lazy">
+
+            </div>
+            {% endif %}
+
+            <div class="service-content">
+
+                <div class="service-meta">
+                    <span>✧ {{ service.type }}</span>
+                    <span class="meta-separator">|</span>
+                    <span class="free-label">Gratuit</span>
+                </div>
+
+                <h3>{{ service.nom }}</h3>
+                <p>{{ service.description }}</p>
+
+                <span class="included-label">
+                    ✓ Inclus dans votre séjour
+                </span>
+
+            </div>
+        </article>
+
+        {% empty %}
+        <p class="empty-message">
+            Aucun service gratuit disponible pour le moment.
+        </p>
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- ====================================== -->
+<!-- SÉCURITÉ DES ENFANTS -->
+<!-- ====================================== -->
+
+<section class="children-section">
+
+    <div class="children-warning">
+
+        <span class="warning-icon" aria-hidden="true">⚠</span>
+
+        <div>
+            <h3>
+                Informations importantes — Sécurité des enfants
+            </h3>
+
+            <p>
+                Les enfants doivent être accompagnés et surveillés
+                par un adulte responsable dans les espaces communs,
+                notamment à proximité de la piscine.
+
+                L'accès à la piscine sans surveillance d'un adulte
+                est interdit aux enfants.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const cards = Array.from(
+            document.querySelectorAll(".paid-service-card")
+        );
+
+        const search = document.getElementById("serviceSearch");
+        const prixFilter = document.getElementById("prix-filter");
+        const prixValeur = document.getElementById("prix-valeur");
+        const buttons = document.querySelectorAll(".filter-btn");
+        const pagination = document.getElementById("servicesPagination");
+        const count = document.getElementById("filterCount");
+        const noResults = document.getElementById("noResults");
+        const title = document.getElementById("categoryTitle");
+        const description = document.getElementById("categoryDescription");
+
+        const prices = cards.map(card => Number((card.dataset.price || "0").replace(",", "."))).filter(Number.isFinite);
+        const maxPrice = Math.max(500, ...prices);
+        prixFilter.max = String(Math.ceil(maxPrice / 10) * 10);
+        prixFilter.value = prixFilter.max;
+        prixValeur.textContent = prixFilter.value + " DH";
+
+        const perPage = 6;
+        let currentPage = 1;
+        let activeCategory = "all";
+
+        const categoryInfo = {
+            "all": [
+                "Tous nos services",
+                "Découvrez nos prestations et choisissez votre expérience."
+            ],
+            "restauration": [
+                "Restauration",
+                "Café, jus, petit-déjeuner, déjeuner, dîner et boissons."
+            ],
+            "bien-etre": [
+                "Bien-être",
+                "Prenez du temps pour vous détendre."
+            ],
+            "loisirs": [
+                "Loisirs",
+                "Découvrez nos activités et expériences."
+            ]
+        };
+
+        function normalize(value) {
+            return (value || "")
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase()
+                .trim();
+        }
+
+        function createPageButton(label, targetPage, disabled, active = false) {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "page-btn" + (active ? " active" : "");
+            button.textContent = label;
+            button.disabled = disabled;
+
+            if (active) {
+                button.setAttribute("aria-current", "page");
+            }
+
+            button.addEventListener("click", function () {
+                currentPage = targetPage;
+                render();
+
+                document.getElementById("services-payants")
+                    .scrollIntoView({ behavior: "smooth" });
+            });
+
+            return button;
+        }
+
+        function render() {
+            const query = normalize(search.value);
+
+            const filtered = cards.filter(card => {
+                const cardCategory = normalize(card.dataset.category);
+                const cardName = normalize(card.dataset.name);
+                const cardText = normalize(card.textContent);
+                const cardPrice = Number((card.dataset.price || "0").replace(",", "."));
+                const priceMatch = Number.isFinite(cardPrice) && cardPrice <= Number(prixFilter.value);
+
+                const categoryMatch =
+                    activeCategory === "all" ||
+                    cardCategory === activeCategory;
+
+                const searchMatch =
+                    !query ||
+                    cardName.includes(query) ||
+                    cardText.includes(query);
+
+                return categoryMatch && searchMatch && priceMatch;
+            });
+
+            const totalPages = Math.ceil(filtered.length / perPage);
+
+            currentPage = Math.min(
+                currentPage,
+                Math.max(1, totalPages)
+            );
+
+            const start = (currentPage - 1) * perPage;
+            const visible = filtered.slice(start, start + perPage);
+
+            cards.forEach(card => {
+                card.hidden = true;
+            });
+
+            visible.forEach(card => {
+                card.hidden = false;
+            });
+
+            count.textContent =
+                filtered.length + " service(s) trouvé(s)";
+
+            noResults.hidden = filtered.length !== 0;
+
+            const info = categoryInfo[activeCategory] || categoryInfo.all;
+            title.textContent = info[0];
+            description.textContent = info[1];
+
+            pagination.innerHTML = "";
+
+            if (totalPages <= 1) {
+                pagination.hidden = true;
+                return;
+            }
+
+            pagination.hidden = false;
+
+            pagination.appendChild(
+                createPageButton(
+                    "← Précédent",
+                    currentPage - 1,
+                    currentPage === 1
+                )
+            );
+
+            for (let page = 1; page <= totalPages; page++) {
+                pagination.appendChild(
+                    createPageButton(
+                        String(page),
+                        page,
+                        false,
+                        page === currentPage
+                    )
+                );
+            }
+
+            pagination.appendChild(
+                createPageButton(
+                    "Suivant →",
+                    currentPage + 1,
+                    currentPage === totalPages
+                )
+            );
+        }
+
+        buttons.forEach(button => {
+            button.addEventListener("click", function () {
+                activeCategory = normalize(this.dataset.category);
+                currentPage = 1;
+
+                buttons.forEach(btn => {
+                    btn.classList.remove("active");
+                });
+
+                this.classList.add("active");
+                render();
+            });
+        });
+
+        search.addEventListener("input", function () {
+            currentPage = 1;
+            render();
+        });
+
+        prixFilter.addEventListener("input", function () {
+            prixValeur.textContent = this.value + " DH";
+            currentPage = 1;
+            render();
+        });
+
+        render();
+    });
+
+
+</script>
+{% endblock %}

@@ -1,11 +1,10 @@
-from django.db import models
 
-# Create your models here.
 from django.db import models
 from django.conf import settings
 
 
 class Reservation(models.Model):
+
     utilisateur = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT,
@@ -25,12 +24,15 @@ class Reservation(models.Model):
 
     dateArrivee = models.DateField()
     dateDepart = models.DateField()
+
     nbrPersonnes = models.PositiveIntegerField()
 
     STATUT_CHOICES = [
         ('en_attente', 'En attente'),
         ('confirmee', 'Confirmée'),
+        ('payee', 'Payée'),
         ('annulee', 'Annulée'),
+        ('terminee', 'Terminée'),
     ]
 
     statut = models.CharField(

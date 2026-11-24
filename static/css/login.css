@@ -1,0 +1,198 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    color: #242424;
+}
+
+.login-page {
+    display: flex;
+    min-height: 100vh;
+}
+
+.login-image {
+    width: 50%;
+    position: relative;
+    background:
+        linear-gradient(
+            rgba(15,18,22,.30),
+            rgba(15,18,22,.55)
+        ),
+        url("../images/login-bg.jpg") center/cover;
+    color: white;
+    padding: 55px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+}
+
+.welcome {
+    margin-bottom: 70px;
+}
+
+.welcome span {
+    letter-spacing: 4px;
+    font-size: 13px;
+}
+
+.welcome h1 {
+    font: 64px 'Playfair Display', serif;
+    margin: 25px 0;
+}
+
+.welcome p {
+    max-width: 450px;
+    line-height: 1.9;
+}
+
+.login-content {
+    width: 50%;
+    background: #FAF9F7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 440px;
+}
+
+.eyebrow {
+    color: #758572;
+    letter-spacing: 3px;
+}
+
+h2 {
+    font: 54px 'Playfair Display', serif;
+    margin: 15px 0;
+}
+
+.subtitle {
+    color: #777777;
+    margin-bottom: 45px;
+}
+
+label {
+    display: block;
+    margin: 18px 0 8px;
+}
+
+input {
+    width: 100%;
+    padding: 18px;
+    border: 1px solid #E5E5E5;
+    border-radius: 30px;
+    background: white;
+    font: inherit;
+}
+
+input:focus {
+    outline: 2px solid #758572;
+}
+
+button {
+    width: 100%;
+    margin-top: 30px;
+    padding: 18px;
+    border: none;
+    border-radius: 30px;
+    background: #758572;
+    color: white;
+    font: inherit;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+button:hover {
+    background: #5D705B;
+}
+
+/* LIEN S'INSCRIRE */
+
+.register {
+    text-align: center;
+    color: #777777;
+    margin-top: 30px;
+    font-size: 15px;
+}
+
+.register a {
+    color: #455B45;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.register a:hover {
+    color: #B87555;
+}
+
+.error {
+    color: #A43838;
+}
+
+@media (max-width: 768px) {
+    .login-page {
+        flex-direction: column;
+    }
+
+    .login-image,
+    .login-content {
+        width: 100%;
+    }
+
+    .login-image {
+        min-height: 280px;
+        padding: 25px;
+    }
+
+    .welcome {
+        margin: 30px 0 0;
+    }
+
+    .welcome h1 {
+        font-size: 42px;
+    }
+
+    .login-content {
+        padding: 50px 25px;
+    }
+
+    h2 {
+        font-size: 42px;
+    }
+}
+/* Texte sous le bouton Se connecter */
+.login-box .register {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 12px;
+    color: #827B73;
+}
+
+/* Lien S'inscrire en vert */
+.login-box .register a,
+.login-box .register a:visited {
+    color: #455B45 !important;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.login-box .register a:hover {
+    color: #B87555 !important;
+}

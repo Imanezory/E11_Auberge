@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ service.nom }} | Auberge{% endblock %}
+
+{% block content %}
+<main class="bg-[#F8F5EF] text-[#302B26] min-h-screen">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-10 pb-24">
+
+    <!-- FIL D'ARIANE -->
+    <nav aria-label="Fil d'Ariane" class="flex flex-wrap items-center gap-3 text-sm mb-12">
+      <a href="/" class="text-[#455B45] hover:underline">Accueil</a>
+      <span class="text-[#B87555]">›</span>
+      <a href="{% url 'liste_services' %}" class="text-[#455B45] hover:underline">Services</a>
+      <span class="text-[#B87555]">›</span>
+      <span class="font-semibold">{{ service.nom }}</span>
+    </nav>
+
+    <!-- PRESENTATION DU SERVICE -->
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <div class="relative">
+        <div class="aspect-[5/4] overflow-hidden bg-[#E8DCC8]">
+          {% if service.image %}
+            <img src="{{ service.image.url }}" alt="{{ service.nom }}" class="w-full h-full object-cover" />
+          {% else %}
+            <div class="w-full h-full flex flex-col items-center justify-center gap-4 text-center px-8 text-[#455B45]">
+              <span class="text-6xl" aria-hidden="true">✧</span>
+              <span class="font-serif text-3xl">{{ service.nom }}</span>
+            </div>
+          {% endif %}
+        </div>
+        <div class="hidden sm:block absolute -bottom-6 -left-4 bg-[#455B45] text-white px-7 py-6 shadow-lg">
+          <p class="font-serif text-2xl font-semibold">Auberge.</p>
+          <p class="text-[10px] uppercase tracking-[0.22em] mt-1">Confort &amp; authenticité</p>
+        </div>
+      </div>
+
+      <div class="lg:py-5">
+        <div class="flex items-center gap-4 text-[#B87555] text-xs sm:text-sm font-semibold uppercase tracking-[0.28em]">
+          <span class="w-12 h-px bg-[#B87555]"></span>
+          Nos services
+        </div>
+        <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl leading-tight mt-6 mb-6">{{ service.nom }}</h1>
+        <p class="text-[#625B53] leading-8 text-base sm:text-lg">{{ service.description }}</p>
+
+        <div class="mt-9 bg-[#E8DCC8] px-6 sm:px-8 py-6 flex items-center gap-5">
+          <div>
+            <p class="text-sm text-[#625B53]">Prix du service</p>
+            {% if service.prix > 0 %}
+              <p class="text-2xl sm:text-3xl font-bold text-[#302B26] mt-1">{{ service.prix|floatformat:2 }} DH</p>
+            {% else %}
+              <p class="text-2xl sm:text-3xl font-bold text-[#455B45] mt-1">Gratuit</p>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="mt-7 border-t border-[#E8DCC8] pt-6 grid gap-4 text-sm sm:text-base">
+          <p class="flex items-center gap-4"><span class="text-[#455B45] text-xl" aria-hidden="true">✧</span><span><strong>Catégorie :</strong> {{ service.type }}</span></p>
+          <p class="flex items-center gap-4"><span class="text-[#455B45] text-xl" aria-hidden="true">✓</span><span><strong>Type :</strong> {% if service.prix > 0 %}Service payant{% else %}Service gratuit{% endif %}</span></p>
+          <p class="flex items-center gap-4"><span class="text-[#455B45] text-xl" aria-hidden="true">⌂</span><span><strong>Établissement :</strong> Auberge</span></p>
+        </div>
+
+        <div class="mt-9">
+          {% if service.prix > 0 %}
+         <a href="{% url 'reserver_service' service.id %}"
+   class="inline-flex items-center justify-between gap-6
+          bg-[#455B45] px-6 py-3
+          text-white text-sm font-semibold
+          rounded-none transition-colors duration-300
+          hover:bg-[#304330]">
+
+    Réserver ce service
+    <span>→</span>
+
+</a>
+          {% else %}
+            <span class="inline-flex items-center gap-3 border border-[#455B45] text-[#455B45] px-7 py-4 font-semibold">✓ Service gratuit</span>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+
+    <!-- CE QUE COMPREND LE SERVICE -->
+    <section class="mt-24">
+      <div class="flex items-center gap-4 text-[#B87555] text-xs font-semibold uppercase tracking-[0.26em] mb-4"><span class="w-12 h-px bg-[#B87555]"></span>Votre expérience</div>
+      <h2 class="font-serif text-3xl sm:text-4xl mb-4">Ce que comprend le service</h2>
+      <div class="w-16 h-1 bg-[#455B45] mb-9"></div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <article class="bg-white border border-[#E8DCC8] p-8 text-center">
+          <div class="text-4xl text-[#455B45] mb-5" aria-hidden="true">✧</div>
+          <h3 class="font-serif text-xl font-semibold mb-3">Présentation</h3>
+          <p class="text-sm text-[#625B53] leading-7">Découvrez {{ service.nom }}, un service proposé par notre auberge.</p>
+        </article>
+        <article class="bg-white border border-[#E8DCC8] p-8 text-center">
+          <div class="text-4xl text-[#455B45] mb-5" aria-hidden="true">✓</div>
+          <h3 class="font-serif text-xl font-semibold mb-3">Informations</h3>
+          <p class="text-sm text-[#625B53] leading-7">{{ service.description|truncatewords:18 }}</p>
+        </article>
+        <article class="bg-white border border-[#E8DCC8] p-8 text-center">
+          <div class="text-4xl text-[#455B45] mb-5" aria-hidden="true">⌂</div>
+          <h3 class="font-serif text-xl font-semibold mb-3">Votre séjour</h3>
+          <p class="text-sm text-[#625B53] leading-7">Profitez des services de notre auberge dans un cadre accueillant.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- AUTRES SERVICES ALEATOIRES -->
+    <section class="mt-24" aria-label="Autres services similaires">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-9">
+        <div>
+          <div class="flex items-center gap-4 text-[#B87555] text-xs font-semibold uppercase tracking-[0.26em] mb-4"><span class="w-12 h-px bg-[#B87555]"></span>À découvrir</div>
+          <h2 class="font-serif text-3xl sm:text-4xl mb-3">Autres services similaires</h2>
+          <p class="text-[#625B53] leading-7">Découvrez également les autres services proposés par notre auberge.</p>
+        </div>
+      <a href="{% url 'liste_services' %}"
+   class="inline-flex items-center justify-between gap-6
+          bg-[#455B45] px-6 py-3
+          text-white text-sm font-semibold
+          rounded-none transition-colors duration-300
+          hover:bg-[#304330]">
+    Voir tous les services
+    <span>→</span>
+</a>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-4">
+        <button type="button" id="other-prev" aria-label="Service précédent" class="shrink-0 w-9 h-9 sm:w-11 sm:h-11 border border-[#455B45] text-[#455B45] hover:bg-[#455B45] hover:text-white transition-colors">‹</button>
+        <div id="other-carousel" tabindex="0" aria-label="Carrousel des autres services" class="flex flex-1 min-w-0 gap-4 sm:gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4" style="scrollbar-width:none;">
+          {% for autre in autres_services %}
+            <a href="{% url 'detail_service' autre.id %}" class="group shrink-0 basis-full sm:basis-[calc((100%-1.5rem)/2)] lg:basis-[calc((100%-3rem)/3)] snap-start min-w-0 bg-white border border-[#E8DCC8] text-[#302B26] no-underline hover:shadow-lg transition-shadow">
+              <div class="h-44 sm:h-48 bg-[#E8DCC8] overflow-hidden">
+                {% if autre.image %}
+                  <img src="{{ autre.image.url }}" alt="{{ autre.nom }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                {% else %}
+                  <div class="w-full h-full flex items-center justify-center text-[#455B45] text-5xl" aria-hidden="true">✧</div>
+                {% endif %}
+              </div>
+              <div class="p-5 sm:p-6">
+                <span class="text-[#B87555] uppercase tracking-[0.16em] text-xs font-semibold">{{ autre.type }}</span>
+                <h3 class="font-serif text-xl font-semibold mt-2 mb-3">{{ autre.nom }}</h3>
+                <p class="text-[#625B53] text-sm leading-6 min-h-12">{{ autre.description|truncatewords:12 }}</p>
+                <div class="border-t border-[#E8DCC8] mt-5 pt-4 flex items-center justify-between gap-3">
+                  <strong class="text-[#455B45]">{% if autre.prix > 0 %}{{ autre.prix|floatformat:2 }} DH{% else %}Gratuit{% endif %}</strong>
+                  <span class="text-[#B87555] text-sm group-hover:underline">Détails →</span>
+                </div>
+              </div>
+            </a>
+          {% empty %}
+            <p class="py-8 text-[#625B53]">Aucun autre service disponible.</p>
+          {% endfor %}
+        </div>
+        <button type="button" id="other-next" aria-label="Service suivant" class="shrink-0 w-9 h-9 sm:w-11 sm:h-11 border border-[#455B45] text-[#455B45] hover:bg-[#455B45] hover:text-white transition-colors">›</button>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const carousel = document.getElementById('other-carousel');
+  const prev = document.getElementById('other-prev');
+  const next = document.getElementById('other-next');
+  if (!carousel || !prev || !next) return;
+  const cards = carousel.querySelectorAll('a');
+  if (cards.length < 2) return;
+
+  function move(direction) {
+    const max = carousel.scrollWidth - carousel.clientWidth;
+    if (max <= 1) return;
+    const gap = parseFloat(getComputedStyle(carousel).gap) || 0;
+    const step = cards[0].getBoundingClientRect().width + gap;
+    if (direction > 0 && carousel.scrollLeft >= max - 5) {
+      carousel.scrollTo({ left: 0, behavior: 'smooth' });
+    } else if (direction < 0 && carousel.scrollLeft <= 5) {
+      carousel.scrollTo({ left: max, behavior: 'smooth' });
+    } else {
+      carousel.scrollBy({ left: direction * step, behavior: 'smooth' });
+    }
+  }
+
+  prev.addEventListener('click', () => move(-1));
+  next.addEventListener('click', () => move(1));
+
+  let interval;
+  function stop() { clearInterval(interval); }
+  function start() {
+    stop();
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    interval = setInterval(() => move(1), 3500);
+  }
+  carousel.addEventListener('mouseenter', stop);
+  carousel.addEventListener('mouseleave', start);
+  carousel.addEventListener('focusin', stop);
+  carousel.addEventListener('focusout', (event) => {
+    if (!carousel.contains(event.relatedTarget)) start();
+  });
+  document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+  start();
+});
+</script>
+{% endblock %}

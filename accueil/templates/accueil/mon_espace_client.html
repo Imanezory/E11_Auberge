@@ -1,0 +1,1393 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mon espace client | Auberge{% endblock %}
+
+{% block extra_css %}
+<style>
+:root {
+    --green: #1f4d3b;
+    --green-dark: #153729;
+    --green-light: #e9f0eb;
+    --beige: #f7f3e9;
+    --gold: #d4af37;
+    --brown: #2b2b2b;
+    --muted: #777;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.client-dashboard {
+    min-height: 750px;
+    display: flex;
+    background: #f7f5f0;
+}
+
+/* =================================
+   SIDEBAR
+================================= */
+
+.client-sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: var(--green);
+    color: white;
+    padding: 30px 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-brand {
+    padding: 5px 15px 30px;
+    border-bottom: 1px solid rgba(255,255,255,.17);
+    margin-bottom: 28px;
+}
+
+.sidebar-brand h2 {
+    font-family: Georgia, serif;
+    font-size: 25px;
+    letter-spacing: 2px;
+    margin: 0;
+    color: white;
+}
+
+.sidebar-brand p {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #d6dfd8;
+    margin: 8px 0 0;
+}
+
+.sidebar-label {
+    color: #b9cbbf;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    padding: 0 15px;
+    margin-bottom: 13px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    width: 100%;
+    padding: 14px 15px;
+    border: none;
+    border-radius: 9px;
+    background: transparent;
+    color: #e5eee8;
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.sidebar-link:hover {
+    background: rgba(255,255,255,.1);
+    color: white;
+}
+
+.sidebar-link.active {
+    background: white;
+    color: var(--green);
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(0,0,0,.08);
+}
+
+.sidebar-icon {
+    font-size: 18px;
+    width: 23px;
+    text-align: center;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+    padding-top: 25px;
+    border-top: 1px solid rgba(255,255,255,.17);
+}
+
+.sidebar-bottom button {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    text-align: left;
+    padding: 12px 15px;
+    font-size: 14px;
+}
+
+/* =================================
+   MAIN CONTENT
+================================= */
+
+.client-main {
+    flex: 1;
+    min-width: 0;
+    padding: 38px 45px;
+}
+
+.client-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 35px;
+    flex-wrap: wrap;
+}
+
+.client-topbar h1 {
+    color: var(--green);
+    font-family: Georgia, serif;
+    font-size: 30px;
+    margin: 0;
+    font-weight: 500;
+}
+
+.client-topbar p {
+    color: var(--muted);
+    margin: 8px 0 0;
+    font-size: 14px;
+}
+
+.client-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--green);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+}
+
+/* =================================
+   ALERTS
+================================= */
+
+.client-message {
+    padding: 15px 18px;
+    border-radius: 9px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.client-message.success {
+    background: #e3f3e7;
+    color: #176b37;
+}
+
+.client-message.error {
+    background: #ffe5e5;
+    color: #a32626;
+}
+
+/* =================================
+   TAB CONTENT
+================================= */
+
+.dashboard-panel {
+    display: none;
+    animation: fadeIn .25s ease;
+}
+
+.dashboard-panel.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content-card {
+    background: white;
+    border: 1px solid #ebe7df;
+    border-radius: 13px;
+    padding: 30px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,.025);
+}
+
+.content-heading {
+    color: var(--green);
+    font-family: Georgia, serif;
+    font-size: 24px;
+    font-weight: 500;
+    margin: 0 0 9px;
+}
+
+.content-description {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 0 0 27px;
+    line-height: 1.7;
+}
+
+.section-line {
+    height: 1px;
+    background: #eee;
+    margin: 20px 0 25px;
+}
+
+/* =================================
+   PROFILE
+================================= */
+
+.profile-avatar {
+    width: 75px;
+    height: 75px;
+    background: var(--green-light);
+    color: var(--green);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.profile-name {
+    font-size: 21px;
+    color: var(--green);
+    margin: 0 0 5px;
+}
+
+.profile-email {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.profile-item {
+    background: var(--beige);
+    padding: 20px;
+    border-radius: 9px;
+    min-width: 0;
+}
+
+.profile-item span {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 9px;
+}
+
+.profile-item strong {
+    color: var(--green);
+    font-size: 15px;
+    overflow-wrap: anywhere;
+}
+
+/* =================================
+   STATISTICS
+================================= */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background: white;
+    border: 1px solid #ebe7df;
+    border-radius: 12px;
+    padding: 22px;
+}
+
+.stat-card span {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.stat-card strong {
+    display: block;
+    font-size: 27px;
+    color: var(--green);
+    margin-top: 9px;
+}
+
+/* =================================
+   PASSWORD
+================================= */
+
+.password-form {
+    max-width: 570px;
+}
+
+.password-field {
+    margin-bottom: 21px;
+}
+
+.password-field label {
+    display: block;
+    color: var(--green);
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 9px;
+}
+
+.password-field input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ddd8ce;
+    border-radius: 8px;
+    font-size: 14px;
+    background: white;
+}
+
+.password-field input:focus {
+    outline: none;
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(31,77,59,.1);
+}
+
+.password-field ul {
+    color: var(--muted);
+    font-size: 12px;
+    padding-left: 20px;
+    line-height: 1.7;
+}
+
+.field-error {
+    color: #b42318;
+    font-size: 13px;
+    margin-top: 7px;
+}
+
+.password-submit,
+.primary-button {
+    background: var(--green);
+    color: white;
+    border: none;
+    padding: 14px 23px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: .2s;
+}
+
+.password-submit:hover,
+.primary-button:hover {
+    background: var(--green-dark);
+}
+
+/* =================================
+   HISTORY
+================================= */
+
+.history-filter {
+    background: var(--beige);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 22px;
+}
+
+.history-filter label {
+    display: block;
+    color: var(--green);
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.filter-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.history-filter select {
+    min-width: 180px;
+    padding: 12px;
+    border: 1px solid #ddd8ce;
+    border-radius: 7px;
+    background: white;
+}
+
+.filter-button {
+    padding: 12px 19px;
+    border: none;
+    border-radius: 7px;
+    background: var(--green);
+    color: white;
+    cursor: pointer;
+}
+
+.reset-filter {
+    color: var(--green);
+    font-size: 13px;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.reservation-card {
+    background: white;
+    border: 1px solid #e9e4da;
+    border-radius: 12px;
+    padding: 25px;
+}
+
+.reservation-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 23px;
+}
+
+.reservation-top h3 {
+    color: var(--green);
+    font-size: 20px;
+    margin: 0;
+}
+
+.status {
+    display: inline-block;
+    padding: 8px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.status.en_attente {
+    background: #fff1cc;
+    color: #916500;
+}
+
+.status.confirmee {
+    background: #e4efff;
+    color: #205a9c;
+}
+
+.status.annulee {
+    background: #ffe5e5;
+    color: #a32626;
+}
+
+.status.terminee {
+    background: #eee;
+    color: #555;
+}
+
+.reservation-info {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.info-item {
+    background: var(--beige);
+    border-radius: 8px;
+    padding: 16px;
+    min-width: 0;
+}
+
+.info-item span {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 8px;
+}
+
+.info-item strong {
+    color: var(--green);
+    font-size: 14px;
+}
+
+.details-block {
+    padding: 18px;
+    background: #faf9f5;
+    border-radius: 9px;
+    margin-top: 17px;
+}
+
+.details-block h4 {
+    color: var(--green);
+    margin: 0 0 12px;
+    font-size: 15px;
+}
+
+.details-block p {
+    color: #555;
+    font-size: 14px;
+    margin: 8px 0;
+}
+
+/* =================================
+   INVOICE
+================================= */
+
+.invoice-box {
+    background: #eff5f0;
+    border-radius: 9px;
+    padding: 20px;
+    margin-top: 18px;
+}
+
+.invoice-box h4 {
+    color: var(--green);
+    margin: 0 0 15px;
+}
+
+.invoice-box p {
+    font-size: 14px;
+    margin: 9px 0;
+    color: #555;
+}
+
+.invoice-box strong {
+    color: var(--green);
+}
+
+.invoice-link {
+    display: inline-block;
+    background: var(--green);
+    color: white !important;
+    text-decoration: none !important;
+    padding: 12px 18px;
+    border-radius: 8px;
+    margin-top: 12px;
+    font-size: 13px;
+}
+
+.invoice-empty {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* =================================
+   PAGINATION
+================================= */
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 25px 0 5px;
+    border-top: 1px solid #eee;
+    margin-top: 25px;
+}
+
+.pagination-button {
+    display: inline-block;
+    padding: 12px 20px;
+    border: 1px solid #e6dfd2;
+    border-radius: 9px;
+    color: var(--green);
+    background: white;
+    text-decoration: none !important;
+    font-size: 14px;
+    transition: .2s;
+}
+
+.pagination-button:hover {
+    background: var(--green);
+    color: white !important;
+}
+
+.pagination-button.disabled {
+    color: #aaa !important;
+    background: #faf9f6;
+    pointer-events: none;
+    opacity: .7;
+}
+
+.pagination-current {
+    color: var(--brown);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.history-count {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 17px;
+}
+
+/* =================================
+   EMPTY STATE
+================================= */
+
+.empty-state {
+    text-align: center;
+    padding: 50px 20px;
+    background: var(--beige);
+    border-radius: 10px;
+}
+
+.empty-state h3 {
+    color: var(--green);
+}
+
+.empty-state p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* =================================
+   RESPONSIVE
+================================= */
+
+@media(max-width: 850px) {
+    .client-dashboard {
+        display: block;
+    }
+
+    .client-sidebar {
+        width: 100%;
+        padding: 18px;
+    }
+
+    .sidebar-brand {
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+
+    .sidebar-nav {
+        flex-direction: row;
+        overflow-x: auto;
+    }
+
+    .sidebar-link {
+        min-width: max-content;
+        padding: 12px;
+    }
+
+    .sidebar-bottom {
+        margin-top: 15px;
+        padding-top: 10px;
+    }
+
+    .client-main {
+        padding: 25px 18px;
+    }
+}
+
+@media(max-width: 550px) {
+    .profile-grid,
+    .stats-grid,
+    .reservation-info {
+        grid-template-columns: 1fr;
+    }
+
+    .content-card {
+        padding: 20px;
+    }
+
+    .client-topbar h1 {
+        font-size: 25px;
+    }
+
+    .pagination-container {
+        gap: 10px;
+    }
+}
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+{% if password_form.errors %}
+    {% with initial_tab="securite" %}
+    <div class="client-dashboard" data-initial-tab="securite">
+    {% endwith %}
+{% else %}
+    <div class="client-dashboard" data-initial-tab="infos">
+{% endif %}
+
+    <!-- =================================
+         SIDEBAR
+    ================================== -->
+
+    <aside class="client-sidebar">
+
+        <div class="sidebar-brand">
+            <h2>AUBERGE</h2>
+            <p>HOSPITALITÉ & CONFORT</p>
+        </div>
+
+        <div class="sidebar-label">
+            ESPACE PERSONNEL
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <button
+                type="button"
+                class="sidebar-link active"
+                data-tab="infos"
+            >
+                <span class="sidebar-icon"></span>
+                Mes informations
+            </button>
+
+            <button
+                type="button"
+                class="sidebar-link"
+                data-tab="securite"
+            >
+                <span class="sidebar-icon"></span>
+                Sécurité du compte
+            </button>
+
+            <button
+                type="button"
+                class="sidebar-link"
+                data-tab="historique"
+            >
+                <span class="sidebar-icon">▤</span>
+                Mon historique
+            </button>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">
+                    ↪ Déconnexion
+                </button>
+            </form>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =================================
+         MAIN
+    ================================== -->
+
+    <main class="client-main">
+
+        <header class="client-topbar">
+
+            <div>
+                <h1>Mon espace client</h1>
+
+                <p>
+                    Bienvenue dans votre espace personnel
+                </p>
+            </div>
+
+            <div class="client-avatar">
+                {{ utilisateur.prenom|default:utilisateur.username|first|upper }}
+            </div>
+
+        </header>
+
+
+        <!-- MESSAGES -->
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="client-message
+                    {% if message.tags == 'success' %}success{% else %}error{% endif %}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+
+        <!-- =================================
+             TAB 1 : MES INFORMATIONS
+        ================================== -->
+
+        <section
+            class="dashboard-panel active"
+            id="panel-infos"
+        >
+
+            <div class="content-card">
+
+                <h2 class="content-heading">
+                    Mes informations personnelles
+                </h2>
+
+                <p class="content-description">
+                    Consultez les informations associées à votre compte Auberge.
+                </p>
+
+                <div class="profile-avatar">
+                    ♙
+                </div>
+
+                <h3 class="profile-name">
+                    {{ utilisateur.prenom }}
+                    {{ utilisateur.nom }}
+                </h3>
+
+                <p class="profile-email">
+                    {{ utilisateur.email|default:"Adresse e-mail non renseignée" }}
+                </p>
+
+                <div class="section-line"></div>
+
+                <div class="profile-grid">
+
+                    <div class="profile-item">
+                        <span>Nom</span>
+                        <strong>
+                            {{ utilisateur.nom|default:"Non renseigné" }}
+                        </strong>
+                    </div>
+
+                    <div class="profile-item">
+                        <span>Prénom</span>
+                        <strong>
+                            {{ utilisateur.prenom|default:"Non renseigné" }}
+                        </strong>
+                    </div>
+
+                    <div class="profile-item">
+                        <span>Adresse e-mail</span>
+                        <strong>
+                            {{ utilisateur.email|default:"Non renseignée" }}
+                        </strong>
+                    </div>
+
+                    <div class="profile-item">
+                        <span>Téléphone</span>
+                        <strong>
+                            {{ utilisateur.numTelephone|default:"Non renseigné" }}
+                        </strong>
+                    </div>
+
+                    <div class="profile-item">
+                        <span>Identifiant client</span>
+                        <strong>#{{ utilisateur.id }}</strong>
+                    </div>
+
+                    <div class="profile-item">
+                        <span>Nom d'utilisateur</span>
+                        <strong>{{ utilisateur.username }}</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <span>Total de mes réservations</span>
+                    <strong>{{ nombre_reservations }}</strong>
+                </div>
+
+                <div class="stat-card">
+                    <span>Factures payées</span>
+                    <strong>{{ nombre_payees }}</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================
+             TAB 2 : SECURITE
+        ================================== -->
+
+        <section
+            class="dashboard-panel"
+            id="panel-securite"
+        >
+
+            <div class="content-card">
+
+                <h2 class="content-heading">
+                    Sécurité du compte
+                </h2>
+
+                <p class="content-description">
+                    Modifiez votre mot de passe afin de protéger
+                    votre espace personnel.
+                </p>
+
+                <div class="section-line"></div>
+
+                <form
+                    method="POST"
+                    class="password-form"
+                >
+
+                    {% csrf_token %}
+
+                    <input
+                        type="hidden"
+                        name="action"
+                        value="change_password"
+                    >
+
+                    {% for field in password_form %}
+
+                        <div class="password-field">
+
+                            <label for="{{ field.id_for_label }}">
+                                {{ field.label }}
+                            </label>
+
+                            {{ field }}
+
+                            {% if field.help_text %}
+                                {{ field.help_text }}
+                            {% endif %}
+
+                            {% for error in field.errors %}
+
+                                <p class="field-error">
+                                    {{ error }}
+                                </p>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% endfor %}
+
+                    {% for error in password_form.non_field_errors %}
+
+                        <p class="field-error">
+                            {{ error }}
+                        </p>
+
+                    {% endfor %}
+
+                    <button
+                        type="submit"
+                        class="password-submit"
+                    >
+                        Modifier mon mot de passe
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================
+             TAB 3 : HISTORIQUE
+        ================================== -->
+
+        <section
+            class="dashboard-panel"
+            id="panel-historique"
+        >
+
+            <div class="content-card">
+
+                <h2 class="content-heading">
+                    Mon historique de réservations
+                </h2>
+
+                <p class="content-description">
+                    Consultez vos réservations, vos services et vos factures.
+                </p>
+
+
+                <!-- FILTRE -->
+
+                <form
+                    method="GET"
+                    action="{% url 'mon_espace_client' %}"
+                    class="history-filter"
+                >
+
+                    <label for="annee">
+                        Filtrer par année
+                    </label>
+
+                    <div class="filter-row">
+
+                        <select name="annee" id="annee">
+
+                            <option value="">
+                                Toutes les années
+                            </option>
+
+                            {% for annee in annees %}
+
+                                <option
+                                    value="{{ annee }}"
+                                    {% if annee_selectionnee == annee|stringformat:"s" %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ annee }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                        <button
+                            type="submit"
+                            class="filter-button"
+                        >
+                            Filtrer
+                        </button>
+
+                        <a
+                            href="{% url 'mon_espace_client' %}"
+                            class="reset-filter"
+                        >
+                            Réinitialiser
+                        </a>
+
+                    </div>
+
+                </form>
+
+
+                <p class="history-count">
+
+                    {% if page_obj.paginator.count %}
+
+                        Réservation
+                        {{ page_obj.start_index }}
+                        sur
+                        {{ page_obj.paginator.count }}
+
+                    {% else %}
+
+                        Aucune réservation trouvée.
+
+                    {% endif %}
+
+                </p>
+
+
+                <!-- UNE RESERVATION PAR PAGE -->
+
+                {% for reservation in reservations %}
+
+                    <article class="reservation-card">
+
+                        <div class="reservation-top">
+
+                            <h3>
+                                Réservation #{{ reservation.id }}
+                            </h3>
+
+                            <span class="status {{ reservation.statut }}">
+                                {{ reservation.get_statut_display }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="reservation-info">
+
+                            <div class="info-item">
+                                <span>Date d'arrivée</span>
+                                <strong>
+                                    {{ reservation.dateArrivee|date:"d/m/Y" }}
+                                </strong>
+                            </div>
+
+                            <div class="info-item">
+                                <span>Date de départ</span>
+                                <strong>
+                                    {{ reservation.dateDepart|date:"d/m/Y" }}
+                                </strong>
+                            </div>
+
+                            <div class="info-item">
+                                <span>Nombre de personnes</span>
+                                <strong>
+                                    {{ reservation.nbrPersonnes }}
+                                </strong>
+                            </div>
+
+                        </div>
+
+
+                        <!-- CHAMBRES -->
+
+                        <div class="details-block">
+
+                            <h4>Chambres réservées</h4>
+
+                            {% for chambre in reservation.chambres.all %}
+
+                                <p>
+                                    Chambre {{ chambre.numChambre }}
+                                    — {{ chambre.prix }} DH / nuit
+                                </p>
+
+                            {% empty %}
+
+                                <p>Aucune chambre renseignée.</p>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- SERVICES -->
+
+                        <div class="details-block">
+
+                            <h4>Services supplémentaires</h4>
+
+                            {% for service in reservation.services.all %}
+
+                                <p>
+                                    {{ service.nom }}
+                                    — {{ service.prix }} DH
+                                </p>
+
+                            {% empty %}
+
+                                <p>Aucun service supplémentaire.</p>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- FACTURE -->
+
+                        {% if reservation.facture_client %}
+
+                            <div class="invoice-box">
+
+                                <h4>
+                                    Facture #{{ reservation.facture_client.id }}
+                                </h4>
+
+                                <p>
+                                    Hébergement :
+                                    {{ reservation.facture_client.montant_chambres }} DH
+                                </p>
+
+                                <p>
+                                    Services :
+                                    {{ reservation.facture_client.montant_services }} DH
+                                </p>
+
+                                <p>
+                                    Montant total :
+                                    <strong>
+                                        {{ reservation.facture_client.montant_total }} DH
+                                    </strong>
+                                </p>
+
+                                <p>
+                                    Statut :
+                                    <strong>
+                                        {{ reservation.facture_client.statut }}
+                                    </strong>
+                                </p>
+
+                                {% if reservation.facture_client.statut == "payee" and reservation.facture_client.pdf_file %}
+
+                                    <a
+                                        class="invoice-link"
+                                        href="{{ reservation.facture_client.pdf_file.url }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Télécharger ma facture PDF
+                                    </a>
+
+                                {% endif %}
+
+                            </div>
+
+                        {% else %}
+
+                            <div class="invoice-box">
+                                <p class="invoice-empty">
+                                    Aucune facture disponible pour cette réservation.
+                                </p>
+                            </div>
+
+                        {% endif %}
+
+                    </article>
+
+                {% empty %}
+
+                    <div class="empty-state">
+
+                        <h3>Aucune réservation</h3>
+
+                        <p>
+                            Vous n'avez pas encore de réservation
+                            {% if annee_selectionnee %}
+                                pour {{ annee_selectionnee }}.
+                            {% endif %}
+                        </p>
+
+                    </div>
+
+                {% endfor %}
+
+
+                <!-- PAGINATION -->
+
+                {% if page_obj.paginator.num_pages > 1 %}
+
+                    <div class="pagination-container">
+
+                        {% if page_obj.has_previous %}
+
+                            <a
+                                class="pagination-button"
+                                href="?{% if annee_selectionnee %}annee={{ annee_selectionnee }}&{% endif %}page={{ page_obj.previous_page_number }}&section=historique"
+                            >
+                                ← Précédent
+                            </a>
+
+                        {% else %}
+
+                            <span class="pagination-button disabled">
+                                ← Précédent
+                            </span>
+
+                        {% endif %}
+
+
+                        <span class="pagination-current">
+                            {{ page_obj.number }}
+                            /
+                            {{ page_obj.paginator.num_pages }}
+                        </span>
+
+
+                        {% if page_obj.has_next %}
+
+                            <a
+                                class="pagination-button"
+                                href="?{% if annee_selectionnee %}annee={{ annee_selectionnee }}&{% endif %}page={{ page_obj.next_page_number }}&section=historique"
+                            >
+                                Suivant →
+                            </a>
+
+                        {% else %}
+
+                            <span class="pagination-button disabled">
+                                Suivant →
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =================================
+     JAVASCRIPT : SIDEBAR TABS
+================================== -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const dashboard = document.querySelector('.client-dashboard');
+
+    if (!dashboard) return;
+
+    const buttons = document.querySelectorAll('.sidebar-link');
+
+    const panels = document.querySelectorAll('.dashboard-panel');
+
+    function showTab(tabName) {
+
+        buttons.forEach(button => {
+
+            button.classList.toggle(
+                'active',
+                button.dataset.tab === tabName
+            );
+
+        });
+
+        panels.forEach(panel => {
+
+            panel.classList.toggle(
+                'active',
+                panel.id === 'panel-' + tabName
+            );
+
+        });
+
+    }
+
+    buttons.forEach(button => {
+
+        button.addEventListener('click', function () {
+
+            showTab(this.dataset.tab);
+
+        });
+
+    });
+
+    // Ouvrir automatiquement l'onglet demandé
+    const params = new URLSearchParams(window.location.search);
+
+    const requestedTab = params.get('section');
+
+    const initialTab = dashboard.dataset.initialTab;
+
+    if (requestedTab === 'historique') {
+        showTab('historique');
+    } else if (initialTab === 'securite') {
+        showTab('securite');
+    } else {
+        showTab('infos');
+    }
+
+});
+</script>
+
+{% endblock %}

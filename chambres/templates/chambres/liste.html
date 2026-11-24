@@ -1,0 +1,1252 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Nos Chambres | Auberge{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'chambres/css/chambres.css' %}">
+
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    #rooms-section {
+        scroll-margin-top: 100px;
+    }
+
+    /* HERO */
+    #rooms-hero .hero-photo {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        animation: heroFade 18s infinite;
+    }
+
+    #rooms-hero .hero-photo-1 {
+        background-image: url("https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1800&q=85");
+        animation-delay: 0s;
+    }
+
+    #rooms-hero .hero-photo-2 {
+        background-image: url("https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1800&q=85");
+        animation-delay: 6s;
+    }
+
+    #rooms-hero .hero-photo-3 {
+        background-image: url("https://images.unsplash.com/photo-1590490360182-c33d57733427?w=1800&q=85");
+        animation-delay: 12s;
+    }
+
+    @keyframes heroFade {
+        0% {
+            opacity: 0;
+            transform: scale(1);
+        }
+
+        5%,
+        30% {
+            opacity: 1;
+        }
+
+        35%,
+        100% {
+            opacity: 0;
+            transform: scale(1.08);
+        }
+    }
+
+    /* INTRODUCTION */
+    .rooms-section {
+        padding: 80px 6%;
+    }
+
+    .rooms-heading {
+        text-align: center;
+        margin-bottom: 45px;
+    }
+
+    .rooms-heading span {
+        color: #71816F;
+        font-size: 12px;
+        letter-spacing: 3px;
+    }
+
+    .rooms-heading h2 {
+        font-family: Georgia, serif;
+        font-size: 38px;
+        color: #302B26;
+        margin-top: 12px;
+    }
+
+    .rooms-heading p {
+        color: #777;
+        margin-top: 12px;
+    }
+
+    /* FILTRAGE */
+    .rooms-filter-panel {
+        max-width: 1100px;
+        margin: 0 auto 40px;
+        padding: 28px;
+        background: white;
+        border: 1px solid #E8DCC8;
+        border-radius: 22px;
+        box-shadow: 0 8px 30px rgba(48, 43, 38, .06);
+    }
+
+    .room-search-wrapper {
+        position: relative;
+    }
+
+    .room-search-icon {
+        position: absolute;
+        left: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #71816F;
+        font-size: 18px;
+        pointer-events: none;
+    }
+
+    .room-search {
+        width: 100%;
+        padding: 15px 20px 15px 48px;
+        border: 1px solid #E5E0D6;
+        border-radius: 50px;
+        background: #F8F5EF;
+        color: #302B26;
+        outline: none;
+        transition: .3s;
+    }
+
+    .room-search:focus {
+        border-color: #455B45;
+        box-shadow: 0 0 0 4px rgba(69, 91, 69, .10);
+    }
+
+    .room-filter-layout {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 22px;
+        margin-top: 22px;
+    }
+
+    .room-filter-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .room-filter-btn {
+        padding: 11px 22px;
+        border: 1px solid #455B45;
+        border-radius: 50px;
+        background: transparent;
+        color: #455B45;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: .3s;
+    }
+
+    .room-filter-btn:hover,
+    .room-filter-btn.active {
+        background: #455B45;
+        color: white;
+    }
+
+    .room-price-filter {
+        width: 180px;
+        flex-shrink: 0;
+    }
+
+    .room-price-filter input {
+        width: 100%;
+        accent-color: #455B45;
+        cursor: pointer;
+    }
+
+    .room-filter-count {
+        margin-top: 18px;
+        color: #777;
+        font-size: 13px;
+    }
+
+    /* TITRE DYNAMIQUE */
+    .rooms-dynamic-heading {
+        max-width: 1100px;
+        margin: 0 auto 35px;
+        text-align: center;
+    }
+
+    .rooms-dynamic-heading h3 {
+        font-family: Georgia, serif;
+        font-size: 34px;
+        color: #302B26;
+    }
+
+    .rooms-dynamic-heading p {
+        margin-top: 10px;
+        color: #777;
+    }
+
+    /* GRILLE */
+    .rooms-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 28px;
+        max-width: 1250px;
+        margin: auto;
+    }
+
+    .room-card[hidden] {
+        display: none !important;
+    }
+
+    .room-card {
+        overflow: hidden;
+        background: white;
+        border: 1px solid #EAE5DB;
+        border-radius: 16px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, .05);
+        transition: transform .3s, box-shadow .3s;
+    }
+
+    .room-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, .10);
+    }
+
+    .room-image {
+        height: 240px;
+        overflow: hidden;
+    }
+
+    .room-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform .5s;
+    }
+
+    .room-card:hover .room-image img {
+        transform: scale(1.06);
+    }
+
+    .room-content {
+        padding: 22px;
+    }
+
+    .room-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        color: #71816F;
+        font-size: 12px;
+    }
+
+    .room-content h3 {
+        margin-top: 14px;
+        font-family: Georgia, serif;
+        font-size: 22px;
+        color: #302B26;
+    }
+
+    .room-status {
+        display: inline-block;
+        margin-top: 13px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .room-status.available {
+        color: #39845B;
+    }
+
+    .room-status.occupied {
+        color: #C58B42;
+    }
+
+    .room-status.maintenance {
+        color: #C34D4D;
+    }
+
+    .room-card-footer {
+        margin-top: 22px;
+    }
+
+    .room-reserve-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 12px 23px;
+        background: #455B45;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 13px;
+        font-weight: 600;
+        transition: .3s;
+    }
+
+    .room-reserve-btn:hover {
+        background: #20352D;
+    }
+
+    /* AUCUN RESULTAT */
+    .rooms-empty {
+        grid-column: 1 / -1;
+        padding: 45px 20px;
+        text-align: center;
+        color: #777;
+    }
+
+    .rooms-empty h3 {
+        font-family: Georgia, serif;
+        font-size: 23px;
+        color: #302B26;
+    }
+
+    .rooms-empty p {
+        margin-top: 10px;
+    }
+
+    /* PAGINATION */
+    .rooms-pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 9px;
+        margin-top: 45px;
+    }
+
+    .room-page-btn {
+        min-width: 42px;
+        padding: 11px 15px;
+        border: 1px solid #455B45;
+        border-radius: 6px;
+        background: white;
+        color: #455B45;
+        cursor: pointer;
+        transition: .25s;
+    }
+
+    .room-page-btn:hover:not(:disabled),
+    .room-page-btn.active {
+        background: #455B45;
+        color: white;
+    }
+
+    .room-page-btn:disabled {
+        opacity: .35;
+        cursor: not-allowed;
+    }
+
+    .room-page-btn:focus-visible {
+        outline: 3px solid #A8B6A4;
+        outline-offset: 3px;
+    }
+
+    .room-page-info {
+        margin-top: 15px;
+        text-align: center;
+        color: #777;
+        font-size: 12px;
+    }
+
+    /* ENGAGEMENTS */
+    .engagements-section {
+        padding: 75px 6%;
+        background: #F8F5EF;
+    }
+
+    .engagements-heading {
+        text-align: center;
+        margin-bottom: 45px;
+    }
+
+    .engagements-heading span {
+        color: #71816F;
+        font-size: 12px;
+        letter-spacing: 3px;
+    }
+
+    .engagements-heading h2 {
+        margin-top: 12px;
+        font-family: Georgia, serif;
+        font-size: 36px;
+        color: #302B26;
+    }
+
+    .engagements-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 25px;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .engagement-item {
+        text-align: center;
+        padding: 25px 15px;
+    }
+
+    .engagement-icon {
+        font-size: 32px;
+        color: #71816F;
+    }
+
+    .engagement-item h3 {
+        margin-top: 15px;
+        font-family: Georgia, serif;
+        font-size: 19px;
+        color: #302B26;
+    }
+
+    .engagement-item p {
+        margin-top: 10px;
+        color: #777;
+        font-size: 13px;
+        line-height: 1.8;
+    }
+
+    @media(max-width: 900px) {
+        .rooms-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .engagements-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media(max-width: 600px) {
+        .rooms-section {
+            padding: 55px 5%;
+        }
+
+        .rooms-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .room-filter-layout {
+            align-items: stretch;
+        }
+
+        .room-price-filter {
+            width: 100%;
+        }
+
+        .rooms-heading h2 {
+            font-size: 30px;
+        }
+
+        .rooms-dynamic-heading h3 {
+            font-size: 27px;
+        }
+
+        .engagements-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @media(prefers-reduced-motion: reduce) {
+        html {
+            scroll-behavior: auto;
+        }
+
+        #rooms-hero .hero-photo {
+            animation: none;
+            opacity: 0;
+        }
+
+        #rooms-hero .hero-photo-1 {
+            opacity: 1;
+        }
+
+        .room-card,
+        .room-image img {
+            transition: none;
+        }
+    }
+    .service-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    width: auto;
+    padding: 10px 20px;
+
+    background-color: #1F4D3B;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.service-btn:hover {
+    background-color: #326B53;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(31, 77, 59, 0.2);
+}
+
+.service-btn span {
+    font-size: 16px;
+    transition: transform 0.3s ease;
+}
+
+.service-btn:hover span {
+    transform: translateX(4px);
+}
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<!-- ====================================== -->
+<!-- HERO -->
+<!-- ====================================== -->
+
+<section id="rooms-hero"
+    class="relative flex h-[360px] items-center justify-center overflow-hidden bg-[#202D28] px-6 text-center text-white sm:h-[420px] lg:h-[460px]">
+
+    <div class="absolute inset-0">
+        <div class="hero-photo hero-photo-1"></div>
+        <div class="hero-photo hero-photo-2"></div>
+        <div class="hero-photo hero-photo-3"></div>
+    </div>
+
+    <div class="absolute inset-0 bg-[#14231C]/65"></div>
+
+    <div class="relative z-10 mx-auto max-w-4xl">
+
+        <span class="text-xs uppercase tracking-[.3em] text-[#E8DCC8]">
+            NOTRE HÉBERGEMENT
+        </span>
+
+        <h1 class="mt-5 font-serif text-4xl sm:text-5xl lg:text-6xl">
+            Nos Chambres
+            <span class="mt-2 block italic text-[#E8DCC8]">
+                Votre confort, notre priorité.
+            </span>
+        </h1>
+
+        <p class="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/85">
+            Découvrez nos chambres confortables et élégantes,
+            pour un séjour inoubliable au cœur d'Agadir.
+        </p>
+
+        <a href="#rooms-section"
+            class="mt-7 inline-flex bg-[#E8DCC8] px-8 py-3 font-semibold text-[#302B26] transition hover:bg-white">
+            Explorer nos chambres →
+        </a>
+
+    </div>
+</section>
+
+
+<!-- ====================================== -->
+<!-- LISTE DES CHAMBRES -->
+<!-- ====================================== -->
+
+<section class="rooms-section" id="rooms-section">
+
+    <div class="rooms-heading">
+
+        <span>NOS CHAMBRES</span>
+
+        <h2>Un confort sur mesure</h2>
+
+        <p>
+            Profitez d'un cadre agréable avec des chambres adaptées
+            à tous vos besoins.
+        </p>
+
+    </div>
+
+
+    <!-- FILTRAGE -->
+
+    <div class="rooms-filter-panel">
+
+        <!-- Recherche -->
+        <div class="room-search-wrapper">
+
+            <span class="room-search-icon" aria-hidden="true">⌕</span>
+
+            <input type="search" id="roomSearch" class="room-search"
+                placeholder="Rechercher par numéro, type de chambre..." aria-label="Rechercher une chambre">
+
+        </div>
+
+
+        <div class="room-filter-layout">
+
+            <!-- FILTRE PAR TYPE -->
+            <div class="room-filter-buttons">
+
+                <button type="button" class="room-filter-btn active" data-type="all">
+                    Tous les types
+                </button>
+
+                {% for type in types_chambres %}
+
+                <button type="button" class="room-filter-btn" data-type="{{ type }}">
+                    {{ type }}
+                </button>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- FILTRE PRIX -->
+            <div class="room-price-filter">
+
+                <div class="mb-2 flex justify-between text-xs font-semibold text-[#455B45]">
+
+                    <span>Prix maximum</span>
+
+                    <span id="room-price-value">1000 DH</span>
+
+                </div>
+
+                <input type="range" id="room-price" min="0" max="1000" value="1000" step="10" aria-label="Prix maximum">
+
+            </div>
+
+        </div>
+
+
+        <p class="room-filter-count" id="roomFilterCount" aria-live="polite"></p>
+
+    </div>
+
+
+    <!-- TITRE DYNAMIQUE -->
+
+    <div class="rooms-dynamic-heading">
+
+        <h3 id="roomCategoryTitle">Toutes nos chambres</h3>
+
+        <p id="roomCategoryDescription">
+            Découvrez nos chambres et choisissez celle qui vous convient.
+        </p>
+
+    </div>
+
+
+    <!-- CARTES DES CHAMBRES -->
+
+    <div class="rooms-grid" id="roomsGrid">
+
+        {% for chambre in chambres %}
+
+        <article class="room-card" data-name="{{ chambre.numChambre|escape }}" data-type="{{ chambre.type|escape }}"
+            data-price="{{ chambre.prix|floatformat:2 }}">
+
+            <div class="room-image">
+
+                {% if chambre.image %}
+
+                <img src="{{ chambre.image.url }}" alt="Chambre {{ chambre.numChambre }}" loading="lazy">
+
+                {% else %}
+
+                <img src="{% static 'chambres/images/chambre-default.jpg' %}" alt="Photo de chambre" loading="lazy">
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="room-content">
+
+                <div class="room-meta">
+
+                    <span>✧ {{ chambre.type }}</span>
+
+                    <span>♙ {{ chambre.capacite }} personne(s)</span>
+
+                    <span>◇ {{ chambre.prix }} DH / nuit</span>
+
+                </div>
+
+
+                <h3>Chambre {{ chambre.numChambre }}</h3>
+
+
+                <span class="room-status
+                    {% if chambre.statut == 'disponible' %}
+                        available
+                    {% elif chambre.statut == 'occupee' %}
+                        occupied
+                    {% else %}
+                        maintenance
+                    {% endif %}
+                ">
+                    ● {{ chambre.get_statut_display }}
+                </span>
+
+               
+
+<div class="flex items-center justify-between gap-3 mt-5">
+
+    <!-- RESERVER -->
+    <a href="/reservations/?chambre_id={{ chambre.id }}"
+       class="service-btn">
+        Réserver
+        <span aria-hidden="true">→</span>
+    </a>
+
+    <!-- DETAILS -->
+    <a href="{% url 'chambres:detail' chambre.pk %}"
+       class="text-xs font-medium text-[#455B45] hover:underline">
+        Voir détails →
+    </a>
+
+</div>
+
+
+
+
+
+            </div>
+
+        </article>
+
+        {% empty %}
+
+        <div class="rooms-empty" id="initialEmpty">
+            <h3>Aucune chambre enregistrée pour le moment.</h3>
+            <p>Revenez bientôt pour découvrir nos chambres.</p>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- AUCUN RESULTAT APRES FILTRAGE -->
+
+    <div class="rooms-empty" id="roomNoResults" hidden>
+
+        <h3>Aucune chambre trouvée.</h3>
+
+        <p>Essayez de modifier votre recherche ou vos filtres.</p>
+
+    </div>
+
+
+    <!-- PAGINATION -->
+
+    <nav id="roomPagination" class="rooms-pagination" aria-label="Pagination des chambres" hidden>
+    </nav>
+
+    <p id="roomPageInfo" class="room-page-info"></p>
+
+</section>
+
+
+<!-- ====================================== -->
+<!-- NOS ENGAGEMENTS -->
+<!-- ====================================== -->
+
+<section class="engagements-section" id="engagements">
+
+    <div class="engagements-heading">
+
+        <span>POUR UN SÉJOUR AGRÉABLE</span>
+
+        <h2>Nos engagements</h2>
+
+    </div>
+
+
+    <div class="engagements-grid">
+
+        <div class="engagement-item">
+
+            <div class="engagement-icon">♢</div>
+
+            <h3>Confort garanti</h3>
+
+            <p>Des chambres modernes et bien équipées.</p>
+
+        </div>
+
+
+        <div class="engagement-item">
+
+            <div class="engagement-icon">♧</div>
+
+            <h3>Service 24h/24</h3>
+
+            <p>Une équipe à votre écoute en permanence.</p>
+
+        </div>
+
+
+        <div class="engagement-item">
+
+            <div class="engagement-icon">♧</div>
+
+            <h3>Sécurité assurée</h3>
+
+            <p>Un environnement sûr pour votre tranquillité.</p>
+
+        </div>
+
+
+        <div class="engagement-item">
+
+            <div class="engagement-icon">⌖</div>
+
+            <h3>Emplacement idéal</h3>
+
+            <p>Au cœur d'Agadir, proche des principales attractions.</p>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const cards = Array.from(
+            document.querySelectorAll(".room-card")
+        );
+
+        const search = document.getElementById("roomSearch");
+        const priceFilter = document.getElementById("room-price");
+        const priceValue = document.getElementById("room-price-value");
+
+        const buttons = Array.from(
+            document.querySelectorAll(".room-filter-btn")
+        );
+
+        const count = document.getElementById("roomFilterCount");
+        const noResults = document.getElementById("roomNoResults");
+        const pagination = document.getElementById("roomPagination");
+        const pageInfo = document.getElementById("roomPageInfo");
+
+        const title = document.getElementById("roomCategoryTitle");
+        const description = document.getElementById("roomCategoryDescription");
+
+        if (!search || !priceFilter || !pagination) return;
+
+        const perPage = 6;
+
+        let currentPage = 1;
+        let activeType = "all";
+
+
+        /* NORMALISATION DES TEXTES */
+
+        function normalize(value) {
+
+            return (value || "")
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase()
+                .trim();
+
+        }
+
+
+        /* CONFIGURATION DU PRIX */
+
+        const prices = cards.map(card => {
+
+            return Number(
+                card.dataset.price.replace(",", ".")
+            );
+
+        }).filter(Number.isFinite);
+
+        const maxPrice = Math.max(1000, ...prices);
+
+        priceFilter.max = String(
+            Math.ceil(maxPrice / 100) * 100
+        );
+
+        priceFilter.value = priceFilter.max;
+
+        priceValue.textContent = priceFilter.value + " DH";
+
+
+        /* TITRES DYNAMIQUES */
+
+        function updateHeading() {
+
+            const type = normalize(activeType);
+
+            if (type === "all") {
+
+                title.textContent = "Toutes nos chambres";
+
+                description.textContent =
+                    "Découvrez nos chambres et choisissez celle qui vous convient.";
+
+            } else {
+
+                title.textContent =
+                    "Chambres " + activeType;
+
+                description.textContent =
+                    "Découvrez notre sélection de chambres " +
+                    activeType + ".";
+
+            }
+
+        }
+
+
+        /* CREATION DES BOUTONS DE PAGINATION */
+
+        function createPageButton(label, page, disabled, active = false) {
+
+            const button = document.createElement("button");
+
+            button.type = "button";
+
+            button.className =
+                "room-page-btn" + (active ? " active" : "");
+
+            button.textContent = label;
+
+            button.disabled = disabled;
+
+            if (active) {
+                button.setAttribute("aria-current", "page");
+            }
+
+            button.addEventListener("click", function () {
+
+                if (disabled) return;
+
+                currentPage = page;
+
+                render();
+
+                document.getElementById("rooms-section")
+                    .scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+            });
+
+            return button;
+
+        }
+
+
+        /* GENERATION DES NUMEROS DE PAGES */
+
+        function renderPagination(totalPages) {
+
+            pagination.innerHTML = "";
+
+            if (totalPages <= 1) {
+
+                pagination.hidden = true;
+
+                return;
+
+            }
+
+            pagination.hidden = false;
+
+            pagination.appendChild(
+                createPageButton(
+                    "← Précédent",
+                    currentPage - 1,
+                    currentPage === 1
+                )
+            );
+
+
+            // Afficher toutes les pages si elles sont peu nombreuses.
+            // Sinon, afficher les pages autour de la page actuelle.
+
+            let pages = [];
+
+            if (totalPages <= 7) {
+
+                pages = Array.from(
+                    { length: totalPages },
+                    (_, index) => index + 1
+                );
+
+            } else {
+
+                pages = [
+                    1,
+                    2,
+                    currentPage - 1,
+                    currentPage,
+                    currentPage + 1,
+                    totalPages - 1,
+                    totalPages
+                ];
+
+                pages = [...new Set(pages)]
+                    .filter(page => page >= 1 && page <= totalPages)
+                    .sort((a, b) => a - b);
+
+            }
+
+
+            let previousPage = 0;
+
+            pages.forEach(page => {
+
+                if (previousPage && page - previousPage > 1) {
+
+                    const dots = document.createElement("span");
+
+                    dots.textContent = "...";
+
+                    dots.style.padding = "10px";
+
+                    pagination.appendChild(dots);
+
+                }
+
+                pagination.appendChild(
+                    createPageButton(
+                        String(page),
+                        page,
+                        false,
+                        page === currentPage
+                    )
+                );
+
+                previousPage = page;
+
+            });
+
+
+            pagination.appendChild(
+                createPageButton(
+                    "Suivant →",
+                    currentPage + 1,
+                    currentPage === totalPages
+                )
+            );
+
+        }
+
+
+        /* FILTRAGE ET AFFICHAGE */
+
+        function render() {
+
+            const query = normalize(search.value);
+
+            const max = Number(priceFilter.value);
+
+
+            // Filtrer les chambres
+
+            const filtered = cards.filter(card => {
+
+                const name = normalize(card.dataset.name);
+
+                const type = normalize(card.dataset.type);
+
+                const text = normalize(card.textContent);
+
+                const price = Number(
+                    card.dataset.price.replace(",", ".")
+                );
+
+
+                const typeMatch =
+                    activeType === "all" ||
+                    type === normalize(activeType);
+
+
+                const searchMatch =
+                    !query ||
+                    name.includes(query) ||
+                    type.includes(query) ||
+                    text.includes(query);
+
+
+                const priceMatch =
+                    Number.isFinite(price) &&
+                    price <= max;
+
+
+                return typeMatch && searchMatch && priceMatch;
+
+            });
+
+
+            // Calcul du nombre de pages
+
+            const totalPages = Math.ceil(
+                filtered.length / perPage
+            );
+
+
+            // Corriger automatiquement la page courante
+
+            currentPage = Math.min(
+                Math.max(1, currentPage),
+                Math.max(1, totalPages)
+            );
+
+
+            // Calcul des chambres à afficher
+
+            const start = (currentPage - 1) * perPage;
+
+            const visibleCards = filtered.slice(
+                start,
+                start + perPage
+            );
+
+
+            // Masquer toutes les cartes
+
+            cards.forEach(card => {
+                card.hidden = true;
+            });
+
+
+            // Afficher uniquement les chambres de la page actuelle
+
+            visibleCards.forEach(card => {
+                card.hidden = false;
+            });
+
+
+            // Nombre de résultats
+
+            count.textContent =
+                filtered.length + " chambre(s) trouvée(s)";
+
+
+            // Aucun résultat
+
+            noResults.hidden = filtered.length !== 0;
+
+
+            // Titre dynamique
+
+            updateHeading();
+
+
+            // Pagination
+
+            renderPagination(totalPages);
+
+
+            // Informations de pagination
+
+            if (filtered.length === 0) {
+
+                pageInfo.textContent = "";
+
+            } else {
+
+                const first = start + 1;
+
+                const last = Math.min(
+                    start + perPage,
+                    filtered.length
+                );
+
+                pageInfo.textContent =
+                    "Affichage de " + first +
+                    " à " + last +
+                    " sur " + filtered.length +
+                    " chambre(s)";
+
+            }
+
+        }
+
+
+        /* FILTRE PAR TYPE */
+
+        buttons.forEach(button => {
+
+            button.addEventListener("click", function () {
+
+                activeType = this.dataset.type;
+
+                currentPage = 1;
+
+                buttons.forEach(btn => {
+                    btn.classList.remove("active");
+                });
+
+                this.classList.add("active");
+
+                render();
+
+            });
+
+        });
+
+
+        /* RECHERCHE */
+
+        search.addEventListener("input", function () {
+
+            currentPage = 1;
+
+            render();
+
+        });
+
+
+        /* FILTRE PAR PRIX */
+
+        priceFilter.addEventListener("input", function () {
+
+            priceValue.textContent =
+                this.value + " DH";
+
+            currentPage = 1;
+
+            render();
+
+        });
+
+
+        /* INITIALISATION */
+
+        render();
+
+    });
+</script>
+
+{% endblock %}
