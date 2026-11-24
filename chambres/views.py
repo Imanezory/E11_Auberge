@@ -4,13 +4,21 @@ from django.db.models import Q
 from .models import Chambre
 
 
+# =====================================
+# LISTE DES CHAMBRES DISPONIBLES
+# =====================================
+
 def liste_chambres(request):
 
-    chambres = Chambre.objects.all()
+    # Afficher uniquement les chambres disponibles
+    chambres = Chambre.objects.filter(
+        statut='disponible'
+    ).order_by('numChambre')
 
-    recherche = request.GET.get('recherche', '').strip()
-    type_chambre = request.GET.get('type', '')
-    statut = request.GET.get('statut', '')
+    # Recherche
+    recherche = request.GET.get(
+        'recherche', ''
+    ).strip()
 
     if recherche:
         chambres = chambres.filter(
@@ -18,31 +26,48 @@ def liste_chambres(request):
             Q(type__icontains=recherche)
         )
 
+    # Filtrage par type
+    type_chambre = request.GET.get('type', '')
+
     if type_chambre:
-        chambres = chambres.filter(type=type_chambre)
+        chambres = chambres.filter(
+            type=type_chambre
+        )
 
-    if statut:
-        chambres = chambres.filter(statut=statut)
-
+    # Types des chambres disponibles uniquement
     types_chambres = (
         Chambre.objects
+        .filter(statut='disponible')
         .values_list('type', flat=True)
         .distinct()
     )
 
-    return render(request, 'chambres/liste.html', {
-        'chambres': chambres,
-        'types_chambres': types_chambres,
-    })
+    return render(
+        request,
+        'chambres/liste.html',
+        {
+            'chambres': chambres,
+            'types_chambres': types_chambres,
+        }
+    )
 
 
+# =====================================
+# DETAILS D'UNE CHAMBRE DISPONIBLE
+# =====================================
 
 def detail_chambre(request, pk):
 
-    chambre = get_object_or_404(Chambre, pk=pk)
+    chambre = get_object_or_404(
+        Chambre,
+        pk=pk,
+        statut='disponible'
+    )
 
     return render(
         request,
         'chambres/detail.html',
-        {'chambre': chambre}
+        {
+            'chambre': chambre
+        }
     )

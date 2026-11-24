@@ -62,14 +62,16 @@
 
         <div class="mt-9">
           {% if service.prix > 0 %}
-          <a href=""
+         <a href="{% url 'reserver_service' service.id %}"
    class="inline-flex items-center justify-between gap-6
           bg-[#455B45] px-6 py-3
           text-white text-sm font-semibold
           rounded-none transition-colors duration-300
           hover:bg-[#304330]">
+
     Réserver ce service
     <span>→</span>
+
 </a>
           {% else %}
             <span class="inline-flex items-center gap-3 border border-[#455B45] text-[#455B45] px-7 py-4 font-semibold">✓ Service gratuit</span>

@@ -3,12 +3,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-
 from django.contrib.auth.views import LogoutView
 from rest_framework.routers import DefaultRouter
 
-from services.views import ServiceViewSet
+from reservations.frontend_views import (
+    reservation_frontend,
+    facture_payment_frontend,
+)
 
+from services.views import ServiceViewSet
 from accueil.controllers import connexion
 
 from accueil.views import (
@@ -18,9 +21,9 @@ from accueil.views import (
 )
 
 
-# ==============================
+# =====================================
 # REST API - SERVICES
-# ==============================
+# =====================================
 
 router = DefaultRouter()
 
@@ -31,9 +34,9 @@ router.register(
 )
 
 
-# ==============================
+# =====================================
 # URLS PRINCIPALES
-# ==============================
+# =====================================
 
 urlpatterns = [
 
@@ -42,6 +45,20 @@ urlpatterns = [
 
     # Connexion
     path('login/', connexion, name='login'),
+
+    # Interface React - Réservations
+    path(
+        'reservations/',
+        reservation_frontend,
+        name='reservation_frontend'
+    ),
+
+    # Interface React - Paiement des factures
+    path(
+        'factures/payment/<int:pk>/',
+        facture_payment_frontend,
+        name='facture-payment-frontend'
+    ),
 
     # Accueil + Inscription
     path('', include('accueil.urls')),
@@ -60,6 +77,9 @@ urlpatterns = [
 
     # REST API - Réservations
     path('api/', include('reservations.urls')),
+
+    # REST API - Factures
+    path('api/factures/', include('factures.urls')),
 
     # Déconnexion
     path(
@@ -91,9 +111,9 @@ urlpatterns = [
 ]
 
 
-# ==============================
+# =====================================
 # AFFICHAGE DES IMAGES UPLOADÉES
-# ==============================
+# =====================================
 
 if settings.DEBUG:
     urlpatterns += static(

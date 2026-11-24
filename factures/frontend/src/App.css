@@ -1,0 +1,35 @@
+
+/* Structure générale de l'application */
+.app-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: #F7F3E9;
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Layout du dashboard admin */
+.admin-layout {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  width: 100%;
+  align-items: stretch;
+}
+
+.admin-layout > *:first-child {
+  flex-shrink: 0;
+}
+
+.admin-layout .dashboard {
+  flex: 1;
+  min-width: 0;
+  width: auto;
+}

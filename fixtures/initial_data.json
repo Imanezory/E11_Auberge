@@ -1,0 +1,597 @@
+[
+{
+    "model": "chambres.chambre",
+    "pk": 1,
+    "fields": {
+        "numChambre": "101",
+        "type": "double",
+        "capacite": 2,
+        "prix": "950.00",
+        "image": "chambres/ch4.jpg",
+        "statut": "disponible"
+    }
+},
+{
+    "model": "chambres.chambre",
+    "pk": 2,
+    "fields": {
+        "numChambre": "102",
+        "type": "simple",
+        "capacite": 1,
+        "prix": "400.00",
+        "image": "chambres/ch1.jpg",
+        "statut": "disponible"
+    }
+},
+{
+    "model": "chambres.chambre",
+    "pk": 3,
+    "fields": {
+        "numChambre": "103",
+        "type": "simple",
+        "capacite": 1,
+        "prix": "350.00",
+        "image": "chambres/ch2.jpg",
+        "statut": "occupee"
+    }
+},
+{
+    "model": "chambres.chambre",
+    "pk": 4,
+    "fields": {
+        "numChambre": "201",
+        "type": "double",
+        "capacite": 2,
+        "prix": "900.00",
+        "image": "chambres/ch3.jpg",
+        "statut": "disponible"
+    }
+},
+{
+    "model": "chambres.chambre",
+    "pk": 5,
+    "fields": {
+        "numChambre": "205",
+        "type": "suite",
+        "capacite": 3,
+        "prix": "1400.00",
+        "image": "chambres/ch5.jpg",
+        "statut": "maintenance"
+    }
+},
+{
+    "model": "chambres.chambre",
+    "pk": 6,
+    "fields": {
+        "numChambre": "206",
+        "type": "double",
+        "capacite": 2,
+        "prix": "900.00",
+        "image": "chambres/235123b0.avif",
+        "statut": "disponible"
+    }
+},
+{
+    "model": "chambres.chambre",
+    "pk": 7,
+    "fields": {
+        "numChambre": "104",
+        "type": "simple",
+        "capacite": 1,
+        "prix": "400.00",
+        "image": "chambres/Sigean-19.webp",
+        "statut": "disponible"
+    }
+},
+{
+    "model": "chambres.chambre",
+    "pk": 8,
+    "fields": {
+        "numChambre": "301",
+        "type": "suite",
+        "capacite": 3,
+        "prix": "1500.00",
+        "image": "chambres/Suite_marocaine_chaleureuse_avec_vue_sur_les_collines.png",
+        "statut": "disponible"
+    }
+},
+{
+    "model": "chambres.chambre",
+    "pk": 9,
+    "fields": {
+        "numChambre": "105",
+        "type": "simple",
+        "capacite": 1,
+        "prix": "350.00",
+        "image": "chambres/06087f1e-af12-4e9e-a595-b07b785deaed.png",
+        "statut": "disponible"
+    }
+},
+{
+    "model": "chambres.chambre",
+    "pk": 10,
+    "fields": {
+        "numChambre": "207",
+        "type": "familiale",
+        "capacite": 4,
+        "prix": "1700.00",
+        "image": "chambres/2fb56df7-dc23-4684-845f-1381040b2873.png",
+        "statut": "disponible"
+    }
+},
+{
+    "model": "chambres.chambre",
+    "pk": 11,
+    "fields": {
+        "numChambre": "208",
+        "type": "double",
+        "capacite": 2,
+        "prix": "800.00",
+        "image": "chambres/fd9a97f6-a4ad-4c7c-9dad-d6843b0cd763.png",
+        "statut": "disponible"
+    }
+},
+{
+    "model": "chambres.chambre",
+    "pk": 12,
+    "fields": {
+        "numChambre": "308",
+        "type": "suite",
+        "capacite": 3,
+        "prix": "1000.00",
+        "image": "chambres/6c0d30a3-fae9-4143-a116-22a0ec3ede81.png",
+        "statut": "disponible"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 1,
+    "fields": {
+        "nom": "Wi-Fi haut débit",
+        "prix": "0.00",
+        "description": "Connexion Internet gratuite dans toute l'auberge.",
+        "type": "Confort",
+        "image": ""
+    }
+},
+{
+    "model": "services.service",
+    "pk": 2,
+    "fields": {
+        "nom": "Réception 24h/24",
+        "prix": "0.00",
+        "description": "Accueil et assistance disponibles 24h/24.",
+        "type": "Accueil",
+        "image": ""
+    }
+},
+{
+    "model": "services.service",
+    "pk": 3,
+    "fields": {
+        "nom": "Parking sécurisé",
+        "prix": "0.00",
+        "description": "Parking sécurisé gratuit pour les clients.",
+        "type": "Sécurité",
+        "image": ""
+    }
+},
+{
+    "model": "services.service",
+    "pk": 6,
+    "fields": {
+        "nom": "Navette aéroport",
+        "prix": "150.00",
+        "description": "Transport depuis ou vers l'aéroport.",
+        "type": "Transport",
+        "image": "services/Navette_Aéroport_Auberge___Voyagez_Sereinement.png"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 7,
+    "fields": {
+        "nom": "Blanchisserie",
+        "prix": "30.00",
+        "description": "Lavage et repassage des vêtements.",
+        "type": "Confort",
+        "image": "services/dedd2febc5cdacfc401d23c0fda217d9.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 8,
+    "fields": {
+        "nom": "Ftour Beldi",
+        "prix": "45.00",
+        "description": "Petit-djeuner marocain avec msemen, baghrir, miel, pain et thé.",
+        "type": "Restauration",
+        "image": "services/Moroccan_breakfast_.jfif"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 9,
+    "fields": {
+        "nom": "Msemen au miel",
+        "prix": "15.00",
+        "description": "Msemen traditionnel servi avec du miel.",
+        "type": "Restauration",
+        "image": "services/0b37db98fd73b79d1f4393f0ea525373.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 10,
+    "fields": {
+        "nom": "Baghrir",
+        "prix": "18.00",
+        "description": "Crpes marocaines au miel et beurre.",
+        "type": "Restauration",
+        "image": "services/756ce10bddd36da312f8d4619eb08efc.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 11,
+    "fields": {
+        "nom": "Tajine de poulet",
+        "prix": "65.00",
+        "description": "Tajine marocain au poulet, citron confit et olives.",
+        "type": "Restauration",
+        "image": "services/tajine.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 12,
+    "fields": {
+        "nom": "Couscous traditionnel",
+        "prix": "70.00",
+        "description": "Couscous marocain aux lgumes.",
+        "type": "Restauration",
+        "image": "services/couscous.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 13,
+    "fields": {
+        "nom": "Harira marocaine",
+        "prix": "25.00",
+        "description": "Soupe traditionnelle marocaine.",
+        "type": "Restauration",
+        "image": "services/5d66c651214e44e49320c85e2821e6d5.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 14,
+    "fields": {
+        "nom": "Café",
+        "prix": "15.00",
+        "description": "Café fraîchement préparé.",
+        "type": "Restauration",
+        "image": "services/523250bbaaebc05b3c9164bb106fb960.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 15,
+    "fields": {
+        "nom": "Thé à la menthe",
+        "prix": "15.00",
+        "description": "Thé marocain à la menthe fraîche.",
+        "type": "Restauration",
+        "image": "services/the-a-la-menthe-marocain-r74032.webp"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 16,
+    "fields": {
+        "nom": "Jus d'orange frais",
+        "prix": "22.00",
+        "description": "Jus d'orange naturel frachement press.",
+        "type": "Restauration",
+        "image": "services/f386a169020110344d4b15f8d064415a.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 17,
+    "fields": {
+        "nom": "Dîner traditionnel",
+        "prix": "85.00",
+        "description": "Repas traditionnel marocain.",
+        "type": "Restauration",
+        "image": "services/fb4ea59a7f3bc70887f3ebe20edfa659.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 18,
+    "fields": {
+        "nom": "Aire de jeux pour enfants",
+        "prix": "0.00",
+        "description": "Espace de jeux pour enfants avec balanoires et activits ludiques. Les enfants doivent tre surveills par un adulte.",
+        "type": "Loisirs",
+        "image": "services/51139efbc36abcf283e74ca5cfeb2c17.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 19,
+    "fields": {
+        "nom": "Rencontre avec les animaux",
+        "prix": "0.00",
+        "description": "Dcouverte des animaux de l'auberge. Les enfants doivent tre accompagns par un adulte. Il est interdit de nourrir les animaux sans autorisation.",
+        "type": "Loisirs",
+        "image": "services/88c841bd9f0bf0240f93beb45368aed4.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 20,
+    "fields": {
+        "nom": "Piscine",
+        "prix": "90.00",
+        "description": "Accs  la piscine  90 DH par personne. Les enfants doivent tre accompagns et surveills en permanence par un adulte.",
+        "type": "Loisirs",
+        "image": "services/3b2bef16.avif"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 21,
+    "fields": {
+        "nom": "Balade  cheval",
+        "prix": "100.00",
+        "description": "Promenade  cheval accompagne par un encadrant. Tarif de 100 DH par personne.",
+        "type": "Loisirs",
+        "image": "services/Balade-a-poney-annecy.webp"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 22,
+    "fields": {
+        "nom": "Jardin et espace dtente",
+        "prix": "0.00",
+        "description": "Accs gratuit au jardin et aux espaces de dtente de l'auberge.",
+        "type": "Loisirs",
+        "image": "services/f76b8ab4.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 23,
+    "fields": {
+        "nom": "Hammam traditionnel",
+        "prix": "50.00",
+        "description": "Profitez d'un hammam marocain traditionnel pour un moment de dtente. Tarif : 50 DH par personne.",
+        "type": "Bien-être",
+        "image": "services/Hammam_marocain_aux_lanternes_dorées.png"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 24,
+    "fields": {
+        "nom": "Sance de yoga",
+        "prix": "80.00",
+        "description": "Sance de yoga pour la relaxation et le bien-tre. Tarif : 80 DH par sance.",
+        "type": "Bien-être",
+        "image": "services/1659dbbf4a2f4ce07aa9728a85d8ebb8.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 25,
+    "fields": {
+        "nom": "Espace de mditation",
+        "prix": "0.00",
+        "description": "Espace calme et paisible ddi  la mditation,  la relaxation et au repos.",
+        "type": "Bien-être",
+        "image": "services/Espace_de_méditation_marocain_chaleureux.png"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 26,
+    "fields": {
+        "nom": "Tajine de kefta",
+        "prix": "75.00",
+        "description": "Tajine de viande hachée aux œufs et sauce tomate.",
+        "type": "Restauration",
+        "image": "services/kefta.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 27,
+    "fields": {
+        "nom": "Pastilla au poulet",
+        "prix": "95.00",
+        "description": "Pastilla traditionnelle aux amandes et au poulet.",
+        "type": "Restauration",
+        "image": "services/Pastilla.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 28,
+    "fields": {
+        "nom": "Poisson grillé",
+        "prix": "110.00",
+        "description": "Poisson frais grillé accompagné de légumes.",
+        "type": "Restauration",
+        "image": "services/Poisson grillé.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 29,
+    "fields": {
+        "nom": "Salade marocaine",
+        "prix": "25.00",
+        "description": "Tomates, concombre, oignons et huile d'olive.",
+        "type": "Restauration",
+        "image": "services/Salade marocaine.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 30,
+    "fields": {
+        "nom": "Taktouka",
+        "prix": "30.00",
+        "description": "Salade cuite de poivrons et de tomates.",
+        "type": "Restauration",
+        "image": "services/Taktouka.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 31,
+    "fields": {
+        "nom": "Pâtisseries marocaines",
+        "prix": "35.00",
+        "description": "Assortiment de gâteaux traditionnels marocains.",
+        "type": "Restauration",
+        "image": "services/Pâtisseries.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 32,
+    "fields": {
+        "nom": "Rfissa au poulet",
+        "prix": "85.00",
+        "description": "Plat traditionnel marocain à base de poulet, lentilles et msemen.",
+        "type": "Restauration",
+        "image": "services/rfissa.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 33,
+    "fields": {
+        "nom": "Tajine aux pruneaux",
+        "prix": "110.00",
+        "description": "Tajine de viande mijotée aux pruneaux et aux amandes.",
+        "type": "Restauration",
+        "image": "services/pruneaux.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 34,
+    "fields": {
+        "nom": "Tanjia marrakchia",
+        "prix": "120.00",
+        "description": "Viande fondante cuite lentement avec des épices marocaines.",
+        "type": "Restauration",
+        "image": "services/tanjia.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 35,
+    "fields": {
+        "nom": "Seffa traditionnelle",
+        "prix": "70.00",
+        "description": "Vermicelles préparés avec des amandes, du sucre et de la cannelle.",
+        "type": "Restauration",
+        "image": "services/seffa.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 36,
+    "fields": {
+        "nom": "Brochettes de viande",
+        "prix": "95.00",
+        "description": "Brochettes de viande marinée et grillée avec accompagnement.",
+        "type": "Restauration",
+        "image": "services/brochettes.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 37,
+    "fields": {
+        "nom": "Pastilla aux fruits de mer",
+        "prix": "130.00",
+        "description": "Pastilla croustillante garnie de fruits de mer et de vermicelles.",
+        "type": "Restauration",
+        "image": "services/pastilla_mer.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 38,
+    "fields": {
+        "nom": "Zaalouk",
+        "prix": "25.00",
+        "description": "Salade marocaine cuite à base d'aubergines et de tomates.",
+        "type": "Restauration",
+        "image": "services/Zaalouk.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 39,
+    "fields": {
+        "nom": "Briouates au fromage",
+        "prix": "40.00",
+        "description": "Feuilletés croustillants garnis de fromage.",
+        "type": "Restauration",
+        "image": "services/briouates.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 40,
+    "fields": {
+        "nom": "Salade César",
+        "prix": "55.00",
+        "description": "Salade verte, poulet grillé, parmesan, croûtons et sauce César.",
+        "type": "Restauration",
+        "image": "services/cesar.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 41,
+    "fields": {
+        "nom": "Pizza Margherita",
+        "prix": "60.00",
+        "description": "Pizza italienne à la tomate, mozzarella et basilic.",
+        "type": "Restauration",
+        "image": "services/pizza.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 42,
+    "fields": {
+        "nom": "Spaghetti bolognaise",
+        "prix": "75.00",
+        "description": "Spaghetti accompagnés de sauce tomate et de viande hachée.",
+        "type": "Restauration",
+        "image": "services/spaghetti.jpg"
+    }
+},
+{
+    "model": "services.service",
+    "pk": 43,
+    "fields": {
+        "nom": "Burger maison",
+        "prix": "80.00",
+        "description": "Burger de viande grillée avec fromage, salade et frites.",
+        "type": "Restauration",
+        "image": "services/burger.jpg"
+    }
+}
+]

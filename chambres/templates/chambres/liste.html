@@ -1,4 +1,3 @@
-
 {% extends 'base.html' %}
 {% load static %}
 
@@ -47,11 +46,13 @@
             transform: scale(1);
         }
 
-        5%, 30% {
+        5%,
+        30% {
             opacity: 1;
         }
 
-        35%, 100% {
+        35%,
+        100% {
             opacity: 0;
             transform: scale(1.08);
         }
@@ -93,7 +94,7 @@
         background: white;
         border: 1px solid #E8DCC8;
         border-radius: 22px;
-        box-shadow: 0 8px 30px rgba(48,43,38,.06);
+        box-shadow: 0 8px 30px rgba(48, 43, 38, .06);
     }
 
     .room-search-wrapper {
@@ -123,7 +124,7 @@
 
     .room-search:focus {
         border-color: #455B45;
-        box-shadow: 0 0 0 4px rgba(69,91,69,.10);
+        box-shadow: 0 0 0 4px rgba(69, 91, 69, .10);
     }
 
     .room-filter-layout {
@@ -212,13 +213,13 @@
         background: white;
         border: 1px solid #EAE5DB;
         border-radius: 16px;
-        box-shadow: 0 5px 20px rgba(0,0,0,.05);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, .05);
         transition: transform .3s, box-shadow .3s;
     }
 
     .room-card:hover {
         transform: translateY(-6px);
-        box-shadow: 0 12px 30px rgba(0,0,0,.10);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, .10);
     }
 
     .room-image {
@@ -475,6 +476,43 @@
             transition: none;
         }
     }
+    .service-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    width: auto;
+    padding: 10px 20px;
+
+    background-color: #1F4D3B;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.service-btn:hover {
+    background-color: #326B53;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(31, 77, 59, 0.2);
+}
+
+.service-btn span {
+    font-size: 16px;
+    transition: transform 0.3s ease;
+}
+
+.service-btn:hover span {
+    transform: translateX(4px);
+}
 </style>
 {% endblock %}
 
@@ -552,13 +590,8 @@
 
             <span class="room-search-icon" aria-hidden="true">⌕</span>
 
-            <input
-                type="search"
-                id="roomSearch"
-                class="room-search"
-                placeholder="Rechercher par numéro, type de chambre..."
-                aria-label="Rechercher une chambre"
-            >
+            <input type="search" id="roomSearch" class="room-search"
+                placeholder="Rechercher par numéro, type de chambre..." aria-label="Rechercher une chambre">
 
         </div>
 
@@ -568,17 +601,13 @@
             <!-- FILTRE PAR TYPE -->
             <div class="room-filter-buttons">
 
-                <button type="button"
-                    class="room-filter-btn active"
-                    data-type="all">
+                <button type="button" class="room-filter-btn active" data-type="all">
                     Tous les types
                 </button>
 
                 {% for type in types_chambres %}
 
-                <button type="button"
-                    class="room-filter-btn"
-                    data-type="{{ type }}">
+                <button type="button" class="room-filter-btn" data-type="{{ type }}">
                     {{ type }}
                 </button>
 
@@ -598,15 +627,7 @@
 
                 </div>
 
-                <input
-                    type="range"
-                    id="room-price"
-                    min="0"
-                    max="1000"
-                    value="1000"
-                    step="10"
-                    aria-label="Prix maximum"
-                >
+                <input type="range" id="room-price" min="0" max="1000" value="1000" step="10" aria-label="Prix maximum">
 
             </div>
 
@@ -637,30 +658,18 @@
 
         {% for chambre in chambres %}
 
-        <article
-            class="room-card"
-            data-name="{{ chambre.numChambre|escape }}"
-            data-type="{{ chambre.type|escape }}"
-            data-price="{{ chambre.prix|floatformat:2 }}"
-        >
+        <article class="room-card" data-name="{{ chambre.numChambre|escape }}" data-type="{{ chambre.type|escape }}"
+            data-price="{{ chambre.prix|floatformat:2 }}">
 
             <div class="room-image">
 
                 {% if chambre.image %}
 
-                <img
-                    src="{{ chambre.image.url }}"
-                    alt="Chambre {{ chambre.numChambre }}"
-                    loading="lazy"
-                >
+                <img src="{{ chambre.image.url }}" alt="Chambre {{ chambre.numChambre }}" loading="lazy">
 
                 {% else %}
 
-                <img
-                    src="{% static 'chambres/images/chambre-default.jpg' %}"
-                    alt="Photo de chambre"
-                    loading="lazy"
-                >
+                <img src="{% static 'chambres/images/chambre-default.jpg' %}" alt="Photo de chambre" loading="lazy">
 
                 {% endif %}
 
@@ -695,15 +704,28 @@
                     ● {{ chambre.get_statut_display }}
                 </span>
 
+               
 
-                <div class="room-card-footer">
+<div class="flex items-center justify-between gap-3 mt-5">
 
-                    <a href="{% url 'chambres:detail' chambre.pk %}"
-                        class="room-reserve-btn">
-                        Réserver <span aria-hidden="true">→</span>
-                    </a>
+    <!-- RESERVER -->
+    <a href="/reservations/?chambre_id={{ chambre.id }}"
+       class="service-btn">
+        Réserver
+        <span aria-hidden="true">→</span>
+    </a>
 
-                </div>
+    <!-- DETAILS -->
+    <a href="{% url 'chambres:detail' chambre.pk %}"
+       class="text-xs font-medium text-[#455B45] hover:underline">
+        Voir détails →
+    </a>
+
+</div>
+
+
+
+
 
             </div>
 
@@ -734,11 +756,7 @@
 
     <!-- PAGINATION -->
 
-    <nav
-        id="roomPagination"
-        class="rooms-pagination"
-        aria-label="Pagination des chambres"
-        hidden>
+    <nav id="roomPagination" class="rooms-pagination" aria-label="Pagination des chambres" hidden>
     </nav>
 
     <p id="roomPageInfo" class="room-page-info"></p>
@@ -816,215 +834,228 @@
 {% block extra_js %}
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
 
-    const cards = Array.from(
-        document.querySelectorAll(".room-card")
-    );
-
-    const search = document.getElementById("roomSearch");
-    const priceFilter = document.getElementById("room-price");
-    const priceValue = document.getElementById("room-price-value");
-
-    const buttons = Array.from(
-        document.querySelectorAll(".room-filter-btn")
-    );
-
-    const count = document.getElementById("roomFilterCount");
-    const noResults = document.getElementById("roomNoResults");
-    const pagination = document.getElementById("roomPagination");
-    const pageInfo = document.getElementById("roomPageInfo");
-
-    const title = document.getElementById("roomCategoryTitle");
-    const description = document.getElementById("roomCategoryDescription");
-
-    if (!search || !priceFilter || !pagination) return;
-
-    const perPage = 6;
-
-    let currentPage = 1;
-    let activeType = "all";
-
-
-    /* NORMALISATION DES TEXTES */
-
-    function normalize(value) {
-
-        return (value || "")
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .toLowerCase()
-            .trim();
-
-    }
-
-
-    /* CONFIGURATION DU PRIX */
-
-    const prices = cards.map(card => {
-
-        return Number(
-            card.dataset.price.replace(",", ".")
+        const cards = Array.from(
+            document.querySelectorAll(".room-card")
         );
 
-    }).filter(Number.isFinite);
+        const search = document.getElementById("roomSearch");
+        const priceFilter = document.getElementById("room-price");
+        const priceValue = document.getElementById("room-price-value");
 
-    const maxPrice = Math.max(1000, ...prices);
-
-    priceFilter.max = String(
-        Math.ceil(maxPrice / 100) * 100
-    );
-
-    priceFilter.value = priceFilter.max;
-
-    priceValue.textContent = priceFilter.value + " DH";
-
-
-    /* TITRES DYNAMIQUES */
-
-    function updateHeading() {
-
-        const type = normalize(activeType);
-
-        if (type === "all") {
-
-            title.textContent = "Toutes nos chambres";
-
-            description.textContent =
-                "Découvrez nos chambres et choisissez celle qui vous convient.";
-
-        } else {
-
-            title.textContent =
-                "Chambres " + activeType;
-
-            description.textContent =
-                "Découvrez notre sélection de chambres " +
-                activeType + ".";
-
-        }
-
-    }
-
-
-    /* CREATION DES BOUTONS DE PAGINATION */
-
-    function createPageButton(label, page, disabled, active = false) {
-
-        const button = document.createElement("button");
-
-        button.type = "button";
-
-        button.className =
-            "room-page-btn" + (active ? " active" : "");
-
-        button.textContent = label;
-
-        button.disabled = disabled;
-
-        if (active) {
-            button.setAttribute("aria-current", "page");
-        }
-
-        button.addEventListener("click", function () {
-
-            if (disabled) return;
-
-            currentPage = page;
-
-            render();
-
-            document.getElementById("rooms-section")
-                .scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-
-        });
-
-        return button;
-
-    }
-
-
-    /* GENERATION DES NUMEROS DE PAGES */
-
-    function renderPagination(totalPages) {
-
-        pagination.innerHTML = "";
-
-        if (totalPages <= 1) {
-
-            pagination.hidden = true;
-
-            return;
-
-        }
-
-        pagination.hidden = false;
-
-        pagination.appendChild(
-            createPageButton(
-                "← Précédent",
-                currentPage - 1,
-                currentPage === 1
-            )
+        const buttons = Array.from(
+            document.querySelectorAll(".room-filter-btn")
         );
 
+        const count = document.getElementById("roomFilterCount");
+        const noResults = document.getElementById("roomNoResults");
+        const pagination = document.getElementById("roomPagination");
+        const pageInfo = document.getElementById("roomPageInfo");
 
-        // Afficher toutes les pages si elles sont peu nombreuses.
-        // Sinon, afficher les pages autour de la page actuelle.
+        const title = document.getElementById("roomCategoryTitle");
+        const description = document.getElementById("roomCategoryDescription");
 
-        let pages = [];
+        if (!search || !priceFilter || !pagination) return;
 
-        if (totalPages <= 7) {
+        const perPage = 6;
 
-            pages = Array.from(
-                { length: totalPages },
-                (_, index) => index + 1
+        let currentPage = 1;
+        let activeType = "all";
+
+
+        /* NORMALISATION DES TEXTES */
+
+        function normalize(value) {
+
+            return (value || "")
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase()
+                .trim();
+
+        }
+
+
+        /* CONFIGURATION DU PRIX */
+
+        const prices = cards.map(card => {
+
+            return Number(
+                card.dataset.price.replace(",", ".")
             );
 
-        } else {
+        }).filter(Number.isFinite);
 
-            pages = [
-                1,
-                2,
-                currentPage - 1,
-                currentPage,
-                currentPage + 1,
-                totalPages - 1,
-                totalPages
-            ];
+        const maxPrice = Math.max(1000, ...prices);
 
-            pages = [...new Set(pages)]
-                .filter(page => page >= 1 && page <= totalPages)
-                .sort((a, b) => a - b);
+        priceFilter.max = String(
+            Math.ceil(maxPrice / 100) * 100
+        );
 
-        }
+        priceFilter.value = priceFilter.max;
+
+        priceValue.textContent = priceFilter.value + " DH";
 
 
-        let previousPage = 0;
+        /* TITRES DYNAMIQUES */
 
-        pages.forEach(page => {
+        function updateHeading() {
 
-            if (previousPage && page - previousPage > 1) {
+            const type = normalize(activeType);
 
-                const dots = document.createElement("span");
+            if (type === "all") {
 
-                dots.textContent = "...";
+                title.textContent = "Toutes nos chambres";
 
-                dots.style.padding = "10px";
+                description.textContent =
+                    "Découvrez nos chambres et choisissez celle qui vous convient.";
 
-                pagination.appendChild(dots);
+            } else {
+
+                title.textContent =
+                    "Chambres " + activeType;
+
+                description.textContent =
+                    "Découvrez notre sélection de chambres " +
+                    activeType + ".";
 
             }
 
+        }
+
+
+        /* CREATION DES BOUTONS DE PAGINATION */
+
+        function createPageButton(label, page, disabled, active = false) {
+
+            const button = document.createElement("button");
+
+            button.type = "button";
+
+            button.className =
+                "room-page-btn" + (active ? " active" : "");
+
+            button.textContent = label;
+
+            button.disabled = disabled;
+
+            if (active) {
+                button.setAttribute("aria-current", "page");
+            }
+
+            button.addEventListener("click", function () {
+
+                if (disabled) return;
+
+                currentPage = page;
+
+                render();
+
+                document.getElementById("rooms-section")
+                    .scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+            });
+
+            return button;
+
+        }
+
+
+        /* GENERATION DES NUMEROS DE PAGES */
+
+        function renderPagination(totalPages) {
+
+            pagination.innerHTML = "";
+
+            if (totalPages <= 1) {
+
+                pagination.hidden = true;
+
+                return;
+
+            }
+
+            pagination.hidden = false;
+
             pagination.appendChild(
                 createPageButton(
-                    String(page),
-                    page,
-                    false,
-                    page === currentPage
+                    "← Précédent",
+                    currentPage - 1,
+                    currentPage === 1
+                )
+            );
+
+
+            // Afficher toutes les pages si elles sont peu nombreuses.
+            // Sinon, afficher les pages autour de la page actuelle.
+
+            let pages = [];
+
+            if (totalPages <= 7) {
+
+                pages = Array.from(
+                    { length: totalPages },
+                    (_, index) => index + 1
+                );
+
+            } else {
+
+                pages = [
+                    1,
+                    2,
+                    currentPage - 1,
+                    currentPage,
+                    currentPage + 1,
+                    totalPages - 1,
+                    totalPages
+                ];
+
+                pages = [...new Set(pages)]
+                    .filter(page => page >= 1 && page <= totalPages)
+                    .sort((a, b) => a - b);
+
+            }
+
+
+            let previousPage = 0;
+
+            pages.forEach(page => {
+
+                if (previousPage && page - previousPage > 1) {
+
+                    const dots = document.createElement("span");
+
+                    dots.textContent = "...";
+
+                    dots.style.padding = "10px";
+
+                    pagination.appendChild(dots);
+
+                }
+
+                pagination.appendChild(
+                    createPageButton(
+                        String(page),
+                        page,
+                        false,
+                        page === currentPage
+                    )
+                );
+
+                previousPage = page;
+
+            });
+
+
+            pagination.appendChild(
+                createPageButton(
+                    "Suivant →",
+                    currentPage + 1,
+                    currentPage === totalPages
                 )
             );
 
@@ -1033,202 +1064,191 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
 
-        pagination.appendChild(
-            createPageButton(
-                "Suivant →",
-                currentPage + 1,
-                currentPage === totalPages
-            )
-        );
+        /* FILTRAGE ET AFFICHAGE */
 
-    }
+        function render() {
+
+            const query = normalize(search.value);
+
+            const max = Number(priceFilter.value);
 
 
-    /* FILTRAGE ET AFFICHAGE */
+            // Filtrer les chambres
 
-    function render() {
+            const filtered = cards.filter(card => {
 
-        const query = normalize(search.value);
+                const name = normalize(card.dataset.name);
 
-        const max = Number(priceFilter.value);
+                const type = normalize(card.dataset.type);
+
+                const text = normalize(card.textContent);
+
+                const price = Number(
+                    card.dataset.price.replace(",", ".")
+                );
 
 
-        // Filtrer les chambres
+                const typeMatch =
+                    activeType === "all" ||
+                    type === normalize(activeType);
 
-        const filtered = cards.filter(card => {
 
-            const name = normalize(card.dataset.name);
+                const searchMatch =
+                    !query ||
+                    name.includes(query) ||
+                    type.includes(query) ||
+                    text.includes(query);
 
-            const type = normalize(card.dataset.type);
 
-            const text = normalize(card.textContent);
+                const priceMatch =
+                    Number.isFinite(price) &&
+                    price <= max;
 
-            const price = Number(
-                card.dataset.price.replace(",", ".")
+
+                return typeMatch && searchMatch && priceMatch;
+
+            });
+
+
+            // Calcul du nombre de pages
+
+            const totalPages = Math.ceil(
+                filtered.length / perPage
             );
 
 
-            const typeMatch =
-                activeType === "all" ||
-                type === normalize(activeType);
+            // Corriger automatiquement la page courante
 
-
-            const searchMatch =
-                !query ||
-                name.includes(query) ||
-                type.includes(query) ||
-                text.includes(query);
-
-
-            const priceMatch =
-                Number.isFinite(price) &&
-                price <= max;
-
-
-            return typeMatch && searchMatch && priceMatch;
-
-        });
-
-
-        // Calcul du nombre de pages
-
-        const totalPages = Math.ceil(
-            filtered.length / perPage
-        );
-
-
-        // Corriger automatiquement la page courante
-
-        currentPage = Math.min(
-            Math.max(1, currentPage),
-            Math.max(1, totalPages)
-        );
-
-
-        // Calcul des chambres à afficher
-
-        const start = (currentPage - 1) * perPage;
-
-        const visibleCards = filtered.slice(
-            start,
-            start + perPage
-        );
-
-
-        // Masquer toutes les cartes
-
-        cards.forEach(card => {
-            card.hidden = true;
-        });
-
-
-        // Afficher uniquement les chambres de la page actuelle
-
-        visibleCards.forEach(card => {
-            card.hidden = false;
-        });
-
-
-        // Nombre de résultats
-
-        count.textContent =
-            filtered.length + " chambre(s) trouvée(s)";
-
-
-        // Aucun résultat
-
-        noResults.hidden = filtered.length !== 0;
-
-
-        // Titre dynamique
-
-        updateHeading();
-
-
-        // Pagination
-
-        renderPagination(totalPages);
-
-
-        // Informations de pagination
-
-        if (filtered.length === 0) {
-
-            pageInfo.textContent = "";
-
-        } else {
-
-            const first = start + 1;
-
-            const last = Math.min(
-                start + perPage,
-                filtered.length
+            currentPage = Math.min(
+                Math.max(1, currentPage),
+                Math.max(1, totalPages)
             );
 
-            pageInfo.textContent =
-                "Affichage de " + first +
-                " à " + last +
-                " sur " + filtered.length +
-                " chambre(s)";
+
+            // Calcul des chambres à afficher
+
+            const start = (currentPage - 1) * perPage;
+
+            const visibleCards = filtered.slice(
+                start,
+                start + perPage
+            );
+
+
+            // Masquer toutes les cartes
+
+            cards.forEach(card => {
+                card.hidden = true;
+            });
+
+
+            // Afficher uniquement les chambres de la page actuelle
+
+            visibleCards.forEach(card => {
+                card.hidden = false;
+            });
+
+
+            // Nombre de résultats
+
+            count.textContent =
+                filtered.length + " chambre(s) trouvée(s)";
+
+
+            // Aucun résultat
+
+            noResults.hidden = filtered.length !== 0;
+
+
+            // Titre dynamique
+
+            updateHeading();
+
+
+            // Pagination
+
+            renderPagination(totalPages);
+
+
+            // Informations de pagination
+
+            if (filtered.length === 0) {
+
+                pageInfo.textContent = "";
+
+            } else {
+
+                const first = start + 1;
+
+                const last = Math.min(
+                    start + perPage,
+                    filtered.length
+                );
+
+                pageInfo.textContent =
+                    "Affichage de " + first +
+                    " à " + last +
+                    " sur " + filtered.length +
+                    " chambre(s)";
+
+            }
 
         }
 
-    }
 
+        /* FILTRE PAR TYPE */
 
-    /* FILTRE PAR TYPE */
+        buttons.forEach(button => {
 
-    buttons.forEach(button => {
+            button.addEventListener("click", function () {
 
-        button.addEventListener("click", function () {
+                activeType = this.dataset.type;
 
-            activeType = this.dataset.type;
+                currentPage = 1;
 
-            currentPage = 1;
+                buttons.forEach(btn => {
+                    btn.classList.remove("active");
+                });
 
-            buttons.forEach(btn => {
-                btn.classList.remove("active");
+                this.classList.add("active");
+
+                render();
+
             });
 
-            this.classList.add("active");
+        });
+
+
+        /* RECHERCHE */
+
+        search.addEventListener("input", function () {
+
+            currentPage = 1;
 
             render();
 
         });
 
-    });
+
+        /* FILTRE PAR PRIX */
+
+        priceFilter.addEventListener("input", function () {
+
+            priceValue.textContent =
+                this.value + " DH";
+
+            currentPage = 1;
+
+            render();
+
+        });
 
 
-    /* RECHERCHE */
-
-    search.addEventListener("input", function () {
-
-        currentPage = 1;
-
-        render();
-
-    });
-
-
-    /* FILTRE PAR PRIX */
-
-    priceFilter.addEventListener("input", function () {
-
-        priceValue.textContent =
-            this.value + " DH";
-
-        currentPage = 1;
+        /* INITIALISATION */
 
         render();
 
     });
-
-
-    /* INITIALISATION */
-
-    render();
-
-});
 </script>
 
 {% endblock %}
